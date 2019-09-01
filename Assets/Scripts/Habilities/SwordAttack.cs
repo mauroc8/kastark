@@ -13,13 +13,14 @@ public class SwordAttack : MonoBehaviour
     
     bool _opened = false;
     bool _closed = false;
+    bool _AIDrawing = false;
 
     public bool IsClosed() { return _closed; }
 
     Plane _rayCastPlane;
     TrailRenderer _trailRenderer = null;
     float _minVertexDistance;
-    float _trailTime;
+    float _trailExtraLifeTime;
     Material _material;
 
     void Start()
@@ -30,56 +31,61 @@ public class SwordAttack : MonoBehaviour
         _trailRenderer = GetComponent<TrailRenderer>();
         _trailRenderer.enabled = false;
         _minVertexDistance = _trailRenderer.minVertexDistance;
-        _trailTime = _trailRenderer.time;
+        
         _material = _trailRenderer.materials[0];
+
+        _trailExtraLifeTime = _trailRenderer.time;
+        _trailRenderer.time = float.PositiveInfinity;
     }
 
-    List<Vector3> _points = new List<Vector3>(100);
-    List<Vector2> _screenPoints = new List<Vector2>(100);
-    List<GameObject> _targets = new List<GameObject>(100);
+    List<Vector3> _worldPoints = new List<Vector3>(50);
+    List<Vector2> _screenPoints = new List<Vector2>(50);
+    List<GameObject> _targets = new List<GameObject>(50);
 
-    float _openedTime = 0;
+    float _openedTime;
+    float _timeOpened; // ellapsed time from open to close
 
-    void OpenTrail(Vector3 start) {
-        AddPoint(start, true);
+    void OpenTrail(Vector3 worldPoint) {
         _opened = true;
-        _trailRenderer.emitting = _trailRenderer.enabled = true;
-        _trailRenderer.time = float.PositiveInfinity;
-
         _length = 0;
         _openedTime = Time.time;
-    }
+        
+        Vector2 screenPoint = Camera.main.WorldToScreenPoint(worldPoint);
 
-    void MoveTrailTowards(Vector3 point) {
-        float distance = (transform.position - point).magnitude;
-        if (distance < _minVertexDistance) {
-            return;
-        }
-
-        AddPoint(point);
+        AddPoint(worldPoint, screenPoint);
+        
+        _trailRenderer.emitting = _trailRenderer.enabled = true;
     }
 
     Vector2 _lastScreenPoint;
 
-    void AddPoint(Vector3 point, bool first = false) {
-        Vector2 screenPoint = Camera.main.WorldToScreenPoint(point);
+    void MoveTrailTowards(Vector3 worldPoint) {
+        float worldDistance = (transform.position - worldPoint).magnitude;
 
-        if (!first) {
-            float distance = (screenPoint - _lastScreenPoint).magnitude;
-            
-            if (_length + distance > _maxLength) {
-                CloseTrail();
-                return;
-            }
-
-            _length += distance;
+        if (worldDistance < _minVertexDistance) {
+            return;
         }
-        
-        _lastScreenPoint = screenPoint;
 
-        _points.Add(point);
+        Vector2 screenPoint = Camera.main.WorldToScreenPoint(worldPoint);
+
+        float screenDistance = (screenPoint - _lastScreenPoint).magnitude;
+
+        if (_length + screenDistance > _maxLength) {
+            CloseTrail();
+            return;
+        }
+
+        _length += screenDistance;
+
+        AddPoint(worldPoint, screenPoint);
+    }
+
+    void AddPoint(Vector3 point, Vector2 screenPoint) {
+        _worldPoints.Add(point);
         _screenPoints.Add(screenPoint);
+
         transform.position = point;
+        _lastScreenPoint = screenPoint;
     }
 
     void AddTarget(GameObject target) {
@@ -89,70 +95,141 @@ public class SwordAttack : MonoBehaviour
     void CloseTrail() {
         _opened = _trailRenderer.emitting = false;
         _closed = true;
+        _timeOpened = Time.time - _openedTime;
 
         if (!IsAcceptable()) {
-            Debug.Log($"Inacceptable trail, try again.");
-
-            Restart();
-
+            if (!_AIDrawing) {
+                AIDrawTrailStart();
+            } else {
+                Debug.Log("AI Drawn Trail is not acceptable.");
+            }
         } else {
-            _trailRenderer.time = Time.time - _openedTime + _trailTime;
+            _trailRenderer.time = _trailExtraLifeTime;
 
             AnalyzeTrail();
         }
     }
 
-    void Restart() {
+    WaitForSeconds _briefWait = new WaitForSeconds(0.05f);
+
+    void AIDrawTrailStart() {
+        _AIDrawing = true;
+
+        if (_targets.Count < 1) {
+            Debug.Log("Please try again.");
+            return;
+        }
+
+        Debug.Log("Manual Trail");
+
+        Vector2[] screenPoints = _screenPoints.ToArray();
+
+        int N = screenPoints.Length;
+
+        float[] xValues = new float[N];
+        float[] yValues = new float[N];
+        
+        for (int i = 0; i < N; i++) {
+            Vector2 p = screenPoints[i];
+            xValues[i] = p.x;
+            yValues[i] = p.y;
+        }
+
+        Array.Sort(xValues);
+        Array.Sort(yValues);
+
+        float xMedian = xValues[(int) N / 2];
+        float yMedian = yValues[(int) N / 2];
+
+        RestartTrail();
+        N = 20;
+        _AIGeneratedTrail = new Vector2[N];
+        float xSize = 100;
+        float ySize = 16;
+
+        for (int i = 0; i < N; i++) {
+            float progress = (float) i / N;
+            float x = xMedian + (-1 + 2 * progress) * xSize;
+            float y = yMedian + (-1 + 2 * progress) * ySize;
+            Vector2 generatedPoint = new Vector2(x, y);
+
+            _AIGeneratedTrail[i] = generatedPoint;
+        }
+
+        _AITrailIdx = 0;
+    }
+
+    Vector2[] _AIGeneratedTrail;
+    int _AITrailIdx;
+
+    void AIDrawTrailUpdate() {
+        if (_AITrailIdx >= _AIGeneratedTrail.Length) {
+            CloseTrail();
+        } else {
+            HandleClick(_AIGeneratedTrail[_AITrailIdx]);
+        }
+        
+        _AITrailIdx++;
+    }
+
+    void RestartTrail() {
         _closed = false;
         _opened = false;
         _trailRenderer.enabled = false;
-        _trailRenderer.time = _trailTime;
-        _points.Clear();
+        _trailRenderer.time = float.PositiveInfinity;
+        _worldPoints.Clear();
         _screenPoints.Clear();
         _targets.Clear();
-    }
-
-    void DebugDrawTrail() {
-        Color[] colors = {Color.green, Color.blue, Color.red, Color.black};
-
-        for (int i = 1; i < _points.Count; i++) {
-            Debug.DrawLine(_points[i - 1], _points[i], colors[i % 4], 2.5f);
-        }
     }
     
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R)) {
+            RestartTrail();
+            return;
+        }
+
         if (_closed) return;
 
-        if (Input.GetMouseButton(0))
-        {
-            Ray mRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (_AIDrawing) {
+            AIDrawTrailUpdate();
+            return;
+        }
+        
+        bool clicking = Input.GetMouseButton(0);
+        Vector2 clickPoint = Input.mousePosition;
 
-            float rayDistance;
-            if (_rayCastPlane.Raycast(mRay, out rayDistance))
-            {
-                Vector3 point = mRay.GetPoint(rayDistance);
-                if (!_opened) {
-                    OpenTrail(point);
-                    return;
-                } else {
-                    MoveTrailTowards(point);
-                }
-                
-                RaycastHit hit;
-                if (Physics.Raycast(mRay, out hit)){
-                    if (hit.transform.gameObject.CompareTag("Enemy")) {
-                        AddTarget(hit.transform.gameObject);
-                    }
-                }
-            }
+        if (clicking) {
+            HandleClick(clickPoint);
         } else if (_opened) {
             CloseTrail();
         }
     }
 
+    void HandleClick(Vector2 clickPoint) {
+        Ray mRay = Camera.main.ScreenPointToRay(clickPoint);
+
+        float rayDistance;
+        if (_rayCastPlane.Raycast(mRay, out rayDistance))
+        {
+            Vector3 point = mRay.GetPoint(rayDistance);
+            if (!_opened) {
+                OpenTrail(point);
+            } else {
+                MoveTrailTowards(point);
+            }
+            
+            RaycastHit hit;
+            if (Physics.Raycast(mRay, out hit)){
+                if (hit.transform.gameObject.CompareTag("Team 2")) {
+                    AddTarget(hit.transform.gameObject);
+                }
+            }
+        }
+    }
+
     bool IsAcceptable() {
-        return _length > _minLength && _points.Count >= 3;
+        return _length >= _minLength && _worldPoints.Count >= 3;
     }
 
     [Header("Public Trail Analysis")]
@@ -164,13 +241,15 @@ public class SwordAttack : MonoBehaviour
     public bool isShort;
     public bool spike;
     public bool zigZag;
+    public bool fast;
+    public bool slow;
 
     void AnalyzeTrail() {
-        MakeStatisticAnalysis();
+        PerformLevel0Analysis();
         
-        horizontal = _yStdDev < 3.2f;
-        vertical = _xStdDev < 3.2f;
-        straight = _directionStdDev < 0.09f && _spikes == 0;
+        horizontal = _yStdDev < 2.2f;
+        vertical = _xStdDev < 2.2f;
+        straight = _directionStdDev < 0.07f && _spikes == 0;
         circular = _spikes == 0 && (
             _directionStdDev > 0.4f && _angleStdDev < 0.17f ||
             _directionStdDev > 0.9f && _angleStdDev < 0.28f
@@ -179,9 +258,11 @@ public class SwordAttack : MonoBehaviour
         isShort = _length < _minLength * 2.4f;
         spike = _spikes == 1;
         zigZag = _spikes > 1;
+        fast = _speed > 1200;
+        slow = _speed < 150;
     }
 
-    [Header("Private Trail Statistics")]
+    [Header("Level 0 Analysis (private)")]
     [SerializeField] float _length;
     [SerializeField] int _samples;
     [SerializeField] int _spikes;
@@ -202,7 +283,9 @@ public class SwordAttack : MonoBehaviour
     [SerializeField] float _angleMedian;
     [SerializeField] float _angleStdDev = 0;
     
-    void MakeStatisticAnalysis() {
+    [SerializeField] float _speed = 0;
+    
+    void PerformLevel0Analysis() {
         Vector2[] screenPoints = _screenPoints.ToArray();
 
         int N = _samples = screenPoints.Length;
@@ -288,5 +371,7 @@ public class SwordAttack : MonoBehaviour
         _yMedian = yValue[N / 2];
         _directionMedian = directionValue[(N - 1) / 2];
         _angleMedian = angleValue[(N - 2) / 2];
+
+        _speed = _length / _timeOpened;
     }
 }
