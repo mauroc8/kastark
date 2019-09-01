@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Events;
 
-public class BattleSceneManager : MonoBehaviour
+public class BattleManager : MonoBehaviour
 {
     [SerializeField] Party _playerParty = null;
     [SerializeField] Party _enemyParty = null;
