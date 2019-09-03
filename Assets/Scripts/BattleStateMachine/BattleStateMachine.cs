@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Events;
 
-public class BattleManager : MonoBehaviour
+public class BattleStateMachine : StateMachine
 {
-    [SerializeField] Party _playerParty = null;
-    [SerializeField] Party _enemyParty = null;
-
-    Party _currentParty;
+    State _playerTurn;
+    State _enemyTurn;
 
     void Start() {
-        _currentParty = _playerParty;
+        _playerTurn = new PlayerTurnState();
+        _enemyTurn = new EnemyTurnState();
+
+        ChangeState(_playerTurn);
+    }
+
+    void Update() {
+        UpdateCurrentState();
     }
 
     void OnEnable() {
@@ -23,7 +28,8 @@ public class BattleManager : MonoBehaviour
     }
 
     void OnPartyTurnEnd(PartyTurnEndEvent e) {
-        _currentParty = _currentParty == _playerParty ? _enemyParty : _playerParty;
-        _currentParty.BeginTurn();
+        var nextTurn = e.teamId == TeamId.PlayerTeam ? _enemyTurn : _playerTurn;
+
+        ChangeState(nextTurn);
     }
 }

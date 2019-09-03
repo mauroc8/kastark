@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour
 {
-    State _currentState;
+    State _currentState = null;
 
-    protected virtual void Update() {
-        UpdateState();
-    }
-
-    protected void UpdateState() {
+    protected void UpdateCurrentState() {
         if (_currentState == null) return;
 
         _currentState.UpdateState();
     }
 
     protected void ChangeState(State newState) {
-        if (_currentState != null) {
-            if (_currentState.GetType() == newState.GetType()) return;
-            
+        if (_currentState == newState) return;
+
+        if (_currentState != null) {    
             _currentState.ExitState();
         }
 
-        (_currentState = newState).InitState();
+        _currentState = newState;
+        
+        if (_currentState != null) {    
+            _currentState.InitState();
+        }
     }
 }

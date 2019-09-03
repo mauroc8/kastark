@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewCharacter", menuName = "Character Attributes")]
+[CreateAssetMenu(fileName = "CharacterStats", menuName = "Character Stats")]
 
-public class CharacterAttributes : ScriptableObject
+public class CharacterStats : ScriptableObject
 {
     public float health;
     public float maxHealth;

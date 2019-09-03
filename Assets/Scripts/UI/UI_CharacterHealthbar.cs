@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UI_CharacterHealthbar : MonoBehaviour
 {
     [SerializeField]
-    CharacterAttributes _characterAttributes = null;
+    CharacterStats _characterAttributes = null;
 
     [SerializeField] Texture2D _backgroundTexture = null;
     [SerializeField] Texture2D _healthTexture = null;
@@ -25,7 +25,7 @@ public class UI_CharacterHealthbar : MonoBehaviour
         _backgroundTextureWidth = _backgroundTexture.width;
         _backgroundTextureHeight = _backgroundTexture.height;
         
-        CalculateScreenPosition();
+        //CalculateScreenPosition();
     }
 
     Vector2 _screenPosition;
@@ -53,6 +53,7 @@ public class UI_CharacterHealthbar : MonoBehaviour
     }
 
     void OnGUI() {
+        CalculateScreenPosition();
         CalculateTexturesWidth();
 
         GUI.DrawTexture(

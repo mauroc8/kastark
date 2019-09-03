@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: b4ab3c52942fb974a9932ae536d3350c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _characterAttributes: {instanceID: 0}
+  - _backgroundTexture: {fileID: 2800000, guid: bca768f58f71c6d42bfcc49c5ef9a88b,
+      type: 3}
+  - _healthTexture: {fileID: 2800000, guid: 825418443c908d248bba0271f79197b9, type: 3}
+  - _bigMarkerTexture: {fileID: 2800000, guid: acc21662532ed454a958bcea1c6da9ed, type: 3}
+  - _smallMarkerTexture: {fileID: 2800000, guid: 49a2d375fd870a2418f29019fc051910,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
