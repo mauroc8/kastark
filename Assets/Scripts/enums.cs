@@ -5,3 +5,7 @@ using UnityEngine;
 public enum TeamId {
     PlayerTeam, EnemyTeam
 };
+
+public enum HabilityId {
+    Attack, Magic, Shield
+};
