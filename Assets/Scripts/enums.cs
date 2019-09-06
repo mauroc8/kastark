@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum TeamId {
-    PlayerTeam, EnemyTeam
+    PlayerTeam,
+    EnemyTeam
 };
 
 public enum HabilityId {
-    Attack, Magic, Shield
+    Attack,
+    Magic,
+    Shield,
+    None = -1
 };

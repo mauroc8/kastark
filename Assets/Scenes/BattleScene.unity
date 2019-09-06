@@ -2945,6 +2945,7 @@ GameObject:
   - component: {fileID: 1358008266}
   - component: {fileID: 1358008265}
   - component: {fileID: 1358008264}
+  - component: {fileID: 1358008268}
   m_Layer: 0
   m_Name: Gnome Mesh
   m_TagString: Team 2
@@ -3024,6 +3025,18 @@ Transform:
   m_Father: {fileID: 1580877050}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1358008268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358008263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53646e3ef222964daeb96794d30cdc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1389771926
 GameObject:
   m_ObjectHideFlags: 0
@@ -3622,6 +3635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c810331fcf93d41b28cd8acbc9adb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cancelButton: {fileID: 1506417166}
 --- !u!1 &1561139775
 GameObject:
   m_ObjectHideFlags: 0
@@ -3973,6 +3987,7 @@ GameObject:
   - component: {fileID: 1841711954}
   - component: {fileID: 1841711953}
   - component: {fileID: 1841711952}
+  - component: {fileID: 1841711956}
   m_Layer: 0
   m_Name: Fairy Mesh
   m_TagString: Team 1
@@ -4052,6 +4067,18 @@ Transform:
   m_Father: {fileID: 416668932}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1841711956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841711951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53646e3ef222964daeb96794d30cdc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1846563835
 GameObject:
   m_ObjectHideFlags: 0
