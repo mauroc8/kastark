@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class Util
 {
-    public static GameObject[] GetGameObjectChildren(GameObject root) {
+    public static GameObject[] GetGameObjectChildrens(GameObject root) {
         GameObject[] children = new GameObject[root.transform.childCount];
 
         int i = 0;

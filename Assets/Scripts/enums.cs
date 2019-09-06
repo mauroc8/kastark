@@ -10,6 +10,5 @@ public enum TeamId {
 public enum HabilityId {
     Attack,
     Magic,
-    Shield,
-    None = -1
+    Shield
 };

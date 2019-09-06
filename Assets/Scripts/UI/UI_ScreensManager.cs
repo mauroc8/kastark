@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Events;
 
 public class UI_ScreensManager : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class UI_ScreensManager : MonoBehaviour
     int _currentScreenIndex;
 
     void Start() {
-        _screens = Util.GetGameObjectChildren(gameObject);
+        _screens = Util.GetGameObjectChildrens(gameObject);
         _currentScreenIndex = 0;
 
         foreach (var screen in _screens) {
@@ -22,5 +23,20 @@ public class UI_ScreensManager : MonoBehaviour
         _screens[_currentScreenIndex].SetActive(false);
         _currentScreenIndex = (_currentScreenIndex + move) % _screens.Length;
         _screens[_currentScreenIndex].SetActive(true);
+    }
+
+    void OnEnable() {
+        EventController.AddListener<StartUnitTurnEvent>(OnStartUnitTurn);
+    }
+
+    void OnDisable() {
+        EventController.RemoveListener<StartUnitTurnEvent>(OnStartUnitTurn);
+    }
+
+    void OnStartUnitTurn(StartUnitTurnEvent e) {
+        if (e.unit.CompareTag("Team 1")) {
+            Debug.Assert(_currentScreenIndex == 0);
+            MoveScreen(1);
+        }
     }
 }
