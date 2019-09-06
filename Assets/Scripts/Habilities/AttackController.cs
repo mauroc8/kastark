@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using Events;
 using UnityEngine;
 
-public class SwordAttack : MonoBehaviour
+public class AttackController : MonoBehaviour
 {
     [Header("Trail configuration")]
-    [SerializeField] float _minLength = 50;
-    [SerializeField] float _maxLength = 300;
+    [SerializeField] float _minLengthPx = 50;
+    [SerializeField] float _maxLengthPx = 300;
     [SerializeField] float _distanceToCamera = 4;
     
     bool _opened = false;
@@ -38,7 +38,6 @@ public class SwordAttack : MonoBehaviour
         _trailRenderer.time = float.PositiveInfinity;
     }
 
-    List<Vector3> _worldPoints = new List<Vector3>(50);
     List<Vector2> _screenPoints = new List<Vector2>(50);
     List<GameObject> _targets = new List<GameObject>(50);
 
@@ -70,7 +69,7 @@ public class SwordAttack : MonoBehaviour
 
         float screenDistance = (screenPoint - _lastScreenPoint).magnitude;
 
-        if (_length + screenDistance > _maxLength) {
+        if (_length + screenDistance > _maxLengthPx) {
             CloseTrail();
             return;
         }
@@ -81,7 +80,6 @@ public class SwordAttack : MonoBehaviour
     }
 
     void AddPoint(Vector3 point, Vector2 screenPoint) {
-        _worldPoints.Add(point);
         _screenPoints.Add(screenPoint);
 
         transform.position = point;
@@ -177,7 +175,6 @@ public class SwordAttack : MonoBehaviour
         _opened = false;
         _trailRenderer.enabled = false;
         _trailRenderer.time = float.PositiveInfinity;
-        _worldPoints.Clear();
         _screenPoints.Clear();
         _targets.Clear();
     }
@@ -229,10 +226,10 @@ public class SwordAttack : MonoBehaviour
     }
 
     bool IsAcceptable() {
-        return _length >= _minLength && _worldPoints.Count >= 3;
+        return _length >= _minLengthPx && _screenPoints.Count >= 3;
     }
 
-    [Header("Public Trail Analysis")]
+    [Header("Trail Analysis")]
     public bool horizontal;
     public bool straight;
     public bool vertical;
@@ -254,36 +251,36 @@ public class SwordAttack : MonoBehaviour
             _directionStdDev > 0.4f && _angleStdDev < 0.17f ||
             _directionStdDev > 0.9f && _angleStdDev < 0.28f
         );
-        isLong = _length > _maxLength - _minLength && _spikes == 0;
-        isShort = _length < _minLength * 2.4f;
+        isLong = _length > _maxLengthPx - _minLengthPx && _spikes == 0;
+        isShort = _length < _minLengthPx * 2.4f;
         spike = _spikes == 1;
         zigZag = _spikes > 1;
         fast = _speed > 1200;
         slow = _speed < 150;
     }
 
-    [Header("Level 0 Analysis (private)")]
-    [SerializeField] float _length;
-    [SerializeField] int _samples;
-    [SerializeField] int _spikes;
+    // "Level 0" analysis.
+    float _length;
+    int _samples;
+    int _spikes;
 
-    [SerializeField] float _xMean;
-    [SerializeField] float _xMedian;
-    [SerializeField] float _xStdDev = 0;
+    float _xMean;
+    float _xMedian;
+    float _xStdDev = 0;
 
-    [SerializeField] float _yMean;
-    [SerializeField] float _yMedian;
-    [SerializeField] float _yStdDev = 0;
+    float _yMean;
+    float _yMedian;
+    float _yStdDev = 0;
     
-    [SerializeField] float _directionMean;
-    [SerializeField] float _directionMedian;
-    [SerializeField] float _directionStdDev = 0;
+    float _directionMean;
+    float _directionMedian;
+    float _directionStdDev = 0;
     
-    [SerializeField] float _angleMean;
-    [SerializeField] float _angleMedian;
-    [SerializeField] float _angleStdDev = 0;
+    float _angleMean;
+    float _angleMedian;
+    float _angleStdDev = 0;
     
-    [SerializeField] float _speed = 0;
+    float _speed = 0;
     
     void PerformLevel0Analysis() {
         Vector2[] screenPoints = _screenPoints.ToArray();
