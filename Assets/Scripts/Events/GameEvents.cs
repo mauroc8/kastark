@@ -9,5 +9,5 @@ namespace Events{
     public class StartUnitTurnEvent  : GameEvent { public GameObject unit; }
     public class EndUnitTurnEvent    : GameEvent { }
 
-    public class StartCastingEvent   : GameEvent { }
+    public class ConfirmSelectedHabilityEvent : GameEvent { }
 }

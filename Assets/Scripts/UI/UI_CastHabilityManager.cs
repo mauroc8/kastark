@@ -9,15 +9,15 @@ public class UI_CastHabilityManager : MonoBehaviour
     GameObject _cancelButton = null;
 
     void OnEnable() {
-        EventController.AddListener<StartCastingEvent>(OnStartCasting);
+        EventController.AddListener<ConfirmSelectedHabilityEvent>(OnStartCasting);
     }
 
     void OnDisable() {
-        EventController.RemoveListener<StartCastingEvent>(OnStartCasting);
+        EventController.RemoveListener<ConfirmSelectedHabilityEvent>(OnStartCasting);
         _cancelButton.SetActive(true);
     }
 
-    void OnStartCasting(StartCastingEvent e) {
+    void OnStartCasting(ConfirmSelectedHabilityEvent e) {
         _cancelButton.SetActive(false);
     }
 }

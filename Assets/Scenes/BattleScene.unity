@@ -5516,7 +5516,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.8
+  m_Time: 0.2
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.088794515
@@ -5638,13 +5638,3 @@ MonoBehaviour:
   _minLengthPx: 50
   _maxLengthPx: 500
   _distanceToCamera: 4
-  horizontal: 0
-  straight: 0
-  vertical: 0
-  circular: 0
-  isLong: 0
-  isShort: 0
-  spike: 0
-  zigZag: 0
-  fast: 0
-  slow: 0
