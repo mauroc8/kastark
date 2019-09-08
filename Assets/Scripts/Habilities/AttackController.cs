@@ -10,6 +10,7 @@ public class AttackController : MonoBehaviour
     [SerializeField] float _minLengthPx = 50;
     [SerializeField] float _maxLengthPx = 500;
     [SerializeField] float _distanceToCamera = 4;
+    [SerializeField] float _maxLifetime = 2.3f;
 
     public TrailAnalysis trailAnalysis;
 
@@ -21,7 +22,7 @@ public class AttackController : MonoBehaviour
     Plane _rayCastPlane;
     TrailRenderer _trailRenderer = null;
     float _minVertexDistance;
-    float _trailExtraLifeTime;
+    float _trailExtraLifetime;
     //Material _material;
 
     void Start()
@@ -35,7 +36,7 @@ public class AttackController : MonoBehaviour
 
         //_material = _trailRenderer.materials[0];
 
-        _trailExtraLifeTime = _trailRenderer.time;
+        _trailExtraLifetime = _trailRenderer.time;
         _trailRenderer.time = float.PositiveInfinity;
     }
 
@@ -43,7 +44,7 @@ public class AttackController : MonoBehaviour
     List<GameObject> _targets = new List<GameObject>(50);
 
     float _openTime;
-    float _timeOpened; // ellapsed time from open to close
+    float _trailLifetime;
 
     void OpenTrail(Vector3 worldPoint) {
         _opened = true;
@@ -72,7 +73,13 @@ public class AttackController : MonoBehaviour
 
         float screenDistance = (screenPoint - _lastScreenPoint).magnitude;
 
+        // Trail is too Long.
         if (_trailLength + screenDistance > _maxLengthPx) {
+            CloseTrail();
+            return;
+        }
+
+        if (Time.time - _openTime > _maxLifetime) {
             CloseTrail();
             return;
         }
@@ -96,19 +103,21 @@ public class AttackController : MonoBehaviour
     void CloseTrail() {
         _opened = _trailRenderer.emitting = false;
         _closed = true;
-        _timeOpened = Time.time - _openTime;
+        _trailLifetime = Time.time - _openTime;
 
         if (!IsAcceptable()) {
+            // Acá llamaríamos a una referencia de UI_Fx o algo así.
             Debug.Log("Retry!");
+            RestartTrail();
         } else {
-            _trailRenderer.time = _timeOpened + _trailExtraLifeTime;
+            _trailRenderer.time = _trailLifetime + _trailExtraLifetime;
 
             var trailAnalyzer = new TrailAnalyzer(
                 _screenPoints.ToArray(),
                 _trailLength,
                 _minLengthPx,
                 _maxLengthPx,
-                _timeOpened
+                _trailLifetime
             );
 
             trailAnalysis = trailAnalyzer.AnalyzeTrail();
@@ -139,13 +148,20 @@ public class AttackController : MonoBehaviour
         Vector2 clickPoint = Input.mousePosition;
 
         if (clicking) {
-            HandleClick(clickPoint);
+            if (!_opened && clickPoint.y <= 100) {
+                // Clicking on UI panel.
+                // TODO: Cambiar el 100 si cambia el alto de la UI.
+                return;
+            }
+
+            HandleMouseInput(clickPoint);
         } else if (_opened) {
             CloseTrail();
         }
     }
 
-    void HandleClick(Vector2 clickPoint) {
+    // Esto está separado para poder simular un click de la AI.
+    void HandleMouseInput(Vector2 clickPoint) {
         Ray mRay = Camera.main.ScreenPointToRay(clickPoint);
 
         float rayDistance;

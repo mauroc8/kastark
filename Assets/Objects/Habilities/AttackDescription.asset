@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00b99d42c8057844a8c3f07bb4319c37, type: 3}
-  m_Name: ShieldInfo
+  m_Name: AttackDescription
   m_EditorClassIdentifier: 
-  habilityName: Shield
-  description: Cast a protective shield around you.
+  habilityId: 0
+  habilityName: Attack
+  description: Slice an enemy with your mouse.

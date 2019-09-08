@@ -22,14 +22,14 @@ public class TrailAnalyzer
     Vector2[] _screenPoints;
     float _minLengthPx;
     float _maxLengthPx;
-    float _timeOpened;
+    float _trailLifetime;
 
-    public TrailAnalyzer(Vector2[] screenPoints, float length, float minLength, float maxLength, float timeOpened) {
+    public TrailAnalyzer(Vector2[] screenPoints, float length, float minLength, float maxLength, float trailLifetime) {
         _screenPoints = screenPoints;
         _length = length;
         _minLengthPx = minLength;
         _maxLengthPx = maxLength;
-        _timeOpened = timeOpened;
+        _trailLifetime = trailLifetime;
     }
 
     public TrailAnalysis AnalyzeTrail() {
@@ -162,7 +162,7 @@ public class TrailAnalyzer
         _directionMedian = directionValue[(N - 1) / 2];
         _angleMedian = angleValue[(N - 2) / 2];
 
-        _speed = _length / _timeOpened;
+        _speed = _length / _trailLifetime;
     }
 
 }

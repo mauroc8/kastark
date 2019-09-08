@@ -817,6 +817,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5ca9c4662e9cc47960cdfbf5638344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _habilityDescriptions:
+  - {fileID: 11400000, guid: 0f2c52e2c36821143ba2e3b526944337, type: 2}
+  - {fileID: 11400000, guid: 3ef36bb162f5f55439fd906cbd121e37, type: 2}
+  - {fileID: 11400000, guid: 188c16ff9460d5249921178cc5b34a20, type: 2}
 --- !u!1 &291417301
 GameObject:
   m_ObjectHideFlags: 0
@@ -3558,11 +3562,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
     m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0.08235294}
     m_PressedColor: {r: 0, g: 0, b: 0, a: 0.50980395}
     m_SelectedColor: {r: 0, g: 0, b: 0, a: 0.25882354}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.6}
+    m_DisabledColor: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 0.1254902}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -3671,7 +3675,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1898954122}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3690,7 +3694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c810331fcf93d41b28cd8acbc9adb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cancelButton: {fileID: 1506417166}
+  _cancelButtonGameObject: {fileID: 1506417166}
 --- !u!1 &1561139775
 GameObject:
   m_ObjectHideFlags: 0
@@ -4610,8 +4614,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 2064850044}
   - {fileID: 1526435069}
+  - {fileID: 2064850044}
   m_Father: {fileID: 1224618477}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4941,8 +4945,9 @@ GameObject:
   - component: {fileID: 2064850046}
   - component: {fileID: 2064850045}
   - component: {fileID: 2064850047}
+  - component: {fileID: 2064850048}
   m_Layer: 5
-  m_Name: Hability Description Panel (confirm)
+  m_Name: Hability Description Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4963,7 +4968,7 @@ RectTransform:
   - {fileID: 150584269}
   - {fileID: 1506417167}
   m_Father: {fileID: 1898954122}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -5019,6 +5024,20 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2064850048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064850043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8686ac3e5e99f9b4c81de8df607299f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _title: {fileID: 11163966}
+  _description: {fileID: 150584270}
 --- !u!1 &4471200598320236457
 GameObject:
   m_ObjectHideFlags: 0
