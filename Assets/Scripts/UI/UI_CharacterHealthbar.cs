@@ -13,7 +13,7 @@ public class UI_CharacterHealthbar : MonoBehaviour
     [SerializeField] Texture2D _bigMarkerTexture = null;
     [SerializeField] Texture2D _smallMarkerTexture = null;
 
-    float _distanceToHead = 40;
+    float _distanceToHead = 60;
 
     float _leftMargin = 3; // Amount of transparent pixels to the left in _healthTexture
     float _rightMargin = 4;
@@ -70,6 +70,7 @@ public class UI_CharacterHealthbar : MonoBehaviour
             true
         );
 
+        /*
         for (int i = 0; i <= _characterAttributes.health; i++) {
             float x = _screenPosition.x + _leftMargin + i * _healthPointWidth;
             Texture2D texture = i % 10 == 0 ? _bigMarkerTexture : _smallMarkerTexture;
@@ -78,5 +79,6 @@ public class UI_CharacterHealthbar : MonoBehaviour
                 texture
             );
         }
+         */
     }
 }

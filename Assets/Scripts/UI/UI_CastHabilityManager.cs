@@ -13,22 +13,25 @@ public class UI_CastHabilityManager : MonoBehaviour
     Button _cancelButton = null;
     TextMeshProUGUI _cancelTMP = null;
 
-    void Start() {
+    void Awake() {
         _cancelButton = _cancelButtonGameObject.GetComponent<Button>();
         _cancelTMP    = _cancelButtonGameObject.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     void OnEnable() {
         EventController.AddListener<ConfirmSelectedHabilityEvent>(OnStartCasting);
-    }
 
-    void OnDisable() {
-        EventController.RemoveListener<ConfirmSelectedHabilityEvent>(OnStartCasting);
+        // Enable Cancel Button
         _cancelButton.interactable = true;
         _cancelTMP.color = Color.white;
     }
 
+    void OnDisable() {
+        EventController.RemoveListener<ConfirmSelectedHabilityEvent>(OnStartCasting);
+    }
+
     void OnStartCasting(ConfirmSelectedHabilityEvent e) {
+        // Disable Cancel Button
         _cancelButton.interactable = false;
         _cancelTMP.color = Color.gray;
     }
