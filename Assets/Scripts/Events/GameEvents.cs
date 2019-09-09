@@ -6,7 +6,7 @@ namespace Events{
 
     public class ChangeUIScreenEvent : GameEvent { public int move; }
 
-    public class StartUnitTurnEvent  : GameEvent { public GameObject unit; }
+    public class StartUnitTurnEvent  : GameEvent { }
     public class EndUnitTurnEvent    : GameEvent { }
 
     public class SelectedHabilityEvent : GameEvent { public HabilityDescription habilityDescription; }

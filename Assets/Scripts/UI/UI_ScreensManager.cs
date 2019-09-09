@@ -9,7 +9,7 @@ public class UI_ScreensManager : MonoBehaviour
     int _currentScreenIndex;
 
     void Start() {
-        _screens = Util.GetGameObjectChildrens(gameObject);
+        _screens = gameObject.GetComponentsInChildren<GameObject>();
         _currentScreenIndex = 0;
 
         foreach (var screen in _screens) {
@@ -34,9 +34,6 @@ public class UI_ScreensManager : MonoBehaviour
     }
 
     void OnStartUnitTurn(StartUnitTurnEvent e) {
-        if (e.unit.CompareTag("Team 1")) {
-            Debug.Assert(_currentScreenIndex == 0);
-            MoveScreen(1);
-        }
+        MoveScreen(1);
     }
 }

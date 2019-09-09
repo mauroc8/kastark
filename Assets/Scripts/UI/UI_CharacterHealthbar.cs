@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class UI_CharacterHealthbar : MonoBehaviour
 {
-    [SerializeField]
-    CharacterStats _characterAttributes = null;
+    Creature _self = null;
+
+    public void BelongsToCreature(Creature self) {
+        _self = self;
+    }
 
     [SerializeField] Texture2D _backgroundTexture = null;
     [SerializeField] Texture2D _healthTexture = null;
-    //[SerializeField] Texture2D _bigMarkerTexture = null;
-    //[SerializeField] Texture2D _smallMarkerTexture = null;
-
     float _distanceToHead = 60;
 
     float _leftMargin = 3; // Amount of transparent pixels to the left in _healthTexture
@@ -24,12 +24,10 @@ public class UI_CharacterHealthbar : MonoBehaviour
     void Start() {
         _backgroundTextureWidth = _backgroundTexture.width;
         _backgroundTextureHeight = _backgroundTexture.height;
-        
-        //CalculateScreenPosition();
     }
 
     Vector2 _screenPosition;
-    
+
     void CalculateScreenPosition() {
         _screenPosition = Camera.main.WorldToScreenPoint(transform.position);
 
@@ -43,13 +41,13 @@ public class UI_CharacterHealthbar : MonoBehaviour
     float _healthPointWidth;
 
     void CalculateTexturesWidth() {
-        float healthPercentage = _characterAttributes.health / _characterAttributes.maxHealth;
+        float healthPercentage = _self.health / _self.maxHealth;
         float margins = _leftMargin + _rightMargin;
         float healthTextureMaxWidth = _backgroundTextureWidth - margins;
 
         _healthTextureWidth = _leftMargin + healthTextureMaxWidth * healthPercentage;
 
-        _healthPointWidth = healthTextureMaxWidth / _characterAttributes.maxHealth;
+        _healthPointWidth = healthTextureMaxWidth / _self.maxHealth;
     }
 
     void OnGUI() {
@@ -69,16 +67,5 @@ public class UI_CharacterHealthbar : MonoBehaviour
             new Rect(0, 0, _healthTextureWidth / _backgroundTextureWidth, 1),
             true
         );
-
-        /*
-        for (int i = 0; i <= _characterAttributes.health; i++) {
-            float x = _screenPosition.x + _leftMargin + i * _healthPointWidth;
-            Texture2D texture = i % 10 == 0 ? _bigMarkerTexture : _smallMarkerTexture;
-            GUI.DrawTexture(
-                new Rect(x, _screenPosition.y, texture.width, texture.height),
-                texture
-            );
-        }
-         */
     }
 }

@@ -11,7 +11,7 @@ public class SelectedHabilityController : MonoBehaviour
     HabilityDescription[] _habilityDescriptions = new HabilityDescription[0];
 
     void Start() {
-        _habilityGameObjects = Util.GetGameObjectChildrens(gameObject);
+        _habilityGameObjects = gameObject.GetComponentsInChildren<GameObject>();
     }
 
     public void SelectHability(int habilityId) {

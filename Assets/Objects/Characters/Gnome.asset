@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93a5b8fe7738f424585c8279954b2203, type: 3}
   m_Name: Gnome
   m_EditorClassIdentifier: 
-  health: 12
+  health: 10
   maxHealth: 12

@@ -7,11 +7,11 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     GameObject _unitsInBattleRoot = null;
-    
-    GameObject[] _units;
+
+    Creature[] _unitsInBattle;
 
     void Start() {
-        _units = Util.GetGameObjectChildrens(_unitsInBattleRoot);
+        var unitsInBattle = _unitsInBattle = _unitsInBattleRoot.GetComponentsInChildren<Creature>();
 
         StartNewTurn();
     }
@@ -19,9 +19,10 @@ public class GameManager : MonoBehaviour
     int _currentUnitIndex = -1;
 
     void StartNewTurn() {
-        _currentUnitIndex = (_currentUnitIndex + 1) % _units.Length;
+        _currentUnitIndex = (_currentUnitIndex + 1) % _unitsInBattle.Length;
+        GameState.currentUnit = _unitsInBattle[_currentUnitIndex];
 
-        EventController.TriggerEvent(new StartUnitTurnEvent{ unit = _units[_currentUnitIndex] });
+        EventController.TriggerEvent(new StartUnitTurnEvent());
     }
 
     void OnEnable() {
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour
     }
 
     void OnUnitTurnEnd(EndUnitTurnEvent e) {
-        // Remove dead units from _units array.
+        // Remove dead units from _unitsInBattle array.
         StartNewTurn();
     }
 }
