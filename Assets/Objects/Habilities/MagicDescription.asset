@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   habilityId: 1
   habilityName: Magic
-  description: Hold over an enemy to unleash your power.
+  description: Click on an enemy to unleash your power!
