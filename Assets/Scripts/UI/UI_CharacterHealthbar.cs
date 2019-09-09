@@ -10,8 +10,8 @@ public class UI_CharacterHealthbar : MonoBehaviour
 
     [SerializeField] Texture2D _backgroundTexture = null;
     [SerializeField] Texture2D _healthTexture = null;
-    [SerializeField] Texture2D _bigMarkerTexture = null;
-    [SerializeField] Texture2D _smallMarkerTexture = null;
+    //[SerializeField] Texture2D _bigMarkerTexture = null;
+    //[SerializeField] Texture2D _smallMarkerTexture = null;
 
     float _distanceToHead = 60;
 

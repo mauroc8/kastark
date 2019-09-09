@@ -1695,8 +1695,6 @@ MonoBehaviour:
     type: 2}
   _backgroundTexture: {fileID: 2800000, guid: bca768f58f71c6d42bfcc49c5ef9a88b, type: 3}
   _healthTexture: {fileID: 2800000, guid: 825418443c908d248bba0271f79197b9, type: 3}
-  _bigMarkerTexture: {fileID: 2800000, guid: acc21662532ed454a958bcea1c6da9ed, type: 3}
-  _smallMarkerTexture: {fileID: 2800000, guid: 49a2d375fd870a2418f29019fc051910, type: 3}
 --- !u!1 &798641472
 GameObject:
   m_ObjectHideFlags: 0
@@ -2854,6 +2852,7 @@ GameObject:
   - component: {fileID: 1358008266}
   - component: {fileID: 1358008265}
   - component: {fileID: 1358008264}
+  - component: {fileID: 1358008268}
   m_Layer: 0
   m_Name: Gnome Mesh
   m_TagString: Team 2
@@ -2933,6 +2932,22 @@ Transform:
   m_Father: {fileID: 1580877050}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1358008268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358008263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53646e3ef222964daeb96794d30cdc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _teamId: 1
+  _goodColor: {r: 0, g: 0.3764706, b: 0.039215688, a: 1}
+  _badColor: {r: 0.6509434, g: 0, b: 0.012763712, a: 1}
+  _neutralColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &1394823051
 GameObject:
   m_ObjectHideFlags: 0
@@ -3807,8 +3822,6 @@ MonoBehaviour:
     type: 2}
   _backgroundTexture: {fileID: 2800000, guid: bca768f58f71c6d42bfcc49c5ef9a88b, type: 3}
   _healthTexture: {fileID: 2800000, guid: 825418443c908d248bba0271f79197b9, type: 3}
-  _bigMarkerTexture: {fileID: 2800000, guid: acc21662532ed454a958bcea1c6da9ed, type: 3}
-  _smallMarkerTexture: {fileID: 2800000, guid: 49a2d375fd870a2418f29019fc051910, type: 3}
 --- !u!1 &1841711951
 GameObject:
   m_ObjectHideFlags: 0
@@ -3821,6 +3834,7 @@ GameObject:
   - component: {fileID: 1841711954}
   - component: {fileID: 1841711953}
   - component: {fileID: 1841711952}
+  - component: {fileID: 1841711956}
   m_Layer: 0
   m_Name: Fairy Mesh
   m_TagString: Team 1
@@ -3900,6 +3914,22 @@ Transform:
   m_Father: {fileID: 416668932}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1841711956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841711951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53646e3ef222964daeb96794d30cdc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _teamId: 0
+  _goodColor: {r: 0, g: 0.3773585, b: 0.041017264, a: 1}
+  _badColor: {r: 0.6509804, g: 0, b: 0.015686275, a: 1}
+  _neutralColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &1864092528
 GameObject:
   m_ObjectHideFlags: 0

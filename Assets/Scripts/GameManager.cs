@@ -13,11 +13,6 @@ public class GameManager : MonoBehaviour
     void Start() {
         _units = Util.GetGameObjectChildrens(_unitsInBattleRoot);
 
-        StartCoroutine(StartBattle());
-    }
-
-    IEnumerator StartBattle() {
-        yield return new WaitForSeconds(0.1f);
         StartNewTurn();
     }
 

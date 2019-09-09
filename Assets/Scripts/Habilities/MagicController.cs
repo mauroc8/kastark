@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Events;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,18 +8,22 @@ public class MagicController : MonoBehaviour
 {
     [SerializeField] Image _fullBarImage = null;
 
-    [SerializeField] float _speed = 4;
+    [SerializeField] float _speed = 5;
 
-    // The Full Bar Image has 5px of border that shouldn't be considered.
-    float _borderPercentage = 0.013f;
+    float _borderPercentage = 0.013f; // The Full Bar Image has 5px of border that shouldn't be considered.
 
-    float _lastPowerPercentage;
+    bool _hit = false;
+    float _power;
+
+    float _lastPower;
     float _lastTime;
 
     void Update() {
+        if (_hit) return;
+
         var currentTime = Time.time;
-        var currentPowerPercentage = 1 - Mathf.Abs(Mathf.Sin(currentTime * _speed));
-        _fullBarImage.fillAmount = _borderPercentage + currentPowerPercentage * (1 - 2 * _borderPercentage);
+        _power = 1 - Mathf.Abs(Mathf.Sin(currentTime * _speed));
+        _fullBarImage.fillAmount = _borderPercentage + _power * (1 - 2 * _borderPercentage);
 
         if (Input.GetMouseButtonDown(0) && Input.mousePosition.y > 100) {
             Ray mRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -34,26 +39,24 @@ public class MagicController : MonoBehaviour
                     var lastPowerPhase = _lastTime / maxPowerMult;
                     var currentPowerPhase = currentTime / maxPowerMult;
 
-                    float power;
-
                     // If fract(powerPhase) < 0.5 then power is growing
-
                     if (lastPowerPhase % 1 < 0.5) {
-                        if (currentPowerPhase % 1 < 0.5) {
-                            power = 1;
-                        } else {
-                            power = currentPowerPercentage;
+                        if (currentPowerPhase % 1 >= 0.5) { // it was growing and now its decreasing: we reached the summit in this frame!
+                            _power = 1;
                         }
                     } else { // Power is decreasing
-                        power = (currentPowerPercentage + _lastPowerPercentage) / 2;
+                        _power = (_power + _lastPower) / 2;
                     }
 
-                    Debug.Log($"Hit {target.name} with {power} effectivity.");
+                    _hit = true;
+                    EventController.TriggerEvent(new ConfirmSelectedHabilityEvent());
                 }
             }
+
+            _fullBarImage.fillAmount = _borderPercentage + _power * (1 - 2 * _borderPercentage);
         }
 
-        _lastPowerPercentage = currentPowerPercentage;
+        _lastPower = _power;
         _lastTime = Time.time;
     }
 }
