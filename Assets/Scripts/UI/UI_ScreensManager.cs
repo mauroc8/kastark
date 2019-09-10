@@ -9,7 +9,7 @@ public class UI_ScreensManager : MonoBehaviour
     int _currentScreenIndex;
 
     void Start() {
-        _screens = gameObject.GetComponentsInChildren<GameObject>();
+        _screens = Util.GetGameObjectChildrens(gameObject);
         _currentScreenIndex = 0;
 
         foreach (var screen in _screens) {
