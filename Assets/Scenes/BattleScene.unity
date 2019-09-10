@@ -1028,6 +1028,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats: {fileID: 11400000, guid: 25ed7a7e48566fb429fecf2223ddfe43, type: 2}
+  health: 0
+  maxHealth: 0
+  shield: 0
 --- !u!1 &484211088
 GameObject:
   m_ObjectHideFlags: 0
@@ -3616,6 +3619,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats: {fileID: 11400000, guid: 0ce122d9508df63468383154dc4254c8, type: 2}
+  health: 0
+  maxHealth: 0
+  shield: 0
 --- !u!1 &1611941813
 GameObject:
   m_ObjectHideFlags: 0
@@ -4017,7 +4023,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841711951}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -4083693545763357160, guid: 299caa6a3ed26994ead0036de95629d1, type: 3}
 --- !u!4 &1841711955
 Transform:
   m_ObjectHideFlags: 0
@@ -4025,13 +4031,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841711951}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: -1.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 416668932}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 90}
 --- !u!114 &1841711956
 MonoBehaviour:
   m_ObjectHideFlags: 0
