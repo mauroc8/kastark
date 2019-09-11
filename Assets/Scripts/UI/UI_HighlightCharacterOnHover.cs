@@ -43,7 +43,7 @@ public class UI_HighlightCharacterOnHover : MonoBehaviour
         Color outlineColor;
         var habilityId = e.habilityId;
 
-        if (habilityId == HabilityId.Shield) {
+        if (habilityId == HabilityId.Shield || habilityId == HabilityId.Heal) {
             outlineColor = _teamSide == TeamSide.Left ? _goodColor : _neutralColor;
         } else {
             outlineColor = _teamSide == TeamSide.Left ? _neutralColor : _badColor;

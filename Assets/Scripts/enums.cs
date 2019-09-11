@@ -4,11 +4,12 @@ using UnityEngine;
 
 public enum TeamSide {
     Left,
-    Right
+    Right,
 };
 
 public enum HabilityId {
     Attack,
     Magic,
-    Shield
+    Shield,
+    Heal,
 };

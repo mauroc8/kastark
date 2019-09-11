@@ -23,6 +23,8 @@ public static class Util
             return "magic";
             case HabilityId.Shield:
             return "shield";
+            case HabilityId.Heal:
+            return "heal";
         }
         Debug.LogError($"HabilityNameFromId({id}) is unknown");
         return id.ToString();
