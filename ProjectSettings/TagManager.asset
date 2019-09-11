@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Team 1
-  - Team 2
+  - LeftTeam
+  - RightTeam
   layers:
   - Default
   - TransparentFX

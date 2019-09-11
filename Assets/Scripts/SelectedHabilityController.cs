@@ -7,27 +7,15 @@ public class SelectedHabilityController : MonoBehaviour
 {
     GameObject[] _habilityGameObjects;
 
-    [SerializeField]
-    HabilityDescription[] _habilityDescriptions = new HabilityDescription[0];
-
     void Start() {
         _habilityGameObjects = Util.GetGameObjectChildrens(gameObject);
     }
 
-    public void SelectHability(int habilityId) {
+    public void SelectHability(int habilityId) { // habilityId should be HabilityId but Unity won't show it when setting OnClick handlers
         CancelHability();
         _habilityGameObjects[(int) habilityId].SetActive(true);
 
-        bool descriptionFound = false;
-        foreach (var description in _habilityDescriptions) {
-            if (habilityId == (int) description.habilityId) {
-                EventController.TriggerEvent(new SelectedHabilityEvent{ habilityDescription = description });
-                descriptionFound = true;
-                break;
-            }
-        }
-
-        Debug.Assert(descriptionFound);
+        EventController.TriggerEvent(new SelectedHabilityEvent{ habilityId = (HabilityId) habilityId });
     }
 
     public void CancelHability() {

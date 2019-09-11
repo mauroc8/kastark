@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TeamId {
-    PlayerTeam,
-    EnemyTeam
+public enum TeamSide {
+    Left,
+    Right
 };
 
 public enum HabilityId {

@@ -6,12 +6,19 @@ using Events;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
+    GameSettings _gameSettings = null;
+
+    [SerializeField]
     GameObject _unitsInBattleRoot = null;
 
     Creature[] _unitsInBattle;
 
+    void Awake() {
+        Localizer.language = _gameSettings.language;
+    }
+
     void Start() {
-        var unitsInBattle = _unitsInBattle = _unitsInBattleRoot.GetComponentsInChildren<Creature>();
+        _unitsInBattle = _unitsInBattleRoot.GetComponentsInChildren<Creature>();
 
         StartNewTurn();
     }
@@ -35,6 +42,7 @@ public class GameManager : MonoBehaviour
 
     void OnUnitTurnEnd(EndUnitTurnEvent e) {
         // Remove dead units from _unitsInBattle array.
+        // Check if left or right team won.
         StartNewTurn();
     }
 }

@@ -639,10 +639,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5ca9c4662e9cc47960cdfbf5638344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _habilityDescriptions:
-  - {fileID: 11400000, guid: 0f2c52e2c36821143ba2e3b526944337, type: 2}
-  - {fileID: 11400000, guid: 3ef36bb162f5f55439fd906cbd121e37, type: 2}
-  - {fileID: 11400000, guid: 188c16ff9460d5249921178cc5b34a20, type: 2}
 --- !u!1 &355693873
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,7 +649,6 @@ GameObject:
   m_Component:
   - component: {fileID: 355693874}
   - component: {fileID: 355693876}
-  - component: {fileID: 355693877}
   - component: {fileID: 355693875}
   m_Layer: 5
   m_Name: Damage Text
@@ -802,18 +797,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355693873}
   m_CullTransparentMesh: 0
---- !u!114 &355693877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 355693873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 416884024ae536f48b76ab5143873c48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &381725112
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,7 +976,7 @@ GameObject:
   - component: {fileID: 416668933}
   m_Layer: 0
   m_Name: Fairy
-  m_TagString: Team 1
+  m_TagString: LeftTeam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1027,7 +1010,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 750ee26035c08b744b4b744389e7720d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stats: {fileID: 11400000, guid: 25ed7a7e48566fb429fecf2223ddfe43, type: 2}
   health: 0
   maxHealth: 0
   shield: 0
@@ -1281,6 +1263,7 @@ GameObject:
   - component: {fileID: 610277978}
   - component: {fileID: 610277980}
   - component: {fileID: 610277979}
+  - component: {fileID: 610277981}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1327,7 +1310,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Magic
+  m_text: magic
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 756185d28fbc9ed45acd5e1309aaf20b, type: 2}
   m_sharedMaterial: {fileID: 2501011191837983631, guid: 756185d28fbc9ed45acd5e1309aaf20b,
@@ -1428,6 +1411,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 610277977}
   m_CullTransparentMesh: 0
+--- !u!114 &610277981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610277977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b1c7996425c414398845dbf67db349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &700266978
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1627,7 +1622,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 110}
-  m_SizeDelta: {x: 400, y: 55}
+  m_SizeDelta: {x: 300, y: 55}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &750121309
 MonoBehaviour:
@@ -1651,7 +1646,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 7ceb057d198b0ba4c8c380435a3ced20, type: 3}
   m_Type: 3
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 0
   m_FillAmount: 0.013
@@ -1745,7 +1740,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -91.1, y: 155.8}
+  m_AnchoredPosition: {x: -43.82, y: 138.8}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &798641474
@@ -2270,6 +2265,7 @@ GameObject:
   - component: {fileID: 997835008}
   - component: {fileID: 997835010}
   - component: {fileID: 997835009}
+  - component: {fileID: 997835011}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2316,7 +2312,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Shield
+  m_text: shield
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 756185d28fbc9ed45acd5e1309aaf20b, type: 2}
   m_sharedMaterial: {fileID: 2501011191837983631, guid: 756185d28fbc9ed45acd5e1309aaf20b,
@@ -2417,6 +2413,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 997835007}
   m_CullTransparentMesh: 0
+--- !u!114 &997835011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997835007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b1c7996425c414398845dbf67db349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1044866463
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2659,7 +2667,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 110}
-  m_SizeDelta: {x: 400, y: 55}
+  m_SizeDelta: {x: 300, y: 55}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1264659813
 MonoBehaviour:
@@ -2683,7 +2691,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: a7499abd0ba8d2543b91f562be510c39, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -2709,6 +2717,7 @@ GameObject:
   - component: {fileID: 1345177218}
   - component: {fileID: 1345177220}
   - component: {fileID: 1345177219}
+  - component: {fileID: 1345177221}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2755,7 +2764,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Attack
+  m_text: attack
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 756185d28fbc9ed45acd5e1309aaf20b, type: 2}
   m_sharedMaterial: {fileID: 2501011191837983631, guid: 756185d28fbc9ed45acd5e1309aaf20b,
@@ -2856,6 +2865,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1345177217}
   m_CullTransparentMesh: 0
+--- !u!114 &1345177221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345177217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b1c7996425c414398845dbf67db349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1358008263
 GameObject:
   m_ObjectHideFlags: 0
@@ -2871,7 +2892,7 @@ GameObject:
   - component: {fileID: 1358008268}
   m_Layer: 0
   m_Name: Gnome Mesh
-  m_TagString: Team 2
+  m_TagString: RightTeam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2960,7 +2981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53646e3ef222964daeb96794d30cdc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _teamId: 1
+  _teamSide: 1
   _goodColor: {r: 0, g: 0.3764706, b: 0.039215688, a: 1}
   _badColor: {r: 0.6509434, g: 0, b: 0.012763712, a: 1}
   _neutralColor: {r: 0, g: 0, b: 0, a: 1}
@@ -3053,6 +3074,7 @@ GameObject:
   - component: {fileID: 1437901101}
   - component: {fileID: 1437901103}
   - component: {fileID: 1437901102}
+  - component: {fileID: 1437901104}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3099,7 +3121,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Cancel
+  m_text: cancel
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6b59836df1f36184fbb9e3d213a1593c, type: 2}
   m_sharedMaterial: {fileID: -6895309414819882201, guid: 6b59836df1f36184fbb9e3d213a1593c,
@@ -3200,6 +3222,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1437901100}
   m_CullTransparentMesh: 0
+--- !u!114 &1437901104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437901100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b1c7996425c414398845dbf67db349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1444236682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3585,7 +3619,7 @@ GameObject:
   - component: {fileID: 1580877051}
   m_Layer: 0
   m_Name: Gnome
-  m_TagString: Team 2
+  m_TagString: RightTeam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3618,7 +3652,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 750ee26035c08b744b4b744389e7720d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stats: {fileID: 11400000, guid: 0ce122d9508df63468383154dc4254c8, type: 2}
   health: 0
   maxHealth: 0
   shield: 0
@@ -3681,6 +3714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8bcc490ba475a4f9141b59e4848429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameSettings: {fileID: 11400000, guid: 5bf8decad7da16c449c6e196d9324aa3, type: 2}
   _unitsInBattleRoot: {fileID: 1889924746}
 --- !u!4 &1638698168
 Transform:
@@ -3957,17 +3991,17 @@ GameObject:
   - component: {fileID: 1841711955}
   - component: {fileID: 1841711954}
   - component: {fileID: 1841711953}
-  - component: {fileID: 1841711952}
   - component: {fileID: 1841711956}
+  - component: {fileID: 1841711952}
   m_Layer: 0
   m_Name: Fairy Mesh
-  m_TagString: Team 1
+  m_TagString: LeftTeam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &1841711952
-BoxCollider:
+--- !u!136 &1841711952
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3976,9 +4010,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 2
+  m_Height: 9.82
+  m_Direction: 2
+  m_Center: {x: -0.00000023841858, y: -0.0042546093, z: 4.6978383}
 --- !u!23 &1841711953
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4032,8 +4067,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841711951}
   m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: -1.79, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -1.82, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 416668932}
   m_RootOrder: 1
@@ -4050,11 +4085,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53646e3ef222964daeb96794d30cdc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _teamId: 0
+  _teamSide: 0
   _goodColor: {r: 0, g: 0.3773585, b: 0.041017264, a: 1}
   _badColor: {r: 0.6509804, g: 0, b: 0.015686275, a: 1}
   _neutralColor: {r: 0, g: 0, b: 0, a: 1}
-  _onHoverOutlineWidth: 0.07
+  _onHoverOutlineWidth: 0.3
 --- !u!1 &1864092528
 GameObject:
   m_ObjectHideFlags: 0
@@ -4269,8 +4304,8 @@ Light:
   serializedVersion: 9
   m_Type: 2
   m_Color: {r: 1, g: 0.65908426, b: 0.5803922, a: 1}
-  m_Intensity: 1.7
-  m_Range: 13.8
+  m_Intensity: 2
+  m_Range: 25.21
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -4326,7 +4361,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877952144}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 5.65, z: -1.7}
+  m_LocalPosition: {x: -0.1, y: 10.3, z: -1.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4486,7 +4521,7 @@ GameObject:
   - component: {fileID: 1889924747}
   m_Layer: 0
   m_Name: _Units In Battle
-  m_TagString: Team 1
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -176,7 +176,7 @@ public class AttackController : MonoBehaviour
             
             RaycastHit hit;
             if (Physics.Raycast(mRay, out hit)){
-                if (hit.transform.gameObject.CompareTag("Team 2")) {
+                if (hit.transform.gameObject.CompareTag(GameState.EnemyTeamTag)) {
                     AddTarget(hit.transform.gameObject);
                 }
             }

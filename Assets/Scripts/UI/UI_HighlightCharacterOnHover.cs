@@ -5,7 +5,7 @@ using Events;
 
 public class UI_HighlightCharacterOnHover : MonoBehaviour
 {
-    [SerializeField] TeamId _teamId = TeamId.PlayerTeam;
+    [SerializeField] TeamSide _teamSide = TeamSide.Left;
 
     [SerializeField] Color _goodColor = Color.green;
     [SerializeField] Color _badColor = Color.red;
@@ -41,12 +41,12 @@ public class UI_HighlightCharacterOnHover : MonoBehaviour
     }
     void OnSelectHability(SelectedHabilityEvent e) {
         Color outlineColor;
-        var habilityId = e.habilityDescription.habilityId;
+        var habilityId = e.habilityId;
 
         if (habilityId == HabilityId.Shield) {
-            outlineColor = _teamId == TeamId.PlayerTeam ? _goodColor : _neutralColor;
+            outlineColor = _teamSide == TeamSide.Left ? _goodColor : _neutralColor;
         } else {
-            outlineColor = _teamId == TeamId.PlayerTeam ? _neutralColor : _badColor;
+            outlineColor = _teamSide == TeamSide.Left ? _neutralColor : _badColor;
         }
 
         _material.SetColor("_OutlineColor", outlineColor);

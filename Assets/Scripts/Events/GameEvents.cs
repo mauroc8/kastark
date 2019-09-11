@@ -9,6 +9,6 @@ namespace Events{
     public class StartUnitTurnEvent  : GameEvent { }
     public class EndUnitTurnEvent    : GameEvent { }
 
-    public class SelectedHabilityEvent : GameEvent { public HabilityDescription habilityDescription; }
+    public class SelectedHabilityEvent : GameEvent { public HabilityId habilityId; }
     public class ConfirmSelectedHabilityEvent : GameEvent { }
 }

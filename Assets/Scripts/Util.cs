@@ -14,4 +14,17 @@ public static class Util
 
         return children;
     }
+
+    public static string HabilityNameFromId(HabilityId id) {
+        switch (id) {
+            case HabilityId.Attack:
+            return "attack";
+            case HabilityId.Magic:
+            return "magic";
+            case HabilityId.Shield:
+            return "shield";
+        }
+        Debug.LogError($"HabilityNameFromId({id}) is unknown");
+        return id.ToString();
+    }
 }

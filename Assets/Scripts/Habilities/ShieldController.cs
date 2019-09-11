@@ -13,7 +13,7 @@ public class ShieldController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(mRay, out hit)) {
                 var target = hit.transform.gameObject;
-                if (target.CompareTag("Team 1")) {
+                if (target.CompareTag(GameState.PlayerTeamTag)) {
                     EventController.TriggerEvent(new ConfirmSelectedHabilityEvent());
                 }
             }

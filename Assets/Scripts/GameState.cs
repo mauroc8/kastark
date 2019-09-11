@@ -6,4 +6,7 @@ public static class GameState
 {
     public static Creature[] unitsInBattle;
     public static Creature   currentUnit;
+
+    public static string     PlayerTeamTag = "LeftTeam";
+    public static string     EnemyTeamTag  = "RightTeam";
 }
