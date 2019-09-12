@@ -66,7 +66,7 @@ public static class Localization
 
         if (_englishLanguage == null) Init();
 
-        switch (language) {
+        switch (_language) {
             case Language.English: {
                 _englishLanguage.TryGetValue(key, out value);
             } break;
