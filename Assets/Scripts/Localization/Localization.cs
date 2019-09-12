@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Events;
 using UnityEngine;
 
 // https://www.youtube.com/watch?v=c-dzg4M20wY
@@ -9,7 +10,7 @@ public enum Language {
     English, Spanish, Count
 };
 
-public static class Localizer
+public static class Localization
 {
     static void Init() {
         _englishLanguage = new Dictionary<string, string>();
@@ -49,7 +50,16 @@ public static class Localizer
     static Dictionary<string, string> _englishLanguage = null;
     static Dictionary<string, string> _spanishLanguage = null;
 
-    public static Language language;
+    static Language _language;
+
+    public static void SetLanguage(Language newLang) {
+        _language = newLang;
+        EventController.TriggerEvent(new ChangeLanguageEvent{});
+    }
+
+    public static Language GetLanguage() {
+        return _language;
+    }
 
     public static string GetLocalizedString(string key) {
         string value;

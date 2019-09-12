@@ -11,4 +11,6 @@ namespace Events{
 
     public class SelectedHabilityEvent : GameEvent { public HabilityId habilityId; }
     public class ConfirmSelectedHabilityEvent : GameEvent { }
+
+    public class ChangeLanguageEvent : GameEvent {}
 }

@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     Creature[] _unitsInBattle;
 
     void Awake() {
-        Localizer.language = _gameSettings.language;
+        Localization.SetLanguage(_gameSettings.language);
     }
 
     void Start() {

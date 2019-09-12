@@ -6,5 +6,13 @@ using UnityEngine;
 
 public class GameSettings : ScriptableObject
 {
+    public void Save() {
+        PlayerPrefs.SetInt("lang", (int) language);
+    }
+
+    public void Load() {
+        language = (Language) PlayerPrefs.GetInt("lang");
+    }
+
     public Language language = Language.English;
 }
