@@ -17,21 +17,6 @@ public static class Util
         return children;
     }
 
-    public static string HabilityNameFromId(HabilityId id) {
-        switch (id) {
-            case HabilityId.Attack:
-            return "attack";
-            case HabilityId.Magic:
-            return "magic";
-            case HabilityId.Shield:
-            return "shield";
-            case HabilityId.Heal:
-            return "heal";
-        }
-        Debug.LogError($"HabilityNameFromId({id}) is unknown");
-        return id.ToString();
-    }
-
     public static bool MouseIsOnUI() {
         // https://answers.unity.com/questions/844158/how-do-you-perform-a-graphic-raycast.html
 

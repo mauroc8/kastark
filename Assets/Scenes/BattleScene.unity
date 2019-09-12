@@ -5475,8 +5475,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetTransform: {fileID: 1842477364}
   _cursorTransform: {fileID: 1567560627}
-  _speedX: 3
-  _speedY: 3
+  _speedX: 3.26
+  _speedY: 2.13
+  _timeShiftAmountX: 2.03
+  _timeShiftAmountY: 1.5
+  _timeShiftSpeedX: 1.03
+  _timeShiftSpeedY: 0.84
   _xDisplacement: 50
   _yDisplacement: 15
 --- !u!114 &2013354923

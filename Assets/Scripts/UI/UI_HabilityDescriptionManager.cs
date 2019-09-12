@@ -19,8 +19,7 @@ public class UI_HabilityDescriptionManager : MonoBehaviour
     }
 
     void OnSelectedHability(SelectedHabilityEvent e) {
-        var habilityId = e.habilityId;
-        var habilityName = Util.HabilityNameFromId(habilityId);
+        var habilityName = e.habilityId.ToString().ToLower();
 
        _title.text = Localizer.GetLocalizedString(habilityName);
        _description.text = Localizer.GetLocalizedString(habilityName + "_description");
