@@ -124,8 +124,6 @@ public class AttackController : MonoBehaviour
         }
     }
 
-    WaitForSeconds _briefWait = new WaitForSeconds(0.05f);
-
     void RestartTrail() {
         _closed = false;
         _opened = false;
@@ -148,9 +146,7 @@ public class AttackController : MonoBehaviour
         Vector2 clickPoint = Input.mousePosition;
 
         if (clicking) {
-            if (!_opened && clickPoint.y <= 100) {
-                // Clicking on UI panel.
-                // TODO: Cambiar el 100 si cambia el alto de la UI.
+            if (!_opened && Util.MouseIsOnUI()) {
                 return;
             }
 

@@ -25,7 +25,7 @@ public class MagicController : MonoBehaviour
         _power = 1 - Mathf.Abs(Mathf.Sin(currentTime * _speed));
         _fullBarImage.fillAmount = _borderPercentage + _power * (1 - 2 * _borderPercentage);
 
-        if (Input.GetMouseButtonDown(0) && Input.mousePosition.y > 100) {
+        if (Input.GetMouseButtonDown(0) && !Util.MouseIsOnUI()) {
             Ray mRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             RaycastHit hit;

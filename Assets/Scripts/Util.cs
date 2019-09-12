@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public static class Util
 {
@@ -28,5 +30,22 @@ public static class Util
         }
         Debug.LogError($"HabilityNameFromId({id}) is unknown");
         return id.ToString();
+    }
+
+    public static bool MouseIsOnUI() {
+        // https://answers.unity.com/questions/844158/how-do-you-perform-a-graphic-raycast.html
+
+         PointerEventData cursor = new PointerEventData(EventSystem.current);
+         cursor.position = Input.mousePosition;
+         List<RaycastResult> objectsHit = new List<RaycastResult> ();
+         EventSystem.current.RaycastAll(cursor, objectsHit);
+
+        foreach (RaycastResult result in objectsHit) {
+            if (result.gameObject.CompareTag("UI")) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

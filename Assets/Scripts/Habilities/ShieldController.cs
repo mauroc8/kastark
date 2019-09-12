@@ -30,7 +30,7 @@ public class ShieldController : MonoBehaviour
 
         _circleTransform.localScale = new Vector3(scale, scale, 1);
 
-        if (Input.GetMouseButtonDown(0) && Input.mousePosition.y > 100) {
+        if (Input.GetMouseButtonDown(0) && !Util.MouseIsOnUI()) {
             Ray mRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             RaycastHit hit;
