@@ -14,12 +14,29 @@ public class GameManager : MonoBehaviour
     Creature[] _unitsInBattle;
 
     void Awake() {
-        Localization.SetLanguage(_gameSettings.language);
+        _gameSettings.Load();
+        _gameSettings.Init();
     }
 
     void Start() {
         _unitsInBattle = _unitsInBattleRoot.GetComponentsInChildren<Creature>();
 
+        StartCoroutine(StartBattle());
+    }
+
+    void OnEnable() {
+        EventController.AddListener<EndUnitTurnEvent>(OnUnitTurnEnd);
+    }
+
+    void OnDisable() {
+        EventController.RemoveListener<EndUnitTurnEvent>(OnUnitTurnEnd);
+    }
+
+    [SerializeField] float _waitBeforeBattle = 0;
+
+    IEnumerator StartBattle() {
+        yield return new WaitForSeconds(_waitBeforeBattle);
+        EventController.TriggerEvent(new BattleStartEvent{});
         StartNewTurn();
     }
 
@@ -30,14 +47,6 @@ public class GameManager : MonoBehaviour
         GameState.currentUnit = _unitsInBattle[_currentUnitIndex];
 
         EventController.TriggerEvent(new StartUnitTurnEvent());
-    }
-
-    void OnEnable() {
-        EventController.AddListener<EndUnitTurnEvent>(OnUnitTurnEnd);
-    }
-
-    void OnDisable() {
-        EventController.RemoveListener<EndUnitTurnEvent>(OnUnitTurnEnd);
     }
 
     void OnUnitTurnEnd(EndUnitTurnEvent e) {

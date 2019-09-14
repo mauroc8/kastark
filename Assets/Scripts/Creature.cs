@@ -8,10 +8,25 @@ public class Creature : MonoBehaviour
     public float maxHealth;
     public float shield;
 
-    void Start() {
-        var uiCharacterHealthbar = GetComponentInChildren<UI_CharacterHealthbar>();
-        uiCharacterHealthbar.BelongsToCreature(this);
+    public float attackDamage;
+
+    public bool IsAlive() {
+        return health > 0;
     }
 
-    
+    public void Attack(Creature other) {
+        other.ReceiveAttack(this, attackDamage);
+    }
+
+    public void ReceiveAttack(Creature other, float damage) {
+        if (shield > 0) {
+            shield -= damage;
+            if (shield < 0) {
+                health += shield;
+                shield = 0;
+            }
+        } else {
+            health -= damage;
+        }
+    }
 }

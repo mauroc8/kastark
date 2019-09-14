@@ -14,5 +14,9 @@ public class GameSettings : ScriptableObject
         language = (Language) PlayerPrefs.GetInt("lang");
     }
 
+    public void Init() {
+        Localization.SetLanguage(language);
+    }
+
     public Language language = Language.English;
 }

@@ -1,71 +1,103 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Events;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_CharacterHealthbar : MonoBehaviour
 {
-    Creature _self = null;
+    bool _show = false;
+    bool _lastShow = true;
 
-    public void BelongsToCreature(Creature self) {
-        _self = self;
-    }
+    [Header("Settings")]
+    [SerializeField] float _imageMarginPercentage = 0;
+    [SerializeField] float _distanceToHeadVH = 0; // viewport height (percentage)
+    [SerializeField] float _fadeInDuration = 0;
+    [SerializeField] float _fadeInPower = 0;
 
-    [SerializeField] Texture2D _backgroundTexture = null;
-    [SerializeField] Texture2D _healthTexture = null;
-    float _distanceToHead = 60;
+    [Header("Refs")]
+    [SerializeField] GameObject _healthbarGroup = null;
+    [SerializeField] Transform _headTransform = null;
+    [SerializeField] Image _healthImage = null;
+    [SerializeField] Image _shieldImage = null;
 
-    float _leftMargin = 3; // Amount of transparent pixels to the left in _healthTexture
-    float _rightMargin = 4;
-
-    float _backgroundTextureWidth;
-    float _backgroundTextureHeight;
+    Creature _creature = null;
+    CanvasGroup _canvasGroup;
+    Transform _healthbarTransform;
+    Vector3 _headPosition;
+    float _distanceToHeadPx;
 
     void Start() {
-        _backgroundTextureWidth = _backgroundTexture.width;
-        _backgroundTextureHeight = _backgroundTexture.height;
+        _creature = GetComponent<Creature>();
+        _canvasGroup = _healthbarGroup.GetComponent<CanvasGroup>();
+        _headPosition = _headTransform.position;
+        _healthbarTransform = _healthbarGroup.transform;
+        _distanceToHeadPx = Camera.main.pixelHeight * _distanceToHeadVH;
     }
 
-    Vector2 _screenPosition;
+    void Update() {
+        if (_show) {
+            Vector2 pos = Camera.main.WorldToScreenPoint(_headPosition);
+            pos.y += _distanceToHeadPx;
+            
+            _healthbarTransform.position = pos;
 
-    void CalculateScreenPosition() {
-        _screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+            if (!_lastShow) {
+                _canvasGroup.alpha = 1;
+            }
 
-        _screenPosition.x = _screenPosition.x - _backgroundTextureWidth / 2;
-        _screenPosition.y = Camera.main.pixelHeight - _screenPosition.y;
+            var health = _creature.health;
+            var shield = _creature.shield;
+            var maxHealth = _creature.maxHealth;
 
-        _screenPosition.y -= _distanceToHead;
+            var max = Mathf.Max(health + shield, maxHealth);
+            var healthPercent = health / max;
+            var shieldPercent = (health + shield) / max;
+
+            var healthFillAmount = _imageMarginPercentage + healthPercent * (1 - 2 * _imageMarginPercentage);
+            var shieldFillAmount = _imageMarginPercentage + shieldPercent * (1 - 2 * _imageMarginPercentage);
+
+            _healthImage.fillAmount = healthFillAmount;
+            _shieldImage.fillAmount = shieldFillAmount;
+
+        } else {
+            if (_lastShow) {
+                _canvasGroup.alpha = 0;
+            }
+        }
+
+        if (_fading) {
+            var t = (Time.time - _fadeInStart) / _fadeInDuration;
+
+            if (t < 1) {
+                t = Mathf.Pow(t, _fadeInPower);
+                _canvasGroup.alpha = t;
+            } else {
+                _canvasGroup.alpha = 1;
+                _fading = false;
+            }
+        }
+
+        _lastShow = _show;
     }
 
-    float _healthTextureWidth;
-    float _healthPointWidth;
-
-    void CalculateTexturesWidth() {
-        float healthPercentage = _self.health / _self.maxHealth;
-        float margins = _leftMargin + _rightMargin;
-        float healthTextureMaxWidth = _backgroundTextureWidth - margins;
-
-        _healthTextureWidth = _leftMargin + healthTextureMaxWidth * healthPercentage;
-
-        _healthPointWidth = healthTextureMaxWidth / _self.maxHealth;
+    void OnEnable() {
+        EventController.AddListener<BattleStartEvent>(OnBattleStart);
+    }
+    void OnDisable() {
+        EventController.RemoveListener<BattleStartEvent>(OnBattleStart);
     }
 
-    void OnGUI() {
-        CalculateScreenPosition();
-        CalculateTexturesWidth();
+    void OnBattleStart(BattleStartEvent e) {
+        _show = true;
+        FadeIn();
+    }
 
-        GUI.DrawTexture(
-            new Rect(_screenPosition.x, _screenPosition.y, _backgroundTextureWidth, _backgroundTextureHeight),
-            _backgroundTexture
-        );
+    float _fadeInStart;
+    bool _fading;
 
-        GUI.DrawTextureWithTexCoords(
-            new Rect(_screenPosition.x, _screenPosition.y,
-                _healthTextureWidth,
-                _backgroundTextureHeight),
-            _healthTexture,
-            new Rect(0, 0, _healthTextureWidth / _backgroundTextureWidth, 1),
-            true
-        );
+    void FadeIn() {
+        _fadeInStart = Time.time;
+        _fading = true;
     }
 }
