@@ -8,27 +8,23 @@ using UnityEngine.EventSystems;
 public class ShieldController : MonoBehaviour
 {
     [SerializeField] RectTransform _circleTransform = null;
-    [SerializeField] float _speed = 3;
+    [SerializeField] RectTransform _backgroundTransform = null;
+    [SerializeField] float _speed = 0;
+    [SerializeField] float _effectivenessPower = 0;
 
     Vector2 _unitScreenPos;
 
     void OnEnable() {
-        var unitPos = GameState.Instance.actingUnit.transform.position;
-        var cameraPos = Camera.main.transform.position;
+        var unitWorldPos = GameState.Instance.actingUnit.transform.position;
+        _unitScreenPos = Camera.main.WorldToScreenPoint(unitWorldPos);
 
-        transform.position = Vector3.MoveTowards(unitPos, cameraPos, 3);
-        transform.LookAt(Camera.main.transform.position, Vector3.up);
-
-        _unitScreenPos = Camera.main.WorldToScreenPoint(unitPos);
+        _backgroundTransform.position = _circleTransform.position = Util.ScreenPointToHDCoords(_unitScreenPos);
+        _minCastDistance = Camera.main.pixelHeight * 0.35f;
     }
 
     bool _cast = false;
     float _effectiveness;
     float _minCastDistance;
-
-    void Start() {
-        _minCastDistance = Camera.main.pixelHeight * 0.35f;
-    }
 
     void Update() {
         if (_cast) return;
@@ -45,12 +41,8 @@ public class ShieldController : MonoBehaviour
             !Util.MouseIsOnUI()) {
                 EventController.TriggerEvent(new HabilityCastStartEvent{});
                 _cast = true;
-                _effectiveness = 1 - 0.7f * Mathf.Abs(cycle);
-
-                _effectiveness = Mathf.Lerp(
-                    Mathf.Pow(_effectiveness, 0.7f),
-                    Mathf.Pow(_effectiveness, 4),
-                    _effectiveness);
+                _effectiveness = 1 - 0.6f * Mathf.Abs(cycle);
+                _effectiveness = Mathf.Pow(_effectiveness, _effectivenessPower);
 
                 Debug.Log(_effectiveness);
         }

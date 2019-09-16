@@ -37,13 +37,12 @@ public class AttackTrail : MonoBehaviour
     }
 
     Plane _rayCastPlane;
-    void OnEnable() {
+
+    public void Open(Vector2 screenPoint) {
         _rayCastPlane = new Plane(
             Camera.main.transform.forward * -1,
             Camera.main.transform.position + Camera.main.transform.forward * _distanceToCamera);
-    }
-
-    public void Open(Vector2 screenPoint) {
+        
         lengthVH = 0;
         _openTime = Time.time;
 
