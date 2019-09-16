@@ -45,7 +45,9 @@ public class GameManager : MonoBehaviour
     void StartNewTurn() {
         _currentUnitIndex = (_currentUnitIndex + 1) % _battleParticipants.Length;
         
-        GameState.Instance.actingUnit = _battleParticipants[_currentUnitIndex];
+        var unit = _battleParticipants[_currentUnitIndex];
+        GameState.Instance.actingUnit = unit;
+        GameState.Instance.actingTeam = unit.CompareTag("LeftTeam") ? TeamSide.Left : TeamSide.Right;
 
         EventController.TriggerEvent(new UnitTurnStartEvent());
     }

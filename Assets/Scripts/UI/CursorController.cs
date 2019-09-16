@@ -8,10 +8,10 @@ public enum CursorTexture {
 
 public class CursorController : MonoBehaviour
 {
-    [SerializeField] Texture2D _interactableTexture;
-    [SerializeField] Texture2D _friendlyTexture;
-    [SerializeField] Texture2D _aggressiveTexture;
-    [SerializeField] Texture2D _forbiddenTexture;
+    [SerializeField] Texture2D _interactableTexture = null;
+    [SerializeField] Texture2D _friendlyTexture = null;
+    [SerializeField] Texture2D _aggressiveTexture = null;
+    [SerializeField] Texture2D _forbiddenTexture = null;
 
     static CursorController _instance;
     public static CursorController Instance {
@@ -50,5 +50,12 @@ public class CursorController : MonoBehaviour
                 } break;
             }
         }
+    }
+
+    public void ChangeToInteractable() {
+        ChangeCursor(CursorTexture.Interactable);
+    }
+    public void ChangeToDefault() {
+        ChangeCursor(CursorTexture.None);
     }
 }

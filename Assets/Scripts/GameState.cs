@@ -9,6 +9,7 @@ public class GameState : MonoBehaviour
     void Awake() {
         Debug.Assert(_instance == null);
         _instance = this;
+        DontDestroyOnLoad(this);
     }
 
     public static GameState Instance {
@@ -19,6 +20,7 @@ public class GameState : MonoBehaviour
     }
 
     public Creature[] battleParticipants;
+    public TeamSide   actingTeam;
     public Creature   actingUnit;
 
     public string     PlayerTeamTag = "LeftTeam";

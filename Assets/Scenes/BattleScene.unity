@@ -1410,6 +1410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleParticipants: []
+  actingTeam: 0
   actingUnit: {fileID: 0}
   PlayerTeamTag: LeftTeam
   EnemyTeamTag: RightTeam
@@ -3551,7 +3552,7 @@ GameObject:
   - component: {fileID: 1358008266}
   - component: {fileID: 1358008265}
   - component: {fileID: 1358008264}
-  - component: {fileID: 1358008268}
+  - component: {fileID: 1358008269}
   m_Layer: 0
   m_Name: Gnome Mesh
   m_TagString: RightTeam
@@ -3631,7 +3632,7 @@ Transform:
   m_Father: {fileID: 1580877050}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1358008268
+--- !u!114 &1358008269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3640,14 +3641,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1358008263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d53646e3ef222964daeb96794d30cdc6, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a98c4e8d113bd242a22d422be729172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _teamSide: 1
-  _goodColor: {r: 0, g: 0.3764706, b: 0.039215688, a: 1}
-  _badColor: {r: 0.6509434, g: 0, b: 0.012763712, a: 1}
-  _neutralColor: {r: 0, g: 0, b: 0, a: 1}
-  _onHoverOutlineWidth: 0.07
 --- !u!1 &1391979463
 GameObject:
   m_ObjectHideFlags: 0
@@ -3689,6 +3685,7 @@ GameObject:
   - component: {fileID: 1394823052}
   - component: {fileID: 1394823054}
   - component: {fileID: 1394823053}
+  - component: {fileID: 1394823055}
   m_Layer: 5
   m_Name: Select Hability Panel
   m_TagString: Untagged
@@ -3756,6 +3753,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1394823051}
   m_CullTransparentMesh: 0
+--- !u!114 &1394823055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394823051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 863491061}
+          m_MethodName: ChangeToInteractable
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 863491061}
+          m_MethodName: ChangeToDefault
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &1437901100
 GameObject:
   m_ObjectHideFlags: 0
@@ -4195,6 +4239,7 @@ GameObject:
   - component: {fileID: 1506417170}
   - component: {fileID: 1506417169}
   - component: {fileID: 1506417168}
+  - component: {fileID: 1506417171}
   m_Layer: 5
   m_Name: Cancel Button
   m_TagString: Untagged
@@ -4326,6 +4371,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1506417166}
   m_CullTransparentMesh: 0
+--- !u!114 &1506417171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506417166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 863491061}
+          m_MethodName: ChangeToInteractable
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 863491061}
+          m_MethodName: ChangeToDefault
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &1514780482
 GameObject:
   m_ObjectHideFlags: 0
@@ -4551,6 +4643,7 @@ GameObject:
   - component: {fileID: 1580877050}
   - component: {fileID: 1580877051}
   - component: {fileID: 1580877052}
+  - component: {fileID: 1580877053}
   m_Layer: 0
   m_Name: Gnome
   m_TagString: RightTeam
@@ -4611,6 +4704,18 @@ MonoBehaviour:
   _headTransform: {fileID: 1391979464}
   _healthImage: {fileID: 1919365286}
   _shieldImage: {fileID: 581837228}
+--- !u!114 &1580877053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580877049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a98c4e8d113bd242a22d422be729172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1611941813
 GameObject:
   m_ObjectHideFlags: 0
@@ -5060,8 +5165,8 @@ GameObject:
   - component: {fileID: 1841711955}
   - component: {fileID: 1841711954}
   - component: {fileID: 1841711953}
-  - component: {fileID: 1841711956}
   - component: {fileID: 1841711952}
+  - component: {fileID: 1841711957}
   m_Layer: 0
   m_Name: Fairy Mesh
   m_TagString: LeftTeam
@@ -5142,7 +5247,7 @@ Transform:
   m_Father: {fileID: 416668932}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 90}
---- !u!114 &1841711956
+--- !u!114 &1841711957
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5151,14 +5256,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1841711951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d53646e3ef222964daeb96794d30cdc6, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a98c4e8d113bd242a22d422be729172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _teamSide: 0
-  _goodColor: {r: 0, g: 0.3773585, b: 0.041017264, a: 1}
-  _badColor: {r: 0.6509804, g: 0, b: 0.015686275, a: 1}
-  _neutralColor: {r: 0, g: 0, b: 0, a: 1}
-  _onHoverOutlineWidth: 0.3
 --- !u!1 &1842477363
 GameObject:
   m_ObjectHideFlags: 0
