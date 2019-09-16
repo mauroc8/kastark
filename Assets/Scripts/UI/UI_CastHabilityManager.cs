@@ -19,7 +19,7 @@ public class UI_CastHabilityManager : MonoBehaviour
     }
 
     void OnEnable() {
-        EventController.AddListener<ConfirmSelectedHabilityEvent>(OnStartCasting);
+        EventController.AddListener<HabilityCastStartEvent>(OnStartCasting);
 
         // Enable Cancel Button
         _cancelButton.interactable = true;
@@ -27,10 +27,10 @@ public class UI_CastHabilityManager : MonoBehaviour
     }
 
     void OnDisable() {
-        EventController.RemoveListener<ConfirmSelectedHabilityEvent>(OnStartCasting);
+        EventController.RemoveListener<HabilityCastStartEvent>(OnStartCasting);
     }
 
-    void OnStartCasting(ConfirmSelectedHabilityEvent e) {
+    void OnStartCasting(HabilityCastStartEvent e) {
         // Disable Cancel Button
         _cancelButton.interactable = false;
         _cancelTMP.color = Color.gray;

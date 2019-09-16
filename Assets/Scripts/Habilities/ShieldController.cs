@@ -13,7 +13,7 @@ public class ShieldController : MonoBehaviour
     Vector2 _unitScreenPos;
 
     void OnEnable() {
-        var unitPos = GameState.currentUnit.transform.position;
+        var unitPos = GameState.Instance.actingUnit.transform.position;
         var cameraPos = Camera.main.transform.position;
 
         transform.position = Vector3.MoveTowards(unitPos, cameraPos, 3);
@@ -43,7 +43,7 @@ public class ShieldController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) &&
             Vector2.Distance(Input.mousePosition, _unitScreenPos) < _minCastDistance &&
             !Util.MouseIsOnUI()) {
-                EventController.TriggerEvent(new ConfirmSelectedHabilityEvent{});
+                EventController.TriggerEvent(new HabilityCastStartEvent{});
                 _cast = true;
                 _effectiveness = 1 - 0.7f * Mathf.Abs(cycle);
 

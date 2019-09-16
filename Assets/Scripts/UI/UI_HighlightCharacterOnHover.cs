@@ -32,14 +32,14 @@ public class UI_HighlightCharacterOnHover : MonoBehaviour
     //public class ConfirmSelectedHabilityEvent : GameEvent { }
 
     void OnEnable() {
-        EventController.AddListener<SelectedHabilityEvent>(OnSelectHability);
-        EventController.AddListener<ConfirmSelectedHabilityEvent>(OnConfirmHability);
+        EventController.AddListener<HabilitySelectEvent>(OnSelectHability);
+        EventController.AddListener<HabilityCastStartEvent>(OnConfirmHability);
     }
     void OnDisable() {
-        EventController.RemoveListener<SelectedHabilityEvent>(OnSelectHability);
-        EventController.RemoveListener<ConfirmSelectedHabilityEvent>(OnConfirmHability);
+        EventController.RemoveListener<HabilitySelectEvent>(OnSelectHability);
+        EventController.RemoveListener<HabilityCastStartEvent>(OnConfirmHability);
     }
-    void OnSelectHability(SelectedHabilityEvent e) {
+    void OnSelectHability(HabilitySelectEvent e) {
         Color outlineColor;
         var habilityId = e.habilityId;
 
@@ -52,7 +52,7 @@ public class UI_HighlightCharacterOnHover : MonoBehaviour
         _material.SetColor("_OutlineColor", outlineColor);
     }
 
-    void OnConfirmHability(ConfirmSelectedHabilityEvent e) {
+    void OnConfirmHability(HabilityCastStartEvent e) {
         _material.SetColor("_OutlineColor", _neutralColor);
     }
 }

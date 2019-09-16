@@ -31,7 +31,7 @@ public class MagicController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(mRay, out hit)){
                 var target = hit.transform.gameObject;
-                if (target.CompareTag(GameState.EnemyTeamTag)) {
+                if (target.CompareTag(GameState.Instance.EnemyTeamTag)) {
                     // We want to calculate the actual power as the max of the powerPercentage function between
                     // _lastTime and currentTime.
                     var maxPowerMult = Mathf.PI / _speed;
@@ -49,7 +49,7 @@ public class MagicController : MonoBehaviour
                     }
 
                     _hit = true;
-                    EventController.TriggerEvent(new ConfirmSelectedHabilityEvent());
+                    EventController.TriggerEvent(new HabilityCastStartEvent());
                 }
             }
 

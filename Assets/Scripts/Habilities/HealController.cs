@@ -19,7 +19,7 @@ public class HealController : MonoBehaviour
     Vector2 _unitPosition;
 
     void Start() {
-        _unitPosition = Camera.main.WorldToScreenPoint(GameState.currentUnit.transform.position);
+        _unitPosition = Camera.main.WorldToScreenPoint(GameState.Instance.actingUnit.transform.position);
         _minCastDistance = Camera.main.pixelHeight * 0.35f;
 }
 
@@ -53,7 +53,7 @@ public class HealController : MonoBehaviour
                     );
                     _cast = true;
 
-                    EventController.TriggerEvent(new ConfirmSelectedHabilityEvent{});
+                    EventController.TriggerEvent(new HabilityCastStartEvent{});
                     Debug.Log(_effectiveness);
                 }
             }

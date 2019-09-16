@@ -19,13 +19,13 @@ public class TMProLocalizer : MonoBehaviour
     }
 
     void OnEnable() {
-        EventController.AddListener<ChangeLanguageEvent>(OnLanguageChange);
+        EventController.AddListener<LanguageChangeEvent>(OnLanguageChange);
     }
     void OnDisable() {
-        EventController.RemoveListener<ChangeLanguageEvent>(OnLanguageChange);
+        EventController.RemoveListener<LanguageChangeEvent>(OnLanguageChange);
     }
 
-    void OnLanguageChange(ChangeLanguageEvent e) {
+    void OnLanguageChange(LanguageChangeEvent e) {
         GetComponent<TextMeshProUGUI>().text = Localization.GetLocalizedString(_key);
     }
 }

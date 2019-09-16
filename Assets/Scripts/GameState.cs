@@ -2,11 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GameState
+public class GameState : MonoBehaviour
 {
-    public static Creature[] unitsInBattle;
-    public static Creature   currentUnit;
+    private static GameState _instance;
+    
+    void Awake() {
+        Debug.Assert(_instance == null);
+        _instance = this;
+    }
 
-    public static string     PlayerTeamTag = "LeftTeam";
-    public static string     EnemyTeamTag  = "RightTeam";
+    public static GameState Instance {
+        get {
+            Debug.Assert(_instance != null);
+            return _instance;
+        }
+    }
+
+    public Creature[] battleParticipants;
+    public Creature   actingUnit;
+
+    public string     PlayerTeamTag = "LeftTeam";
+    public string     EnemyTeamTag  = "RightTeam";
 }

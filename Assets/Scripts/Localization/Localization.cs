@@ -54,7 +54,7 @@ public static class Localization
 
     public static void SetLanguage(Language newLang) {
         _language = newLang;
-        EventController.TriggerEvent(new ChangeLanguageEvent{});
+        EventController.TriggerEvent(new LanguageChangeEvent{});
     }
 
     public static Language GetLanguage() {

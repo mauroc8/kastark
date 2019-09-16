@@ -26,14 +26,14 @@ public class UI_ScreensManager : MonoBehaviour
     }
 
     void OnEnable() {
-        EventController.AddListener<StartUnitTurnEvent>(OnStartUnitTurn);
+        EventController.AddListener<UnitTurnStartEvent>(OnStartUnitTurn);
     }
 
     void OnDisable() {
-        EventController.RemoveListener<StartUnitTurnEvent>(OnStartUnitTurn);
+        EventController.RemoveListener<UnitTurnStartEvent>(OnStartUnitTurn);
     }
 
-    void OnStartUnitTurn(StartUnitTurnEvent e) {
+    void OnStartUnitTurn(UnitTurnStartEvent e) {
         MoveScreen(1);
     }
 }

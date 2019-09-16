@@ -15,7 +15,7 @@ public class SelectedHabilityController : MonoBehaviour
         CancelHability();
         _habilityGameObjects[(int) habilityId].SetActive(true);
 
-        EventController.TriggerEvent(new SelectedHabilityEvent{ habilityId = (HabilityId) habilityId });
+        EventController.TriggerEvent(new HabilitySelectEvent{ habilityId = (HabilityId) habilityId });
     }
 
     public void CancelHability() {

@@ -9,9 +9,9 @@ public class GameManager : MonoBehaviour
     GameSettings _gameSettings = null;
 
     [SerializeField]
-    GameObject _unitsInBattleRoot = null;
+    GameObject _battleNode = null;
 
-    Creature[] _unitsInBattle;
+    Creature[] _battleParticipants;
 
     void Awake() {
         _gameSettings.Load();
@@ -19,17 +19,17 @@ public class GameManager : MonoBehaviour
     }
 
     void Start() {
-        _unitsInBattle = _unitsInBattleRoot.GetComponentsInChildren<Creature>();
+        _battleParticipants = _battleNode.GetComponentsInChildren<Creature>();
 
         StartCoroutine(StartBattle());
     }
 
     void OnEnable() {
-        EventController.AddListener<EndUnitTurnEvent>(OnUnitTurnEnd);
+        EventController.AddListener<UnitTurnEndEvent>(OnUnitTurnEnd);
     }
 
     void OnDisable() {
-        EventController.RemoveListener<EndUnitTurnEvent>(OnUnitTurnEnd);
+        EventController.RemoveListener<UnitTurnEndEvent>(OnUnitTurnEnd);
     }
 
     [SerializeField] float _waitBeforeBattle = 0;
@@ -43,14 +43,15 @@ public class GameManager : MonoBehaviour
     int _currentUnitIndex = -1;
 
     void StartNewTurn() {
-        _currentUnitIndex = (_currentUnitIndex + 1) % _unitsInBattle.Length;
-        GameState.currentUnit = _unitsInBattle[_currentUnitIndex];
+        _currentUnitIndex = (_currentUnitIndex + 1) % _battleParticipants.Length;
+        
+        GameState.Instance.actingUnit = _battleParticipants[_currentUnitIndex];
 
-        EventController.TriggerEvent(new StartUnitTurnEvent());
+        EventController.TriggerEvent(new UnitTurnStartEvent());
     }
 
-    void OnUnitTurnEnd(EndUnitTurnEvent e) {
-        // Remove dead units from _unitsInBattle array.
+    void OnUnitTurnEnd(UnitTurnEndEvent e) {
+        // Remove dead units from _battleParticipants array.
         // Check if left or right team won.
         StartNewTurn();
     }
