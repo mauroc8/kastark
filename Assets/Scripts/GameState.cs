@@ -6,23 +6,21 @@ public class GameState : MonoBehaviour
 {
     private static GameState _instance;
     
-    void Awake() {
-        Debug.Assert(_instance == null);
-        _instance = this;
-        DontDestroyOnLoad(this);
-    }
-
     public static GameState Instance {
         get {
-            Debug.Assert(_instance != null);
+            if (_instance == null) {
+                _instance = GameObject.FindObjectOfType<GameState>() as GameState;
+                Debug.Assert(_instance);
+                DontDestroyOnLoad(_instance);
+            }
             return _instance;
         }
     }
 
-    public Creature[] battleParticipants;
-    public TeamSide   actingTeam;
-    public Creature   actingUnit;
+    public static Creature[] battleParticipants;
+    public static TeamSide   actingTeam;
+    public static Creature   actingUnit;
 
-    public string     PlayerTeamTag = "LeftTeam";
-    public string     EnemyTeamTag  = "RightTeam";
+    public static string     PlayerTeamTag = "LeftTeam";
+    public static string     EnemyTeamTag  = "RightTeam";
 }

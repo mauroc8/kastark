@@ -15,7 +15,7 @@ public class ShieldController : MonoBehaviour
     Vector2 _unitScreenPos;
 
     void OnEnable() {
-        var unitWorldPos = GameState.Instance.actingUnit.transform.position;
+        var unitWorldPos = GameState.actingUnit.transform.position;
         _unitScreenPos = Camera.main.WorldToScreenPoint(unitWorldPos);
 
         _backgroundTransform.position = _circleTransform.position = Util.ScreenPointToHDCoords(_unitScreenPos);

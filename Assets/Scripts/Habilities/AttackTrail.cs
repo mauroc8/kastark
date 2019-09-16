@@ -21,7 +21,8 @@ public class AttackTrail : MonoBehaviour
     public float trailLifetime;
 
     [Header("Info for the Controller")]
-    public float effectiveness;
+    float _effectiveness;
+    public float Effectiveness => _effectiveness;
 
     float _minVertexDistance;
     float _openTime;
@@ -78,7 +79,7 @@ public class AttackTrail : MonoBehaviour
             return false;
         } else {
             _trailRenderer.time = trailLifetime + _trailExtraLifetime;
-            effectiveness = TrailAnalyzer.StraightLineScore(this);
+            _effectiveness = TrailAnalyzer.StraightLineScore(this);
             return true;
         }
     }
@@ -109,7 +110,7 @@ public class AttackTrail : MonoBehaviour
 
             RaycastHit hit;
             if (Physics.Raycast(mRay, out hit)){
-                if (hit.transform.gameObject.CompareTag(GameState.Instance.EnemyTeamTag)) {
+                if (hit.transform.gameObject.CompareTag(GameState.EnemyTeamTag)) {
                     targets.Add(hit.transform.gameObject);
                 }
             }

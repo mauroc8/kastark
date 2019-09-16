@@ -34,9 +34,11 @@ public static class Util
         return false;
     }
 
+    public static float FloatToHDCoords(float value) {
+        return value * 1080f / Camera.main.pixelHeight;
+    }
+
     public static Vector2 ScreenPointToHDCoords(Vector2 screenPoint) {
-        float scale = 1080f / Camera.main.pixelHeight;
-        
-        return screenPoint * scale;
+        return screenPoint * 1080f / Camera.main.pixelHeight;
     }
 }

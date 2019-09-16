@@ -6,24 +6,32 @@ using UnityEngine.UI;
 
 public class MagicController : MonoBehaviour
 {
-    [SerializeField] Image _fullBarImage = null;
+    [SerializeField] RectTransform _powerTransform = null;
+    [SerializeField] float _fullPowerX = 0;
+    [SerializeField] float _noPowerX   = 0;
 
     [SerializeField] float _speed = 5;
+    [SerializeField] float _effectivenessPower = 1;
 
-    float _borderPercentage = 0.013f; // The Full Bar Image has 5px of border that shouldn't be considered.
-
-    bool _hit = false;
-    float _power;
+    bool _cast = false;
+    float _effectiveness;
 
     float _lastPower;
     float _lastTime;
 
-    void Update() {
-        if (_hit) return;
+    [SerializeField] float _xOffset = 0;
 
-        var currentTime = Time.time;
-        _power = 1 - Mathf.Abs(Mathf.Sin(currentTime * _speed));
-        _fullBarImage.fillAmount = _borderPercentage + _power * (1 - 2 * _borderPercentage);
+    void Update() {
+        if (_cast) return;
+
+        float currentTime = Time.time;
+        float fract = currentTime * _speed;
+        float _power = fract % 1;
+        _effectiveness = Mathf.Pow(_power, _effectivenessPower);
+
+        var pos = _powerTransform.localPosition;
+        pos.x = _xOffset + _noPowerX + _effectiveness * (_fullPowerX - _noPowerX);
+        _powerTransform.localPosition = pos;
 
         if (Input.GetMouseButtonDown(0) && !Util.MouseIsOnUI()) {
             Ray mRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -31,29 +39,12 @@ public class MagicController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(mRay, out hit)){
                 var target = hit.transform.gameObject;
-                if (target.CompareTag(GameState.Instance.EnemyTeamTag)) {
-                    // We want to calculate the actual power as the max of the powerPercentage function between
-                    // _lastTime and currentTime.
-                    var maxPowerMult = Mathf.PI / _speed;
-
-                    var lastPowerPhase = _lastTime / maxPowerMult;
-                    var currentPowerPhase = currentTime / maxPowerMult;
-
-                    // If fract(powerPhase) < 0.5 then power is growing
-                    if (lastPowerPhase % 1 < 0.5) {
-                        if (currentPowerPhase % 1 >= 0.5) { // it was growing and now its decreasing: we reached the summit in this frame!
-                            _power = 1;
-                        }
-                    } else { // Power is decreasing
-                        _power = (_power + _lastPower) / 2;
-                    }
-
-                    _hit = true;
+                if (target.CompareTag(GameState.EnemyTeamTag)) {
+                    _cast = true;
                     EventController.TriggerEvent(new HabilityCastStartEvent());
+                    Debug.Log(_effectiveness);
                 }
             }
-
-            _fullBarImage.fillAmount = _borderPercentage + _power * (1 - 2 * _borderPercentage);
         }
 
         _lastPower = _power;

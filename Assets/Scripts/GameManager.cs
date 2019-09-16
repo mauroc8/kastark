@@ -46,8 +46,8 @@ public class GameManager : MonoBehaviour
         _currentUnitIndex = (_currentUnitIndex + 1) % _battleParticipants.Length;
         
         var unit = _battleParticipants[_currentUnitIndex];
-        GameState.Instance.actingUnit = unit;
-        GameState.Instance.actingTeam = unit.CompareTag("LeftTeam") ? TeamSide.Left : TeamSide.Right;
+        GameState.actingUnit = unit;
+        GameState.actingTeam = unit.CompareTag("LeftTeam") ? TeamSide.Left : TeamSide.Right;
 
         EventController.TriggerEvent(new UnitTurnStartEvent());
     }

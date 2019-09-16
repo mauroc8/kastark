@@ -30,7 +30,7 @@ public class AttackController : MonoBehaviour
                 if (wasClosed) {
                     _cast = true;
                     EventController.TriggerEvent(new HabilityCastStartEvent());
-                    var effectiveness = _attackTrail.effectiveness;
+                    var effectiveness = _attackTrail.Effectiveness;
                     Debug.Log(effectiveness);
                 } else {
                     _attackTrail.Restart();

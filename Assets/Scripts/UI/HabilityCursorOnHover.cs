@@ -20,7 +20,7 @@ public class HabilityCursorOnHover : MonoBehaviour
         EventController.RemoveListener<HabilityCastStartEvent>(OnHabilityCastStart);
     }
     void OnHabilitySelect(HabilitySelectEvent e) {
-        bool playerTeam = GameState.Instance.actingTeam == _teamSide;
+        bool playerTeam = GameState.actingTeam == _teamSide;
 
         switch (e.habilityId) {
             case HabilityId.Attack:
@@ -42,12 +42,12 @@ public class HabilityCursorOnHover : MonoBehaviour
 
     void OnMouseEnter() {
         if (_hoverCursor != CursorTexture.None) {
-            CursorController.Instance.ChangeCursor(_hoverCursor);
+            CursorController.ChangeCursorTexture(_hoverCursor);
         }
     }
     void OnMouseExit() {
         if (_hoverCursor != CursorTexture.None) {
-            CursorController.Instance.ChangeCursor(CursorTexture.None);
+            CursorController.ChangeCursorTexture(CursorTexture.None);
         }
     }
 }

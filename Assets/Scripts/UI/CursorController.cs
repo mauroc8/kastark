@@ -13,37 +13,35 @@ public class CursorController : MonoBehaviour
     [SerializeField] Texture2D _aggressiveTexture = null;
     [SerializeField] Texture2D _forbiddenTexture = null;
 
-    static CursorController _instance;
+    private static CursorController _instance;
     public static CursorController Instance {
         get {
-            Debug.Assert(_instance != null);
+            if (_instance == null) {
+                _instance = GameObject.FindObjectOfType<CursorController>() as CursorController;
+                Debug.Assert(_instance);
+                DontDestroyOnLoad(_instance);
+            }
             return _instance;
         }
     }
 
-    void Awake() {
-        Debug.Assert(_instance == null);
-        _instance = this;
-        DontDestroyOnLoad(this);
-    }
+    private CursorTexture _currentTexture = CursorTexture.None;
 
-    CursorTexture _currentTexture = CursorTexture.None;
-
-    public void ChangeCursor(CursorTexture newTexture) {
-        if (newTexture != _currentTexture) {
-            _currentTexture = newTexture;
+    public static void ChangeCursorTexture(CursorTexture newTexture) {
+        if (newTexture != Instance._currentTexture) {
+            Instance._currentTexture = newTexture;
             switch (newTexture) {
                 case CursorTexture.Interactable: {
-                    Cursor.SetCursor(_interactableTexture, Vector2.zero, CursorMode.Auto);
+                    Cursor.SetCursor(Instance._interactableTexture, Vector2.zero, CursorMode.Auto);
                 } break;
                 case CursorTexture.Friendly: {
-                    Cursor.SetCursor(_friendlyTexture, Vector2.zero, CursorMode.Auto);
+                    Cursor.SetCursor(Instance._friendlyTexture, Vector2.zero, CursorMode.Auto);
                 } break;
                 case CursorTexture.Aggressive: {
-                    Cursor.SetCursor(_aggressiveTexture, Vector2.zero, CursorMode.Auto);
+                    Cursor.SetCursor(Instance._aggressiveTexture, Vector2.zero, CursorMode.Auto);
                 } break;
                 case CursorTexture.Forbidden: {
-                    Cursor.SetCursor(_forbiddenTexture, Vector2.zero, CursorMode.Auto);
+                    Cursor.SetCursor(Instance._forbiddenTexture, Vector2.zero, CursorMode.Auto);
                 } break;
                 case CursorTexture.None: {
                     Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
@@ -53,9 +51,9 @@ public class CursorController : MonoBehaviour
     }
 
     public void ChangeToInteractable() {
-        ChangeCursor(CursorTexture.Interactable);
+        ChangeCursorTexture(CursorTexture.Interactable);
     }
     public void ChangeToDefault() {
-        ChangeCursor(CursorTexture.None);
+        ChangeCursorTexture(CursorTexture.None);
     }
 }
