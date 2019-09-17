@@ -5,17 +5,16 @@ using UnityEngine.UI;
 using Events;
 using UnityEngine.EventSystems;
 
-public class ShieldController : MonoBehaviour
+public class ShieldController : Hability
 {
     [SerializeField] RectTransform _circleTransform = null;
     [SerializeField] RectTransform _backgroundTransform = null;
     [SerializeField] float _speed = 0;
-    [SerializeField] float _effectivenessPower = 0;
 
     Vector2 _unitScreenPos;
 
     void OnEnable() {
-        var unitWorldPos = GameState.actingUnit.transform.position;
+        var unitWorldPos = GameState.actingCreature.transform.position;
         _unitScreenPos = Camera.main.WorldToScreenPoint(unitWorldPos);
 
         _backgroundTransform.position = _circleTransform.position = Util.ScreenPointToHDCoords(_unitScreenPos);
@@ -42,9 +41,19 @@ public class ShieldController : MonoBehaviour
                 EventController.TriggerEvent(new HabilityCastStartEvent{});
                 _cast = true;
                 _effectiveness = 1 - 0.6f * Mathf.Abs(cycle);
-                _effectiveness = Mathf.Pow(_effectiveness, _effectivenessPower);
+                _effectiveness = Mathf.Pow(_effectiveness, effectivenessPower);
 
-                Debug.Log(_effectiveness);
+                var targets = new Creature[1];
+                targets[0] = GameState.actingCreature;
+                var effectiveness = new float[1];
+                effectiveness[0] = _effectiveness;
+
+                EventController.TriggerEvent(new HabilityCastEndEvent{
+                    targets = targets,
+                    effectiveness = effectiveness,
+                    baseDamage = baseDamage,
+                    damageType = damageType,
+                });
         }
     }
 }

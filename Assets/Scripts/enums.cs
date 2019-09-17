@@ -13,3 +13,7 @@ public enum HabilityId {
     Shield,
     Heal,
 };
+
+public enum DamageType {
+    Physical, Magical, Heal, Shield, None
+};

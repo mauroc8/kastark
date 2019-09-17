@@ -19,7 +19,7 @@ public class GameState : MonoBehaviour
 
     public static Creature[] battleParticipants;
     public static TeamSide   actingTeam;
-    public static Creature   actingUnit;
+    public static Creature   actingCreature;
 
     public static string     PlayerTeamTag = "LeftTeam";
     public static string     EnemyTeamTag  = "RightTeam";

@@ -24,14 +24,6 @@ public class GameManager : MonoBehaviour
         StartCoroutine(StartBattle());
     }
 
-    void OnEnable() {
-        EventController.AddListener<UnitTurnEndEvent>(OnUnitTurnEnd);
-    }
-
-    void OnDisable() {
-        EventController.RemoveListener<UnitTurnEndEvent>(OnUnitTurnEnd);
-    }
-
     [SerializeField] float _waitBeforeBattle = 0;
 
     IEnumerator StartBattle() {
@@ -46,10 +38,28 @@ public class GameManager : MonoBehaviour
         _currentUnitIndex = (_currentUnitIndex + 1) % _battleParticipants.Length;
         
         var unit = _battleParticipants[_currentUnitIndex];
-        GameState.actingUnit = unit;
+        GameState.actingCreature = unit;
         GameState.actingTeam = unit.CompareTag("LeftTeam") ? TeamSide.Left : TeamSide.Right;
 
         EventController.TriggerEvent(new UnitTurnStartEvent());
+    }
+
+    void OnEnable() {
+        EventController.AddListener<HabilityCastEndEvent>(OnHabilityCastEnd);
+        EventController.AddListener<UnitTurnEndEvent>(OnUnitTurnEnd);
+    }
+    void OnDisable() {
+        EventController.RemoveListener<HabilityCastEndEvent>(OnHabilityCastEnd);
+        EventController.RemoveListener<UnitTurnEndEvent>(OnUnitTurnEnd);
+    }
+
+    void OnHabilityCastEnd(HabilityCastEndEvent e) {
+        var targets = e.targets;
+        var actingCreature = GameState.actingCreature;
+        var baseDamage = e.baseDamage;
+        for (int i = 0; i < targets.Length; i++) {
+            actingCreature.Attack(targets[i], baseDamage * e.effectiveness[i], e.damageType);
+        }
     }
 
     void OnUnitTurnEnd(UnitTurnEndEvent e) {

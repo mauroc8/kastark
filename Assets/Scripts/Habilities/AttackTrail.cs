@@ -7,7 +7,10 @@ public class AttackTrail : MonoBehaviour
 {
     TrailRenderer _trailRenderer;
 
+    public float worstScenarioDirectionStdDev = 0.3f;
+
     [SerializeField] float _distanceToCamera = 4;
+
 
     [Header("Configuration")]
     public float minLengthVH = 0.1f;
@@ -16,11 +19,10 @@ public class AttackTrail : MonoBehaviour
 
     [Header("Info for the Analyzer")]
     public List<Vector2> screenPoints = new List<Vector2>(50);
-    public List<GameObject> targets = new List<GameObject>(50);
+    public List<Creature> targets = new List<Creature>(50);
     public float lengthVH;
     public float trailLifetime;
 
-    [Header("Info for the Controller")]
     float _effectiveness;
     public float Effectiveness => _effectiveness;
 
@@ -79,9 +81,18 @@ public class AttackTrail : MonoBehaviour
             return false;
         } else {
             _trailRenderer.time = trailLifetime + _trailExtraLifetime;
-            _effectiveness = TrailAnalyzer.StraightLineScore(this);
+            TrailAnalysis trailAnalyzer = new TrailAnalysis(screenPoints.ToArray());
+            _effectiveness = InterpretAnalysisResult(trailAnalyzer);
             return true;
         }
+    }
+
+    float InterpretAnalysisResult(TrailAnalysis trailAnalysis) {
+        var stdDev = trailAnalysis.DirectionStdDev;
+        var effectiveness = 1 - stdDev / worstScenarioDirectionStdDev;
+        if (effectiveness < 0) effectiveness = 0;
+
+        return effectiveness;
     }
 
     public void Restart() {
@@ -111,7 +122,10 @@ public class AttackTrail : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(mRay, out hit)){
                 if (hit.transform.gameObject.CompareTag(GameState.EnemyTeamTag)) {
-                    targets.Add(hit.transform.gameObject);
+                    var target = hit.transform.gameObject.GetComponent<Creature>();
+                    Debug.Assert(target);
+                    if (!targets.Contains(target))
+                        targets.Add(target);
                 }
             }
         }
@@ -119,5 +133,19 @@ public class AttackTrail : MonoBehaviour
 
     bool IsAcceptable() {
         return lengthVH >= minLengthVH && screenPoints.Count >= 3;
+    }
+
+    public Creature[] GetTargets() {
+        return targets.ToArray();
+    }
+
+    public float[] GetEffectiveness() {
+        var effectiveness = new float[targets.Count];
+
+        for (int i = 0; i < effectiveness.Length; i++) {
+            effectiveness[i] = _effectiveness;
+        }
+        
+        return effectiveness;
     }
 }

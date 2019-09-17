@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Events;
 
-public class AttackController : MonoBehaviour
+public class AttackController : Hability
 {
     [SerializeField] AttackTrail _attackTrail;
+
+    float _effectiveness;
 
     void Start() {
         _attackTrail = GetComponentInChildren<AttackTrail>();
@@ -30,8 +32,19 @@ public class AttackController : MonoBehaviour
                 if (wasClosed) {
                     _cast = true;
                     EventController.TriggerEvent(new HabilityCastStartEvent());
-                    var effectiveness = _attackTrail.Effectiveness;
-                    Debug.Log(effectiveness);
+                    _effectiveness = _attackTrail.Effectiveness;
+                    _effectiveness = Mathf.Pow(_effectiveness, effectivenessPower);
+                    
+                    var targets = _attackTrail.GetTargets();
+                    var effectiveness = _attackTrail.GetEffectiveness();
+
+                    EventController.TriggerEvent(new HabilityCastEndEvent{
+                        targets = targets,
+                        effectiveness = effectiveness,
+                        baseDamage = baseDamage,
+                        damageType = damageType,
+                    });
+                    
                 } else {
                     _attackTrail.Restart();
                 }

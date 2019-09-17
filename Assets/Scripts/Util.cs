@@ -20,10 +20,10 @@ public static class Util
     public static bool MouseIsOnUI() {
         // https://answers.unity.com/questions/844158/how-do-you-perform-a-graphic-raycast.html
 
-         PointerEventData cursor = new PointerEventData(EventSystem.current);
-         cursor.position = Input.mousePosition;
-         List<RaycastResult> objectsHit = new List<RaycastResult> ();
-         EventSystem.current.RaycastAll(cursor, objectsHit);
+        PointerEventData cursor = new PointerEventData(EventSystem.current);
+        cursor.position = Input.mousePosition;
+        List<RaycastResult> objectsHit = new List<RaycastResult> ();
+        EventSystem.current.RaycastAll(cursor, objectsHit);
 
         foreach (RaycastResult result in objectsHit) {
             if (result.gameObject.CompareTag("UI")) {

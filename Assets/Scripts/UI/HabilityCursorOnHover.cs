@@ -17,7 +17,6 @@ public class HabilityCursorOnHover : MonoBehaviour
     }
     void OnDisable() {
         EventController.RemoveListener<HabilitySelectEvent>(OnHabilitySelect);
-        EventController.RemoveListener<HabilityCastStartEvent>(OnHabilityCastStart);
     }
     void OnHabilitySelect(HabilitySelectEvent e) {
         bool playerTeam = GameState.actingTeam == _teamSide;
@@ -35,6 +34,7 @@ public class HabilityCursorOnHover : MonoBehaviour
     }
 
     void OnHabilityCastStart(HabilityCastStartEvent e) {
+        CursorController.ChangeCursorTexture(CursorTexture.None);
         _hoverCursor = CursorTexture.None;
     }
 
@@ -46,8 +46,6 @@ public class HabilityCursorOnHover : MonoBehaviour
         }
     }
     void OnMouseExit() {
-        if (_hoverCursor != CursorTexture.None) {
-            CursorController.ChangeCursorTexture(CursorTexture.None);
-        }
+        CursorController.ChangeCursorTexture(CursorTexture.None);
     }
 }
