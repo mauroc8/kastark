@@ -1127,7 +1127,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 416668931}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.9107614, y: 2.29, z: -11.176863}
+  m_LocalPosition: {x: -1.9107614, y: 2.95, z: -11.176863}
   m_LocalScale: {x: 1.8117, y: 1.7326, z: 1.7165}
   m_Children:
   - {fileID: 1841711955}
@@ -1257,7 +1257,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 484211088}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 88.00525, y: 1, z: 64.40456}
   m_Children: []
@@ -4806,8 +4806,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 750ee26035c08b744b4b744389e7720d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
-  maxHealth: 10
+  health: 9
+  maxHealth: 9
   shield: 0
   physicalResistance: 0.95
   magicalResistance: 0.95
