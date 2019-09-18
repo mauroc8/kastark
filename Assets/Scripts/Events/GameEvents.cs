@@ -6,8 +6,8 @@ namespace Events{
 
     public class BattleStartEvent : GameEvent {}
 
-    public class StartCreatureTurnEvent  : GameEvent { }
-    public class UnitTurnEndEvent    : GameEvent { }
+    public class TurnStartEvent  : GameEvent { }
+    public class TurnEndEvent    : GameEvent { }
 
     public class HabilitySelectEvent : GameEvent { public Hability hability; }
 

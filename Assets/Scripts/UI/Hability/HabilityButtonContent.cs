@@ -9,7 +9,7 @@ public class HabilityButtonContent : MonoBehaviour
     [SerializeField] TextMeshProUGUI _text = null;
     [SerializeField] Image _image = null;
 
-    public void FillContent(Hability hability)
+    public virtual void FillContent(Hability hability)
     {
         _text.text = hability.Name;
         _image.sprite = hability.ImageSprite;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Events;
 
-public class PlayerTurnPanels : MonoBehaviour
+public class PlayerTurn : MonoBehaviour
 {
     [SerializeField] GameObject[] _screens = {};
     GameObject _currentScreen;
@@ -14,6 +14,9 @@ public class PlayerTurnPanels : MonoBehaviour
         {
             _currentScreen.SetActive(false);
         }
+
+        if (index == -1) return;
+
         _currentScreen = _screens[index];
         if (_currentScreen != null)
         {
@@ -22,26 +25,28 @@ public class PlayerTurnPanels : MonoBehaviour
     }
 
     void OnEnable() {
-        EventController.AddListener<StartCreatureTurnEvent>(OnStartUnitTurn);
+        EventController.AddListener<TurnStartEvent>(OnTurnStart);
         EventController.AddListener<HabilitySelectEvent>(OnHabilitySelect);
         EventController.AddListener<HabilityCastEvent>(OnHabilityCast);
     }
 
     void OnDisable() {
-        EventController.RemoveListener<StartCreatureTurnEvent>(OnStartUnitTurn);
+        EventController.RemoveListener<TurnStartEvent>(OnTurnStart);
         EventController.RemoveListener<HabilitySelectEvent>(OnHabilitySelect);
         EventController.RemoveListener<HabilityCastEvent>(OnHabilityCast);
     }
 
-    void OnStartUnitTurn(StartCreatureTurnEvent evt)
+    void OnTurnStart(TurnStartEvent evt)
     {
-        SelectScreen(0);
+        SelectScreen(GameState.IsPlayersTurn() ? 0 : -1);
     }
 
     GameObject _instance;
 
     void OnHabilitySelect(HabilitySelectEvent evt)
     {
+        if (!GameState.IsPlayersTurn()) return;
+
         Debug.Log($"HabilitySelected:{evt.hability.Name}");
         SelectScreen(1);
         _instance = Instantiate(evt.hability.Controller);
@@ -51,16 +56,19 @@ public class PlayerTurnPanels : MonoBehaviour
 
     void OnHabilityCast(HabilityCastEvent evt)
     {
+        if (!GameState.IsPlayersTurn()) return;
+        
         Debug.Log($"HabilityCast: {evt.DamageType}\nDamage: {evt.BaseDamage * evt.Effectiveness[0]}");
         
-        StartCoroutine(DestroyInstance());
+        StartCoroutine(EndTurn());
     }
 
     WaitForSeconds _waitBeforeDestroy = new WaitForSeconds(1.2f);
 
-    IEnumerator DestroyInstance()
+    IEnumerator EndTurn()
     {
         yield return _waitBeforeDestroy;
         Destroy(_instance);
+        EventController.TriggerEvent(new TurnEndEvent());
     }
 }

@@ -9,9 +9,9 @@ public class ConsumableButtonContent : HabilityButtonContent
     [Header("Consumable")]
     [SerializeField] TextMeshProUGUI _amount = null;
 
-    public void FillContent(Consumable consumable)
+    public override void FillContent(Hability consumable)
     {
-        FillContent(consumable as Hability);
-        _amount.text = $"x{consumable.amount}";
+        base.FillContent(consumable);
+        _amount.text = $"x{((Consumable) consumable).amount}";
     }
 }

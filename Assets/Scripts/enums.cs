@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TeamSide {
+public enum Team {
     Left,
     Right,
 };

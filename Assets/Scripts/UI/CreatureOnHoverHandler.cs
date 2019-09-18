@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CreatureOnHoverHandler : MonoBehaviour
 {
-    [SerializeField] TeamSide _teamId = TeamSide.Left;
+    [SerializeField] Team _teamId = Team.Left;
     [SerializeField] CursorSkin _cursorSkin = null;
 
     void OnMouseEnter() {

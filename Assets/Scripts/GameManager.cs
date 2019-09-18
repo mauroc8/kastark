@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject _battleNode = null;
 
-    Creature[] _battleParticipants;
+    List<Creature> _battleParticipants;
+    List<Creature> _deadCreatures;
 
     void Awake()
     {
@@ -25,7 +26,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        _battleParticipants = _battleNode.GetComponentsInChildren<Creature>();
+        _battleParticipants = new List<Creature>(_battleNode.GetComponentsInChildren<Creature>());
+        _deadCreatures      = new List<Creature>();
 
         StartCoroutine(StartBattle());
     }
@@ -43,26 +45,27 @@ public class GameManager : MonoBehaviour
 
     void StartNewTurn()
     {
-        _currentUnitIndex = (_currentUnitIndex + 1) % _battleParticipants.Length;
-        
-        var unit = _battleParticipants[_currentUnitIndex];
-        GameState.actingCreature = unit;
-        GameState.actingTeam = unit.CompareTag("LeftTeam") ? TeamSide.Left : TeamSide.Right;
+        _currentUnitIndex = (_currentUnitIndex + 1) % _battleParticipants.Count;
 
-        EventController.TriggerEvent(new StartCreatureTurnEvent());
+        var unit = _battleParticipants[_currentUnitIndex];
+
+        GameState.actingCreature = unit;
+        GameState.actingTeam = GameState.GetTeam(unit);
+        
+        EventController.TriggerEvent(new TurnStartEvent());
     }
 
     void OnEnable()
     {
         EventController.AddListener<HabilitySelectEvent>(OnHabilitySelect);
         EventController.AddListener<HabilityCastEvent>(OnHabilityCastEnd);
-        EventController.AddListener<UnitTurnEndEvent>(OnUnitTurnEnd);
+        EventController.AddListener<TurnEndEvent>(OnTurnEnd);
     }
     void OnDisable()
     {
         EventController.RemoveListener<HabilitySelectEvent>(OnHabilitySelect);
         EventController.RemoveListener<HabilityCastEvent>(OnHabilityCastEnd);
-        EventController.RemoveListener<UnitTurnEndEvent>(OnUnitTurnEnd);
+        EventController.RemoveListener<TurnEndEvent>(OnTurnEnd);
     }
 
     void OnHabilitySelect(HabilitySelectEvent evt)
@@ -80,10 +83,54 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void OnUnitTurnEnd(UnitTurnEndEvent e)
+    WaitForSeconds _endTurnWait = new WaitForSeconds(0.3f);
+    
+    void OnTurnEnd(TurnEndEvent evt)
     {
-        // Remove dead units from _battleParticipants array.
-        // Check if left or right team won.
-        StartNewTurn();
+        bool leftTeamHasLivingUnit = false;
+        bool rightTeamHasLivingUnit = false;
+
+        foreach (var creature in _battleParticipants)
+        {
+            if (!creature.IsAlive())
+            {
+                _battleParticipants.Remove(creature);
+                _deadCreatures.Add(creature);
+            } else
+            {
+                if (GameState.GetTeam(creature) == Team.Left)
+                {
+                    leftTeamHasLivingUnit = true;
+                } else
+                {
+                    rightTeamHasLivingUnit = true;
+                }
+            }
+        }
+
+        if (leftTeamHasLivingUnit && rightTeamHasLivingUnit)
+        {
+            StartNewTurn();
+        } else
+        {
+            if (leftTeamHasLivingUnit && GameState.PlayerTeam == Team.Left ||
+                rightTeamHasLivingUnit && GameState.PlayerTeam == Team.Right)
+            {
+                PlayerWins();
+            } else
+            {
+                PlayerLooses();
+            }
+        }
+    }
+
+    void PlayerWins()
+    {
+        Debug.Log("You WIN!");
+    }
+
+    void PlayerLooses()
+    {
+        Debug.Log("You LOSE!");
     }
 }
