@@ -4,15 +4,16 @@ using UnityEngine;
 using TMPro;
 using Events;
 
+[RequireComponent(typeof(TextMeshProUGUI))]
 public class TMProLocalizer : MonoBehaviour
 {
-    string _key = null;
+    [SerializeField] string _key = "";
 
-    void Start()
+    void Awake()
     {
         var tmp = GetComponent<TextMeshProUGUI>();
         
-        if (_key == null)
+        if (_key == "")
             _key = tmp.text;
         
         tmp.text = Localization.GetLocalizedString(_key);

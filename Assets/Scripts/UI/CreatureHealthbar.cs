@@ -4,7 +4,7 @@ using Events;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_CharacterHealthbar : MonoBehaviour
+public class CreatureHealthbar : MonoBehaviour
 {
     bool _show = false;
     bool _lastShow = true;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Events;
 using UnityEngine;
 
-public class UI_BattleStartFadeIn : MonoBehaviour
+public class FadeInOnBattleStart : MonoBehaviour
 {
     [SerializeField] float _fadeInDuration = 0;
     [SerializeField] float _fadePower      = 0;

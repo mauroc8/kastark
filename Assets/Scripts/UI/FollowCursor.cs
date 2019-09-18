@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_FollowCursor : MonoBehaviour
+public class FollowCursor : MonoBehaviour
 {
     [SerializeField] float _attraction = 0.8f;
     

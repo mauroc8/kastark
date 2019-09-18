@@ -4,8 +4,8 @@ using UnityEngine;
 public class Hability : ScriptableObject
 {
     [Header("Hability")]
-    public int Damage;
-    public int Difficulty;
+    public float Damage;
+    public float Difficulty;
     public DamageType DamageType;
 
     [Header("UI")]

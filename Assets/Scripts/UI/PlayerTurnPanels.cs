@@ -46,10 +46,21 @@ public class PlayerTurnPanels : MonoBehaviour
         SelectScreen(1);
         _instance = Instantiate(evt.hability.Controller);
         _instance.transform.SetParent(transform, false);
+        _instance.SetActive(true);
     }
 
     void OnHabilityCast(HabilityCastEvent evt)
     {
-        //Destroy(_instance);
+        Debug.Log($"HabilityCast: {evt.DamageType}\nDamage: {evt.BaseDamage * evt.Effectiveness[0]}");
+        
+        StartCoroutine(DestroyInstance());
+    }
+
+    WaitForSeconds _waitBeforeDestroy = new WaitForSeconds(1.2f);
+
+    IEnumerator DestroyInstance()
+    {
+        yield return _waitBeforeDestroy;
+        Destroy(_instance);
     }
 }

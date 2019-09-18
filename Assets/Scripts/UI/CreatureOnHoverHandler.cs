@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using Events;
 using UnityEngine;
 
-public class ChangeCursorOnHover : MonoBehaviour
+public class CreatureOnHoverHandler : MonoBehaviour
 {
     [SerializeField] TeamSide _teamId = TeamSide.Left;
+    [SerializeField] CursorSkin _cursorSkin = null;
 
     void OnMouseEnter() {
         if (GameState.actingTeam != GameState.PlayerTeam) return;
@@ -29,11 +30,11 @@ public class ChangeCursorOnHover : MonoBehaviour
         }
 
         if (hoverCursor != CursorTexture.None) {
-            CursorController.ChangeCursorTexture(hoverCursor);
+            _cursorSkin.ChangeCursorTexture(hoverCursor);
         }
     }
 
     void OnMouseExit() {
-        CursorController.ChangeCursorTexture(CursorTexture.None);
+        _cursorSkin.ChangeCursorTexture(CursorTexture.None);
     }
 }

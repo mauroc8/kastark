@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8186dfad205d34d8eef8850d07e2b9, type: 3}
   m_Name: FairyAttack
   m_EditorClassIdentifier: 
-  Damage: 0
-  Difficulty: 0
+  Damage: 5
+  Difficulty: 0.82
   DamageType: 0
   Name: Attack
   ImageSprite: {fileID: 21300000, guid: 919aa016a18722e4cb319d49535483d3, type: 3}

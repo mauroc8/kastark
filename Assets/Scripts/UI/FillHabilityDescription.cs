@@ -4,7 +4,7 @@ using UnityEngine;
 using Events;
 using TMPro;
 
-public class UI_HabilityDescriptionManager : MonoBehaviour
+public class FillHabilityDescription : MonoBehaviour
 {
     [SerializeField]
     TextMeshProUGUI _title = null;

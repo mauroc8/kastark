@@ -18,9 +18,9 @@ public class AttackTrail : MonoBehaviour
     public float maxLengthVH = 0.3f;
     public float maxLifetime = 2.3f;
 
-    private List<Vector2> _screenPoints = new List<Vector2>(50);
-    private List<Creature> _targetCreatures = new List<Creature>(50);
-    private float _lengthVH;
+    private List<Vector2> _screenPoints = new List<Vector2>(30);
+    private List<Creature> _targetCreatures = new List<Creature>(30);
+    private float _length; // in VH (viewport height) units (1 = full height).
     private float _trailLifetime;
 
     TrailRenderer _trailRenderer;
@@ -45,7 +45,7 @@ public class AttackTrail : MonoBehaviour
             Camera.main.transform.position + Camera.main.transform.forward * _distanceToCamera);
         
         _open = true;
-        _lengthVH = 0;
+        _length = 0;
         _openTime = Time.time;
 
         AddPoint(screenPoint);
@@ -60,7 +60,7 @@ public class AttackTrail : MonoBehaviour
         float screenDistancePX = (screenPoint - _lastScreenPoint).magnitude;
         float screenDistanceVH = screenDistancePX / Camera.main.pixelHeight;
 
-        _lengthVH += screenDistanceVH;
+        _length += screenDistanceVH;
 
         AddPoint(screenPoint);
     }
@@ -68,23 +68,17 @@ public class AttackTrail : MonoBehaviour
     public bool IsOutOfBounds()
     {
         // Trail is too long or too slow.
-        if (_lengthVH > maxLengthVH || Time.time - _openTime > maxLifetime) {
-            return false;
+        if (_length > maxLengthVH || Time.time - _openTime > maxLifetime) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     public void Close() {
+        // Pre: IsAcceptable()
         _trailLifetime = Time.time - _openTime;
-
-        if (!IsAcceptable()) {
-            return;
-        }
-
         _open = false;
-
         _trailRenderer.time = _trailLifetime + _trailExtraLifetime;
-
         TrailAnalysis trailAnalyzer = new TrailAnalysis(_screenPoints.ToArray());
         InterpretAnalysisResult(trailAnalyzer);
     }
@@ -99,6 +93,7 @@ public class AttackTrail : MonoBehaviour
 
     public void Restart() {
         _trailRenderer.time = float.PositiveInfinity;
+        _trailRenderer.Clear();
         _screenPoints.Clear();
         _targetCreatures.Clear();
     }
@@ -132,8 +127,8 @@ public class AttackTrail : MonoBehaviour
         }
     }
 
-    bool IsAcceptable() {
-        return _lengthVH >= minLengthVH && _screenPoints.Count >= 3;
+    public bool IsAcceptable() {
+        return _length >= minLengthVH && _screenPoints.Count >= 3;
     }
 
     public Creature[] GetTargets() {

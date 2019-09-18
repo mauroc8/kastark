@@ -12,6 +12,6 @@ public static class GameState
 
     public static bool IsFromActingTeam(GameObject go) {
         return
-            go.CompareTag(actingTeam == TeamSide.Left ? "TeamLeft" : "TeamRight");
+            go.CompareTag(actingTeam == TeamSide.Left ? "LeftTeam" : "RightTeam");
     }
 }

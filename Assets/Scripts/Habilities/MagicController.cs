@@ -1,30 +1,53 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Events;
 using UnityEngine;
 using UnityEngine.UI;
+using Events;
 
 public class MagicController : HabilityController
 {
-    [SerializeField] RectTransform _powerTransform = null;
-    [SerializeField] float _fullPowerX = 0;
-    [SerializeField] float _noPowerX   = 0;
+    public float duration = 1;
+    public float selfHarmPower = 0.2f;
 
-    [SerializeField] float _speed = 5;
+    [SerializeField] Image _powerImage = null;
+    [SerializeField] float _emptyPercentage = 0;
+    [SerializeField] float _selfHarmThreshold = 0;
+
+    bool _stopAnimation;
+    float _startTime;
+
+    void OnEnable()
+    {
+        _stopAnimation = false;
+        _startTime = Time.time;
+    }
 
     void Update() {
+        if (_stopAnimation) return;
+
+        var t = (Time.time - _startTime) / duration;
+
+        var power = Mathf.Pow(t, difficulty);
+
+        if (power >= 1)
+        {
+            _stopAnimation = true;
+            return;
+        }
+
+        _powerImage.fillAmount = _emptyPercentage + power * (1 - 2 * _emptyPercentage);
+
         if (_cast) return;
 
-        float t = Time.time * _speed * Mathf.Log(difficulty + 1);
-
-        float effectiveness = Mathf.Floor(t) % 2 == 0 ? t % 1 : 1 - t % 1;
-
-        effectiveness = Mathf.Pow(effectiveness, difficulty);
-
-        var pos = _powerTransform.localPosition;
-        pos.x = Mathf.Lerp(_noPowerX, _fullPowerX, effectiveness);
+        if (power > _selfHarmThreshold)
+        {
+            _cast = true;
+            EventController.TriggerEvent(new HabilityCastEvent(GameState.actingCreature, selfHarmPower));
+            return;
+        }
         
-        _powerTransform.localPosition = pos;
+
+        var effectiveness = power / _selfHarmThreshold;
 
         if (Input.GetMouseButtonDown(0) && !Util.MouseIsOnUI()) {
             Ray mRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -35,6 +58,7 @@ public class MagicController : HabilityController
                 if (!GameState.IsFromActingTeam(target)) {
                     var creature = target.GetComponent<Creature>();
                     _cast = true;
+                    _stopAnimation = true;
                     EventController.TriggerEvent(new HabilityCastEvent(creature, effectiveness));
                 }
             }

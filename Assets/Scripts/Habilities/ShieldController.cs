@@ -19,7 +19,7 @@ public class ShieldController : HabilityController
         _unitScreenPos = Camera.main.WorldToScreenPoint(unitWorldPos);
 
         // TODO: Fix bug where shield isn't well position'd
-        _backgroundTransform.position = _circleTransform.position = Util.ScreenPointToHDCoords(_unitScreenPos);
+        _backgroundTransform.position = _circleTransform.position = _unitScreenPos;
         _minCastDistance = Camera.main.pixelHeight * 0.35f;
     }
 

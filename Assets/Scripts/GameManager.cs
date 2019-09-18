@@ -5,6 +5,10 @@ using Events;
 
 public class GameManager : MonoBehaviour
 {
+    // Ahora mismo el GameManager se encarga de dos cosas:
+    // De iniciar la batalla, repartir recursos, y también de mantener actualizado el GameState.
+    // (Hay que separar la clase.)
+
     [SerializeField]
     GameSettings _gameSettings = null;
 
@@ -13,12 +17,14 @@ public class GameManager : MonoBehaviour
 
     Creature[] _battleParticipants;
 
-    void Awake() {
+    void Awake()
+    {
         _gameSettings.Load();
         _gameSettings.Init();
     }
 
-    void Start() {
+    void Start()
+    {
         _battleParticipants = _battleNode.GetComponentsInChildren<Creature>();
 
         StartCoroutine(StartBattle());
@@ -26,7 +32,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] float _waitBeforeBattle = 0;
 
-    IEnumerator StartBattle() {
+    IEnumerator StartBattle()
+    {
         yield return new WaitForSeconds(_waitBeforeBattle);
         EventController.TriggerEvent(new BattleStartEvent{});
         StartNewTurn();
@@ -34,7 +41,8 @@ public class GameManager : MonoBehaviour
 
     int _currentUnitIndex = -1;
 
-    void StartNewTurn() {
+    void StartNewTurn()
+    {
         _currentUnitIndex = (_currentUnitIndex + 1) % _battleParticipants.Length;
         
         var unit = _battleParticipants[_currentUnitIndex];
@@ -44,16 +52,26 @@ public class GameManager : MonoBehaviour
         EventController.TriggerEvent(new StartCreatureTurnEvent());
     }
 
-    void OnEnable() {
+    void OnEnable()
+    {
+        EventController.AddListener<HabilitySelectEvent>(OnHabilitySelect);
         EventController.AddListener<HabilityCastEvent>(OnHabilityCastEnd);
         EventController.AddListener<UnitTurnEndEvent>(OnUnitTurnEnd);
     }
-    void OnDisable() {
+    void OnDisable()
+    {
+        EventController.RemoveListener<HabilitySelectEvent>(OnHabilitySelect);
         EventController.RemoveListener<HabilityCastEvent>(OnHabilityCastEnd);
         EventController.RemoveListener<UnitTurnEndEvent>(OnUnitTurnEnd);
     }
 
-    void OnHabilityCastEnd(HabilityCastEvent evt) {
+    void OnHabilitySelect(HabilitySelectEvent evt)
+    {
+        GameState.selectedHability = evt.hability;
+    }
+
+    void OnHabilityCastEnd(HabilityCastEvent evt)
+    {
         var targets = evt.Targets;
         var actingCreature = GameState.actingCreature;
         var baseDamage = evt.BaseDamage;
@@ -62,7 +80,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void OnUnitTurnEnd(UnitTurnEndEvent e) {
+    void OnUnitTurnEnd(UnitTurnEndEvent e)
+    {
         // Remove dead units from _battleParticipants array.
         // Check if left or right team won.
         StartNewTurn();
