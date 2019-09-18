@@ -5,30 +5,27 @@ using UnityEngine;
 
 public class AttackTrail : MonoBehaviour
 {
-    TrailRenderer _trailRenderer;
+    private bool _open;
+    public bool IsOpen => _open;
+
 
     public float worstScenarioDirectionStdDev = 0.3f;
 
     [SerializeField] float _distanceToCamera = 4;
-
 
     [Header("Configuration")]
     public float minLengthVH = 0.1f;
     public float maxLengthVH = 0.3f;
     public float maxLifetime = 2.3f;
 
-    [Header("Info for the Analyzer")]
-    public List<Vector2> screenPoints = new List<Vector2>(50);
-    public List<Creature> targets = new List<Creature>(50);
-    public float lengthVH;
-    public float trailLifetime;
+    private List<Vector2> _screenPoints = new List<Vector2>(50);
+    private List<Creature> _targetCreatures = new List<Creature>(50);
+    private float _lengthVH;
+    private float _trailLifetime;
 
-    float _effectiveness;
-    public float Effectiveness => _effectiveness;
-
-    float _minVertexDistance;
-    float _openTime;
+    TrailRenderer _trailRenderer;
     float _trailExtraLifetime;
+    float _minVertexDistance;
 
     void Start()
     {
@@ -40,13 +37,15 @@ public class AttackTrail : MonoBehaviour
     }
 
     Plane _rayCastPlane;
+    float _openTime;
 
     public void Open(Vector2 screenPoint) {
         _rayCastPlane = new Plane(
             Camera.main.transform.forward * -1,
             Camera.main.transform.position + Camera.main.transform.forward * _distanceToCamera);
         
-        lengthVH = 0;
+        _open = true;
+        _lengthVH = 0;
         _openTime = Time.time;
 
         AddPoint(screenPoint);
@@ -56,49 +55,52 @@ public class AttackTrail : MonoBehaviour
 
     Vector2 _lastScreenPoint;
 
-    public bool Move(Vector2 screenPoint) {
-
+    public void Move(Vector2 screenPoint)
+    {
         float screenDistancePX = (screenPoint - _lastScreenPoint).magnitude;
         float screenDistanceVH = screenDistancePX / Camera.main.pixelHeight;
 
-        // Trail is too long or too slow.
-        if (lengthVH + screenDistanceVH > maxLengthVH ||
-            Time.time - _openTime > maxLifetime) {
-            return false;
-        }
-
-        lengthVH += screenDistanceVH;
+        _lengthVH += screenDistanceVH;
 
         AddPoint(screenPoint);
+    }
 
+    public bool IsOutOfBounds()
+    {
+        // Trail is too long or too slow.
+        if (_lengthVH > maxLengthVH || Time.time - _openTime > maxLifetime) {
+            return false;
+        }
         return true;
     }
 
-    public bool Close() {
-        trailLifetime = Time.time - _openTime;
+    public void Close() {
+        _trailLifetime = Time.time - _openTime;
 
         if (!IsAcceptable()) {
-            return false;
-        } else {
-            _trailRenderer.time = trailLifetime + _trailExtraLifetime;
-            TrailAnalysis trailAnalyzer = new TrailAnalysis(screenPoints.ToArray());
-            _effectiveness = InterpretAnalysisResult(trailAnalyzer);
-            return true;
+            return;
         }
+
+        _open = false;
+
+        _trailRenderer.time = _trailLifetime + _trailExtraLifetime;
+
+        TrailAnalysis trailAnalyzer = new TrailAnalysis(_screenPoints.ToArray());
+        InterpretAnalysisResult(trailAnalyzer);
     }
 
-    float InterpretAnalysisResult(TrailAnalysis trailAnalysis) {
-        var stdDev = trailAnalysis.DirectionStdDev;
-        var effectiveness = 1 - stdDev / worstScenarioDirectionStdDev;
-        if (effectiveness < 0) effectiveness = 0;
+    float _effectiveness;
 
-        return effectiveness;
+    void InterpretAnalysisResult(TrailAnalysis trailAnalysis) {
+        var stdDev = trailAnalysis.DirectionStdDev;
+        _effectiveness = 1 - stdDev / worstScenarioDirectionStdDev;
+        if (_effectiveness < 0) _effectiveness = 0;
     }
 
     public void Restart() {
         _trailRenderer.time = float.PositiveInfinity;
-        screenPoints.Clear();
-        targets.Clear();
+        _screenPoints.Clear();
+        _targetCreatures.Clear();
     }
 
     void AddPoint(Vector2 screenPoint) {
@@ -109,43 +111,44 @@ public class AttackTrail : MonoBehaviour
         {
             Vector3 worldPoint = mRay.GetPoint(rayDistance);
 
-            float worldDistance = (transform.position - worldPoint).magnitude;
-
-            if (worldDistance < _minVertexDistance) {
+            if (Vector3.Distance(transform.position, worldPoint) < _minVertexDistance) {
                 return;
             }
 
-            screenPoints.Add(screenPoint);
+            _screenPoints.Add(screenPoint);
             _lastScreenPoint = screenPoint;
             transform.position = worldPoint;
 
             RaycastHit hit;
             if (Physics.Raycast(mRay, out hit)){
-                if (hit.transform.gameObject.CompareTag(GameState.EnemyTeamTag)) {
-                    var target = hit.transform.gameObject.GetComponent<Creature>();
-                    Debug.Assert(target);
-                    if (!targets.Contains(target))
-                        targets.Add(target);
+                var target = hit.transform.gameObject;
+                if (!GameState.IsFromActingTeam(target)) {
+                    var creature = target.GetComponent<Creature>();
+
+                    if (creature && !_targetCreatures.Contains(creature))
+                        _targetCreatures.Add(creature);
                 }
             }
         }
     }
 
     bool IsAcceptable() {
-        return lengthVH >= minLengthVH && screenPoints.Count >= 3;
+        return _lengthVH >= minLengthVH && _screenPoints.Count >= 3;
     }
 
     public Creature[] GetTargets() {
-        return targets.ToArray();
+        return _targetCreatures.ToArray();
     }
 
-    public float[] GetEffectiveness() {
-        var effectiveness = new float[targets.Count];
+    public float[] GetEffectiveness(float difficulty) {
+        var effectivenessArray = new float[_targetCreatures.Count];
 
-        for (int i = 0; i < effectiveness.Length; i++) {
-            effectiveness[i] = _effectiveness;
+        var adjusted = Mathf.Pow(_effectiveness, difficulty);
+
+        for (int i = 0; i < effectivenessArray.Length; i++) {
+            effectivenessArray[i] = adjusted;
         }
         
-        return effectiveness;
+        return effectivenessArray;
     }
 }

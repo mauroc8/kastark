@@ -41,24 +41,24 @@ public class GameManager : MonoBehaviour
         GameState.actingCreature = unit;
         GameState.actingTeam = unit.CompareTag("LeftTeam") ? TeamSide.Left : TeamSide.Right;
 
-        EventController.TriggerEvent(new UnitTurnStartEvent());
+        EventController.TriggerEvent(new StartCreatureTurnEvent());
     }
 
     void OnEnable() {
-        EventController.AddListener<HabilityCastEndEvent>(OnHabilityCastEnd);
+        EventController.AddListener<HabilityCastEvent>(OnHabilityCastEnd);
         EventController.AddListener<UnitTurnEndEvent>(OnUnitTurnEnd);
     }
     void OnDisable() {
-        EventController.RemoveListener<HabilityCastEndEvent>(OnHabilityCastEnd);
+        EventController.RemoveListener<HabilityCastEvent>(OnHabilityCastEnd);
         EventController.RemoveListener<UnitTurnEndEvent>(OnUnitTurnEnd);
     }
 
-    void OnHabilityCastEnd(HabilityCastEndEvent e) {
-        var targets = e.targets;
+    void OnHabilityCastEnd(HabilityCastEvent evt) {
+        var targets = evt.Targets;
         var actingCreature = GameState.actingCreature;
-        var baseDamage = e.baseDamage;
+        var baseDamage = evt.BaseDamage;
         for (int i = 0; i < targets.Length; i++) {
-            actingCreature.Attack(targets[i], baseDamage * e.effectiveness[i], e.damageType);
+            actingCreature.Attack(targets[i], baseDamage * evt.Effectiveness[i], evt.DamageType);
         }
     }
 

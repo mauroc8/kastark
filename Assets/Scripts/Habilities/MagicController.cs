@@ -4,7 +4,7 @@ using Events;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MagicController : Hability
+public class MagicController : HabilityController
 {
     [SerializeField] RectTransform _powerTransform = null;
     [SerializeField] float _fullPowerX = 0;
@@ -12,21 +12,17 @@ public class MagicController : Hability
 
     [SerializeField] float _speed = 5;
 
-    bool _cast = false;
-    float _effectiveness;
-
-    [SerializeField] float _xOffset = 0;
-
     void Update() {
         if (_cast) return;
 
-        float t = Time.time * _speed;
+        float t = Time.time * _speed * Mathf.Log(difficulty + 1);
 
-        _effectiveness = Mathf.Floor(t) % 2 == 0 ? t%1 : 1 - t%1;
-        _effectiveness = Mathf.Pow(_effectiveness, effectivenessPower);
+        float effectiveness = Mathf.Floor(t) % 2 == 0 ? t % 1 : 1 - t % 1;
+
+        effectiveness = Mathf.Pow(effectiveness, difficulty);
 
         var pos = _powerTransform.localPosition;
-        pos.x = _xOffset + _noPowerX + _effectiveness * (_fullPowerX - _noPowerX);
+        pos.x = Mathf.Lerp(_noPowerX, _fullPowerX, effectiveness);
         
         _powerTransform.localPosition = pos;
 
@@ -36,21 +32,10 @@ public class MagicController : Hability
             RaycastHit hit;
             if (Physics.Raycast(mRay, out hit)){
                 var target = hit.transform.gameObject;
-                if (target.CompareTag(GameState.EnemyTeamTag)) {
+                if (!GameState.IsFromActingTeam(target)) {
+                    var creature = target.GetComponent<Creature>();
                     _cast = true;
-                    EventController.TriggerEvent(new HabilityCastStartEvent());
-                    
-                    var targets = new Creature[1];
-                    targets[0] = target.GetComponent<Creature>();
-                    var effectiveness = new float[1];
-                    effectiveness[0] = _effectiveness;
-
-                    EventController.TriggerEvent(new HabilityCastEndEvent{
-                        targets = targets,
-                        effectiveness = effectiveness,
-                        baseDamage = baseDamage,
-                        damageType = damageType,
-                    });
+                    EventController.TriggerEvent(new HabilityCastEvent(creature, effectiveness));
                 }
             }
         }

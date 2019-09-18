@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Events;
 
-public class HealHability : Hability
+public class HealHability : HabilityController
 {
-    bool _cast = false;
-
     void Update() {
         if (_cast) return;
 
@@ -18,19 +16,7 @@ public class HealHability : Hability
                 var target = hit.transform.gameObject;
                 if (target == GameState.actingCreature.gameObject) {
                     _cast = true;
-                    EventController.TriggerEvent(new HabilityCastStartEvent());
-                    
-                    var targets = new Creature[1];
-                    targets[0] = GameState.actingCreature;
-                    var effectiveness = new float[1];
-                    effectiveness[0] = 1;
-
-                    EventController.TriggerEvent(new HabilityCastEndEvent{
-                        targets = targets,
-                        effectiveness = effectiveness,
-                        baseDamage = baseDamage,
-                        damageType = damageType,
-                    });
+                    EventController.TriggerEvent(new HabilityCastEvent(GameState.actingCreature, 1));
                 }
             }
         }

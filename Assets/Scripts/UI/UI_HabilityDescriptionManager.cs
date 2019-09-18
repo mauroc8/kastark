@@ -18,10 +18,8 @@ public class UI_HabilityDescriptionManager : MonoBehaviour
         EventController.RemoveListener<HabilitySelectEvent>(OnSelectHability);
     }
 
-    void OnSelectHability(HabilitySelectEvent e) {
-        var habilityName = e.habilityId.ToString().ToLower();
-
-       _title.text = Localization.GetLocalizedString(habilityName);
-       _description.text = Localization.GetLocalizedString(habilityName + "_description");
+    void OnSelectHability(HabilitySelectEvent evt) {
+       _title.text = evt.hability.LocalizedName;
+       _description.text = evt.hability.LocalizedDescription;
     }
 }

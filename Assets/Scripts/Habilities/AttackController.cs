@@ -4,54 +4,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using Events;
 
-public class AttackController : Hability
+public class AttackController : HabilityController
 {
     [SerializeField] AttackTrail _attackTrail;
-
-    float _effectiveness;
 
     void Start() {
         _attackTrail = GetComponentInChildren<AttackTrail>();
     }
 
-    bool _casting = false;
-    bool _cast = false;
-
     void Update()
     {
         if (_cast) return;
 
-        bool clicking = Input.GetMouseButton(0);
-            
-        if (_casting) {
-            bool stillOpen = clicking && _attackTrail.Move(Input.mousePosition);
-            
-            if (!stillOpen) {
-                bool wasClosed = _attackTrail.Close();
-
-                if (wasClosed) {
-                    _cast = true;
-                    EventController.TriggerEvent(new HabilityCastStartEvent());
-                    _effectiveness = _attackTrail.Effectiveness;
-                    _effectiveness = Mathf.Pow(_effectiveness, effectivenessPower);
-                    
-                    var targets = _attackTrail.GetTargets();
-                    var effectiveness = _attackTrail.GetEffectiveness();
-
-                    EventController.TriggerEvent(new HabilityCastEndEvent{
-                        targets = targets,
-                        effectiveness = effectiveness,
-                        baseDamage = baseDamage,
-                        damageType = damageType,
-                    });
-                    
-                } else {
-                    _attackTrail.Restart();
-                }
+        if (Input.GetMouseButton(0))
+        {
+            if (!_attackTrail.IsOpen)
+            {
+                _attackTrail.Open(Input.mousePosition);
+            } else {
+                _attackTrail.Move(Input.mousePosition);
             }
-        } else if (clicking && !Util.MouseIsOnUI()) {
-            _attackTrail.Open(Input.mousePosition);
-            _casting = true;
+
+            if (_attackTrail.IsOutOfBounds())
+            {
+                CloseTrail();
+            }
+        } else if (_attackTrail.IsOpen)
+        {
+            CloseTrail();
         }
+    }
+
+    void CloseTrail()
+    {
+        _attackTrail.Close();
+        _cast = true;
+        EventController.TriggerEvent(new HabilityCastEvent(
+            _attackTrail.GetTargets(),
+            _attackTrail.GetEffectiveness(difficulty)
+        ));
     }
 }

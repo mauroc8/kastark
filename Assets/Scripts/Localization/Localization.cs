@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Events;
@@ -79,5 +80,13 @@ public static class Localization
         }
 
         return value;
+    }
+
+    public static string[] GetKeysFromHabilityName(string name)
+    {
+        var keys = new string[2];
+        keys[0] = name.ToLower();
+        keys[1] = keys[0] + "_description";
+        return keys;
     }
 }

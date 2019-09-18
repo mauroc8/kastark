@@ -5,25 +5,23 @@ using UnityEngine.UI;
 using Events;
 using UnityEngine.EventSystems;
 
-public class ShieldController : Hability
+public class ShieldController : HabilityController
 {
     [SerializeField] RectTransform _circleTransform = null;
     [SerializeField] RectTransform _backgroundTransform = null;
     [SerializeField] float _speed = 0;
 
     Vector2 _unitScreenPos;
+    float _minCastDistance;
 
     void OnEnable() {
         var unitWorldPos = GameState.actingCreature.transform.position;
         _unitScreenPos = Camera.main.WorldToScreenPoint(unitWorldPos);
 
+        // TODO: Fix bug where shield isn't well position'd
         _backgroundTransform.position = _circleTransform.position = Util.ScreenPointToHDCoords(_unitScreenPos);
         _minCastDistance = Camera.main.pixelHeight * 0.35f;
     }
-
-    bool _cast = false;
-    float _effectiveness;
-    float _minCastDistance;
 
     void Update() {
         if (_cast) return;
@@ -38,22 +36,9 @@ public class ShieldController : Hability
         if (Input.GetMouseButtonDown(0) &&
             Vector2.Distance(Input.mousePosition, _unitScreenPos) < _minCastDistance &&
             !Util.MouseIsOnUI()) {
-                EventController.TriggerEvent(new HabilityCastStartEvent{});
                 _cast = true;
-                _effectiveness = 1 - 0.6f * Mathf.Abs(cycle);
-                _effectiveness = Mathf.Pow(_effectiveness, effectivenessPower);
-
-                var targets = new Creature[1];
-                targets[0] = GameState.actingCreature;
-                var effectiveness = new float[1];
-                effectiveness[0] = _effectiveness;
-
-                EventController.TriggerEvent(new HabilityCastEndEvent{
-                    targets = targets,
-                    effectiveness = effectiveness,
-                    baseDamage = baseDamage,
-                    damageType = damageType,
-                });
+                var effectiveness = 1 - 0.6f * Mathf.Abs(cycle);
+                EventController.TriggerEvent(new HabilityCastEvent(GameState.actingCreature, effectiveness));
         }
     }
 }
