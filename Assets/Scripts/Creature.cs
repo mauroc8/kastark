@@ -17,10 +17,10 @@ public class Creature : MonoBehaviour
     }
 
     public void Attack(Creature other, float damage, DamageType damageType) {
-        other.ReceiveAttack(this, damage, damageType);
+        other.ReceiveAttack(damage, damageType);
     }
 
-    public void ReceiveAttack(Creature other, float damage, DamageType damageType) {
+    public void ReceiveAttack(float damage, DamageType damageType) {
         // Note: use negative damage to heal and to give shield.
 
         switch (damageType) {

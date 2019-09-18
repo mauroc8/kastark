@@ -113,10 +113,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84dbf8b790fb19846a866de3e6260610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: 1
-  _circleTransform: {fileID: 6809123815065996451}
+  difficulty: 2
+  _circle: {fileID: 6809123815065996460}
   _backgroundTransform: {fileID: 6809123816373172329}
-  _speed: 4
+  _duration: 2
 --- !u!1 &6809123815065996460
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 6809123815065996451}
   - component: {fileID: 6809123815065996449}
   - component: {fileID: 6809123815065996450}
+  - component: {fileID: 7343515540817972171}
   m_Layer: 5
   m_Name: Circle
   m_TagString: Untagged
@@ -191,6 +192,18 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!225 &7343515540817972171
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6809123815065996460}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6809123816373172330
 GameObject:
   m_ObjectHideFlags: 0

@@ -90,11 +90,13 @@ public class GameManager : MonoBehaviour
         bool leftTeamHasLivingUnit = false;
         bool rightTeamHasLivingUnit = false;
 
+        var removeList = new List<Creature>();
+
         foreach (var creature in _battleParticipants)
         {
             if (!creature.IsAlive())
             {
-                _battleParticipants.Remove(creature);
+                removeList.Add(creature);
                 _deadCreatures.Add(creature);
             } else
             {
@@ -106,6 +108,11 @@ public class GameManager : MonoBehaviour
                     rightTeamHasLivingUnit = true;
                 }
             }
+        }
+
+        foreach (var creature in removeList)
+        {
+            _battleParticipants.Remove(creature);
         }
 
         if (leftTeamHasLivingUnit && rightTeamHasLivingUnit)
