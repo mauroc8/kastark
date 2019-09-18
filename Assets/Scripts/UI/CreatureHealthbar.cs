@@ -21,14 +21,14 @@ public class CreatureHealthbar : MonoBehaviour
     [SerializeField] Image _healthImage = null;
     [SerializeField] Image _shieldImage = null;
 
-    Creature _creature = null;
+    CreatureController _creature = null;
     CanvasGroup _canvasGroup;
     Transform _healthbarTransform;
     Vector3 _headPosition;
     float _distanceToHeadPx;
 
     void Start() {
-        _creature = GetComponent<Creature>();
+        _creature = GetComponent<CreatureController>();
         _canvasGroup = _healthbarGroup.GetComponent<CanvasGroup>();
         _headPosition = _headTransform.position;
         _healthbarTransform = _healthbarGroup.transform;

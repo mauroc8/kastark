@@ -9,14 +9,16 @@ public class GameManager : MonoBehaviour
     // De iniciar la batalla, repartir recursos, y también de mantener actualizado el GameState.
     // (Hay que separar la clase.)
 
-    [SerializeField]
-    GameSettings _gameSettings = null;
+    [Header("Model")]
+    [SerializeField] GameSettings _gameSettings = null;
 
-    [SerializeField]
-    GameObject _battleNode = null;
+    [Header("References")]
+    [SerializeField] GameObject _battleNode = null;
+    [SerializeField] GameObject _battleWinNode = null;
+    [SerializeField] GameObject _battleLoseNode = null;
 
-    List<Creature> _battleParticipants;
-    List<Creature> _deadCreatures;
+    List<CreatureController> _battleParticipants;
+    List<CreatureController> _deadCreatures;
 
     void Awake()
     {
@@ -26,8 +28,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        _battleParticipants = new List<Creature>(_battleNode.GetComponentsInChildren<Creature>());
-        _deadCreatures      = new List<Creature>();
+        _battleParticipants = new List<CreatureController>(_battleNode.GetComponentsInChildren<CreatureController>());
+        _deadCreatures      = new List<CreatureController>();
 
         StartCoroutine(StartBattle());
     }
@@ -90,7 +92,7 @@ public class GameManager : MonoBehaviour
         bool leftTeamHasLivingUnit = false;
         bool rightTeamHasLivingUnit = false;
 
-        var removeList = new List<Creature>();
+        var removeList = new List<CreatureController>();
 
         foreach (var creature in _battleParticipants)
         {
@@ -133,11 +135,11 @@ public class GameManager : MonoBehaviour
 
     void PlayerWins()
     {
-        Debug.Log("You WIN!");
+        _battleWinNode.SetActive(true);
     }
 
     void PlayerLooses()
     {
-        Debug.Log("You LOSE!");
+        _battleLoseNode.SetActive(true);
     }
 }

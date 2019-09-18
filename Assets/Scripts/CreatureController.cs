@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Creature : MonoBehaviour
+public class CreatureController : MonoBehaviour
 {
     public float health = 10;
     public float maxHealth = 10;
@@ -16,7 +16,7 @@ public class Creature : MonoBehaviour
         return health > 0;
     }
 
-    public void Attack(Creature other, float damage, DamageType damageType) {
+    public void Attack(CreatureController other, float damage, DamageType damageType) {
         other.ReceiveAttack(damage, damageType);
     }
 

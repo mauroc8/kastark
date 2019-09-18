@@ -56,7 +56,7 @@ public class MagicController : HabilityController
             if (Physics.Raycast(mRay, out hit)){
                 var target = hit.transform.gameObject;
                 if (!GameState.IsFromActingTeam(target)) {
-                    var creature = target.GetComponent<Creature>();
+                    var creature = target.GetComponent<CreatureController>();
                     _cast = true;
                     _stopAnimation = true;
                     EventController.TriggerEvent(new HabilityCastEvent(creature, effectiveness));

@@ -5,8 +5,8 @@ using Events;
 
 public class AI : MonoBehaviour
 {
-    [SerializeField] Hability _hability;
-    [SerializeField] Creature _target;
+    [SerializeField] Hability _hability = null;
+    [SerializeField] CreatureController _target = null;
 
     void OnEnable()
     {

@@ -48,7 +48,7 @@ public class AttackController : HabilityController
         _attackTrail.Close();
 
         var targets = _attackTrail.GetTargets();
-        var targetsAsList = new List<Creature>(targets);
+        var targetsAsList = new List<CreatureController>(targets);
 
         if (targetsAsList.Exists(creature => !GameState.IsFromActingTeam(creature.gameObject)))
         {

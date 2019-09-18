@@ -7,7 +7,7 @@ public static class GameState
     public static readonly Team PlayerTeam = Team.Left;
 
     public static Team   actingTeam;
-    public static Creature   actingCreature;
+    public static CreatureController   actingCreature;
     public static Hability   selectedHability;
 
     public static bool IsFromActingTeam(GameObject go)
@@ -15,7 +15,7 @@ public static class GameState
         return go.CompareTag(actingTeam == Team.Left ? "LeftTeam" : "RightTeam");
     }
 
-    public static bool IsFromActingTeam(Creature creature)
+    public static bool IsFromActingTeam(CreatureController creature)
     {
         return IsFromActingTeam(creature.gameObject);
     }
@@ -25,7 +25,7 @@ public static class GameState
         return go.CompareTag("LeftTeam") ? Team.Left : Team.Right;
     }
 
-    public static Team GetTeam(Creature creature)
+    public static Team GetTeam(CreatureController creature)
     {
         return GetTeam(creature.gameObject);
     }

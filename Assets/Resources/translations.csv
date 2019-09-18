@@ -8,3 +8,5 @@
 "shield_description","Cast a protective shield around you.","Conjura un escudo protector alrededor tuyo."
 "heal_description","Match the hearts to heal yourself.","Haz coincidir los corazones para sanarte."
 "cancel","Cancel","Cancelar"
+"battlewin","YOU WIN!","GANASTE!"
+"battlelose","YOU LOSE!","PERDISTE!"

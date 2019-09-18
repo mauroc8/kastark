@@ -13,25 +13,25 @@ namespace Events{
 
     public class HabilityCastEvent : GameEvent
     {
-        private Creature[] _targets;
+        private CreatureController[] _targets;
         private float _damage;
         private float[] _effectiveness;
         private DamageType _damageType;
 
-        public Creature[] Targets => _targets;
+        public CreatureController[] Targets => _targets;
         public float BaseDamage => _damage; // can be a negative number to heal
         public float[] Effectiveness => _effectiveness;
         public DamageType DamageType => _damageType;
         
-        public HabilityCastEvent(Creature target, float effectiveness)
+        public HabilityCastEvent(CreatureController target, float effectiveness)
         {
-            _targets = new Creature[]{target};
+            _targets = new CreatureController[]{target};
             _effectiveness = new float[]{effectiveness};
             _damage = GameState.selectedHability.Damage;
             _damageType = GameState.selectedHability.DamageType;
         }
 
-        public HabilityCastEvent(Creature[] targets, float[] effectiveness)
+        public HabilityCastEvent(CreatureController[] targets, float[] effectiveness)
         {
             _targets = targets;
             _effectiveness = effectiveness;

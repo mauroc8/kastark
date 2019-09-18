@@ -19,7 +19,7 @@ public class AttackTrail : MonoBehaviour
     public float maxLifetime = 2.3f;
 
     private List<Vector2> _screenPoints = new List<Vector2>(30);
-    private List<Creature> _targetCreatures = new List<Creature>(30);
+    private List<CreatureController> _targetCreatures = new List<CreatureController>(30);
     private float _length; // in VH (viewport height) units (1 = full height).
     private float _trailLifetime;
 
@@ -118,7 +118,7 @@ public class AttackTrail : MonoBehaviour
             if (Physics.Raycast(mRay, out hit)){
                 var target = hit.transform.gameObject;
                 if (!GameState.IsFromActingTeam(target)) {
-                    var creature = target.GetComponent<Creature>();
+                    var creature = target.GetComponent<CreatureController>();
 
                     if (creature && !_targetCreatures.Contains(creature))
                         _targetCreatures.Add(creature);
@@ -131,7 +131,7 @@ public class AttackTrail : MonoBehaviour
         return _length >= minLengthVH && _screenPoints.Count >= 3;
     }
 
-    public Creature[] GetTargets() {
+    public CreatureController[] GetTargets() {
         return _targetCreatures.ToArray();
     }
 
