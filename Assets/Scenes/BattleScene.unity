@@ -300,7 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hability: {fileID: 11400000, guid: be014d44bf74bd74facb0723b73125c4, type: 2}
-  _target: {fileID: 416668933}
+  _target: {fileID: 0}
 --- !u!4 &138110862
 Transform:
   m_ObjectHideFlags: 0
@@ -1105,12 +1105,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 416668932}
-  - component: {fileID: 416668933}
   - component: {fileID: 416668934}
   - component: {fileID: 416668936}
   - component: {fileID: 416668935}
+  - component: {fileID: 416668933}
   m_Layer: 0
-  m_Name: Fairy
+  m_Name: Aira
   m_TagString: LeftTeam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1151,7 +1151,6 @@ MonoBehaviour:
   shield: 0
   physicalResistance: 0.95
   magicalResistance: 0.95
-  healMultiplier: 0.95
 --- !u!114 &416668934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2655,7 +2654,7 @@ GameObject:
   - component: {fileID: 1358008265}
   m_Layer: 0
   m_Name: Gnome Mesh
-  m_TagString: RightTeam
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3019,7 +3018,7 @@ GameObject:
   - component: {fileID: 1580877053}
   - component: {fileID: 1580877054}
   m_Layer: 0
-  m_Name: Gnome
+  m_Name: Othok
   m_TagString: RightTeam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3059,7 +3058,6 @@ MonoBehaviour:
   shield: 0
   physicalResistance: 0.95
   magicalResistance: 0.95
-  healMultiplier: 0.95
 --- !u!114 &1580877052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3846,7 +3844,7 @@ GameObject:
   - component: {fileID: 1841711953}
   m_Layer: 0
   m_Name: Fairy Mesh
-  m_TagString: LeftTeam
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

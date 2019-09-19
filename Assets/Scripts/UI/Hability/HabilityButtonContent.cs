@@ -12,6 +12,6 @@ public class HabilityButtonContent : MonoBehaviour
     public virtual void FillContent(Hability hability)
     {
         _text.text = hability.Name;
-        _image.sprite = hability.ImageSprite;
+        _image.sprite = hability.imageSprite;
     }
 }

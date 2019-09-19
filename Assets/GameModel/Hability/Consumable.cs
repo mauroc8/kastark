@@ -6,5 +6,12 @@ using UnityEngine;
 public class Consumable : Hability
 {
     [Header("Consumable")]
-    public int amount;
+    [SerializeField] int initialAmount = 0;
+
+    [System.NonSerialized] public int amount;
+    
+    public void Init()
+    {
+        amount = initialAmount;
+    }
 }

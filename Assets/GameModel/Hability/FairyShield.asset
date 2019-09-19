@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8186dfad205d34d8eef8850d07e2b9, type: 3}
   m_Name: FairyShield
   m_EditorClassIdentifier: 
-  Damage: -5
-  Difficulty: 2
-  DamageType: 3
   Name: Shield
-  ImageSprite: {fileID: 21300000, guid: 919aa016a18722e4cb319d49535483d3, type: 3}
-  Controller: {fileID: 1715831638473981881, guid: 417f388ab3ae4de458b3a12bf635c499,
+  _initialDamage: 3
+  _initialDifficulty: 1
+  DamageType: 3
+  localizationKey: shield
+  imageSprite: {fileID: 21300000, guid: 919aa016a18722e4cb319d49535483d3, type: 3}
+  controller: {fileID: 1715831638473981881, guid: 417f388ab3ae4de458b3a12bf635c499,
     type: 3}

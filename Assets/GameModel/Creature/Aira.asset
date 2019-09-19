@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 915087710799836499470a24963a39c1, type: 3}
+  m_Name: Aira
+  m_EditorClassIdentifier: 
+  creatureName: Aira
+  species: 0
+  _initialMaxHealth: 10
+  _initialPhysicalResistance: 1
+  _initialMagicalResistance: 1
+  _initialHabilities:
+  - {fileID: 11400000, guid: ba7ff20540c40f84f837a8c52d9265ec, type: 2}
+  - {fileID: 11400000, guid: 868c58631dca2fc42944d7ffe5797b18, type: 2}
+  - {fileID: 11400000, guid: fb45dffec50a8a448b1826f2085b6098, type: 2}
+  _initialConsumables:
+  - {fileID: 11400000, guid: f62976b40e3134641964c73808564442, type: 2}

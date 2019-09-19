@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Team {
+public enum Team
+{
     Left,
     Right,
-};
+    None
+}
 
-public enum HabilityId {
-    Attack,
-    Magic,
-    Shield,
-    Heal,
-};
-
-public enum DamageType {
+public enum DamageType
+{
     Physical, Magical, Heal, Shield, None
-};
+}
+
+public enum CreatureKind
+{
+    Fairy, Gnome, Dwarf, None
+}

@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd2fd95a54e432449b8e49983576418e, type: 3}
   m_Name: SmallHealthPotion
   m_EditorClassIdentifier: 
-  Damage: -2
-  Difficulty: 1
-  DamageType: 2
   Name: Health Potion
-  ImageSprite: {fileID: 21300000, guid: 919aa016a18722e4cb319d49535483d3, type: 3}
-  Controller: {fileID: 4861203174460205112, guid: b920207b7dc070e46b91342deaf9f322,
+  _initialDamage: 3
+  _initialDifficulty: 1
+  DamageType: 2
+  localizationKey: heal
+  imageSprite: {fileID: 21300000, guid: 919aa016a18722e4cb319d49535483d3, type: 3}
+  controller: {fileID: 4861203174460205112, guid: b920207b7dc070e46b91342deaf9f322,
     type: 3}
-  amount: 0
+  initialAmount: 1

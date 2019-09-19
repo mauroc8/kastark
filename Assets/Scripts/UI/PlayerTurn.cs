@@ -49,7 +49,7 @@ public class PlayerTurn : MonoBehaviour
 
         Debug.Log($"HabilitySelected:{evt.hability.Name}");
         SelectScreen(1);
-        _instance = Instantiate(evt.hability.Controller);
+        _instance = Instantiate(evt.hability.controller);
         _instance.transform.SetParent(transform, false);
         _instance.SetActive(true);
     }
