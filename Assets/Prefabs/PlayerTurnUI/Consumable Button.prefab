@@ -15,6 +15,18 @@ MonoBehaviour:
   _text: {fileID: 4142928323003214406}
   _image: {fileID: 4851378782170884780}
   _amount: {fileID: 2856983670203316871}
+--- !u!114 &9117854968580358409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4142928323868244421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7cc3774685f9d44d8d96f6284c62e87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4455331490760446638
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,6 +360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7494800115286456821, guid: ba5e0567c23ac1146a0e2b979ceb5be0, type: 3}
+    - {fileID: 4113181481958397399, guid: ba5e0567c23ac1146a0e2b979ceb5be0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ba5e0567c23ac1146a0e2b979ceb5be0, type: 3}
 --- !u!1 &4142928323868244421 stripped
 GameObject:

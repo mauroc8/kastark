@@ -14,7 +14,7 @@ public class Creature : ScriptableObject
     [SerializeField] float _initialPhysicalResistance = 1;
     [SerializeField] float _initialMagicalResistance = 1;
     [SerializeField] Hability[] _initialHabilities = null;
-    [SerializeField] Consumable[] _initialConsumables = null;
+    [SerializeField] Hability[] _initialConsumables = null;
 
     [System.NonSerialized] public float health;
     [System.NonSerialized] public float maxHealth;
@@ -31,28 +31,11 @@ public class Creature : ScriptableObject
         physicalResistance = _initialPhysicalResistance;
         magicalResistance = _initialMagicalResistance;
         habilities = new List<Hability>(_initialHabilities);
-        consumables = new List<Consumable>(_initialConsumables);
-
-        foreach (var consumable in consumables)
-        {
-            consumable.Init();
-        }
+        consumables = Consumable.GetConsumableList(_initialConsumables);
     }
 
-    public void GrabConsumable(Consumable newConsumable)
+    public void GrabAsConsumable(Hability hability)
     {
-        var foundConsumable = consumables.Find(consumable => consumable.GetType() == newConsumable.GetType());
-
-        if (foundConsumable == newConsumable) {
-            Debug.LogWarning($"Consumable {newConsumable.Name} duplicado en {creatureName}.");
-        }
-        else if (foundConsumable != null)
-        {
-            foundConsumable.amount += newConsumable.amount;
-        }
-        else
-        {
-            consumables.Add(newConsumable);
-        }
+        
     }
 }

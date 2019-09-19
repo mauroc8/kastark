@@ -5,9 +5,9 @@ using UnityEngine;
 public class HabilityPanelContent : MonoBehaviour
 {
     [SerializeField] Hability[] _habilities = {};
-    [SerializeField] GameObject _prefab     = null;
+    [SerializeField] protected GameObject _prefab     = null;
 
-    void Start()
+    protected virtual void Start()
     {
         for (int i = _habilities.Length - 1; i >= 0; i--)
         {
@@ -21,7 +21,7 @@ public class HabilityPanelContent : MonoBehaviour
         }
     }
 
-    void PositionInstance(GameObject instance, int i)
+    protected void PositionInstance(GameObject instance, int i)
     {
         var pos = instance.transform.localPosition;
 

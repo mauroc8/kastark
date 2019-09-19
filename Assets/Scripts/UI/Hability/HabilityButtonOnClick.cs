@@ -12,7 +12,7 @@ public class HabilityButtonOnClick : MonoBehaviour
         button.onClick.AddListener(() => TriggerSelectedHabilityEvent(hability));
     }
 
-    void TriggerSelectedHabilityEvent(Hability hability)
+    protected void TriggerSelectedHabilityEvent(Hability hability)
     {
         EventController.TriggerEvent(new HabilitySelectEvent{ hability = hability });
     }

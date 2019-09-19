@@ -2,16 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName="Kastark/Consumable")]
-public class Consumable : Hability
+public class Consumable
 {
-    [Header("Consumable")]
-    [SerializeField] int initialAmount = 0;
+    public Hability hability;
+    public int      amount;
 
-    [System.NonSerialized] public int amount;
-    
-    public void Init()
+    public static List<Consumable> GetConsumableList(IEnumerable<Hability> habilities)
     {
-        amount = initialAmount;
+        var list = new List<Consumable>();
+
+        foreach (var hability in habilities)
+        {
+            AppendToConsumableList(list, hability);
+        }
+
+        return list;
+    }
+
+    public static void AppendToConsumableList(List<Consumable> list, Hability hability)
+    {
+        if (!list.Exists(consumable => consumable.hability == hability))
+        {
+            list.Add(new Consumable{ hability=hability, amount=1 });
+        }
+        else
+        {
+            var creature = list.Find(creat => creat.hability == hability);
+            creature.amount++;
+        } 
     }
 }

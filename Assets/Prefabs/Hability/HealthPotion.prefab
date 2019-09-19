@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4861203174460205116}
   - component: {fileID: 4861203174460205115}
   - component: {fileID: 4861203174460205114}
-  - component: {fileID: 7140663961301394354}
   - component: {fileID: 1820445084607340240}
   m_Layer: 0
   m_Name: HealthPotion
@@ -114,21 +113,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficulty: 1
---- !u!114 &7140663961301394354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4861203174460205112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2150c0938a55d474daab303878f7200c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _texture: {fileID: 0}
-  _width: 0
-  _height: 0
 --- !u!114 &1820445084607340240
 MonoBehaviour:
   m_ObjectHideFlags: 0

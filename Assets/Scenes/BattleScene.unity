@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44998223, g: 0.49738777, b: 0.5612785, a: 1}
+  m_IndirectSpecularColor: {r: 0.44998235, g: 0.4973879, b: 0.56127876, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -300,7 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hability: {fileID: 11400000, guid: be014d44bf74bd74facb0723b73125c4, type: 2}
-  _target: {fileID: 0}
+  _target: {fileID: 416668933}
 --- !u!4 &138110862
 Transform:
   m_ObjectHideFlags: 0
@@ -4778,7 +4778,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _habilities.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: f62976b40e3134641964c73808564442,
+      objectReference: {fileID: 11400000, guid: 87521aab02a075047829c4bda376650e,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 841c80a4ec7ad80429f598ea67d8674b, type: 3}
