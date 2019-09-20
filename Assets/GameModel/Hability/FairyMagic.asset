@@ -18,5 +18,5 @@ MonoBehaviour:
   DamageType: 0
   localizationKey: magic
   imageSprite: {fileID: 21300000, guid: 919aa016a18722e4cb319d49535483d3, type: 3}
-  controller: {fileID: 6551569821050045844, guid: c320afee82e38014fa89671d4be26a62,
+  controller: {fileID: 1259224199978336840, guid: 5b2fab65b14497341a53921d6b9bfa88,
     type: 3}

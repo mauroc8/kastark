@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Events;
 
-public class MagicController : HabilityController
+public class OldMagicController : HabilityController
 {
     public float duration = 1;
     public float selfHarmPower = 0.2f;
