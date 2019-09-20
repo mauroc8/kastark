@@ -9,10 +9,10 @@ public class HabilityButtonOnClick : MonoBehaviour
     public void SetHandler(Hability hability)
     {
         var button = GetComponent<Button>();
-        button.onClick.AddListener(() => TriggerSelectedHabilityEvent(hability));
+        button.onClick.AddListener(() => TriggerHabilitySelectEvent(hability));
     }
 
-    protected void TriggerSelectedHabilityEvent(Hability hability)
+    protected void TriggerHabilitySelectEvent(Hability hability)
     {
         EventController.TriggerEvent(new HabilitySelectEvent{ hability = hability });
     }

@@ -9,7 +9,7 @@ public class ConsumableButtonOnClick : HabilityButtonOnClick
     public void SetHandler(Consumable consumable)
     {
         var button = GetComponent<Button>();
-        button.onClick.AddListener(() => TriggerSelectedHabilityEvent(consumable.hability));
+        button.onClick.AddListener(() => TriggerHabilitySelectEvent(consumable.hability));
         consumable.amount--;
     }
 }

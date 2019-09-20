@@ -60,13 +60,13 @@ public class GameManager : MonoBehaviour
     void OnEnable()
     {
         EventController.AddListener<HabilitySelectEvent>(OnHabilitySelect);
-        EventController.AddListener<HabilityCastEvent>(OnHabilityCastEnd);
+        EventController.AddListener<HabilityCastEvent>(OnHabilityCast);
         EventController.AddListener<TurnEndEvent>(OnTurnEnd);
     }
     void OnDisable()
     {
         EventController.RemoveListener<HabilitySelectEvent>(OnHabilitySelect);
-        EventController.RemoveListener<HabilityCastEvent>(OnHabilityCastEnd);
+        EventController.RemoveListener<HabilityCastEvent>(OnHabilityCast);
         EventController.RemoveListener<TurnEndEvent>(OnTurnEnd);
     }
 
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
         GameState.selectedHability = evt.hability;
     }
 
-    void OnHabilityCastEnd(HabilityCastEvent evt)
+    void OnHabilityCast(HabilityCastEvent evt)
     {
         var targets = evt.Targets;
         var actingCreature = GameState.actingCreature;
