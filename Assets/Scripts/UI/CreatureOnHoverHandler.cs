@@ -5,13 +5,19 @@ using UnityEngine;
 
 public class CreatureOnHoverHandler : MonoBehaviour
 {
-    [SerializeField] Team _teamId = Team.Left;
     [SerializeField] CursorSkin _cursorSkin = null;
+
+    Team _team;
+
+    void Start()
+    {
+        _team = GetComponent<CreatureController>().creature.team;
+    }
 
     void OnMouseEnter() {
         if (GameState.actingTeam != GameState.PlayerTeam) return;
 
-        var myTeamsTurn = GameState.actingTeam == _teamId;
+        var myTeamsTurn = GameState.actingTeam == _team;
         var hability    = GameState.selectedHability;
 
         if (hability == null) return;

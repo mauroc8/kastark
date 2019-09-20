@@ -5,19 +5,14 @@ using Events;
 
 public class GameManager : MonoBehaviour
 {
-    // Ahora mismo el GameManager se encarga de dos cosas:
-    // De iniciar la batalla, repartir recursos, y también de mantener actualizado el GameState.
-    // (Hay que separar la clase.)
-
     [Header("Model")]
     [SerializeField] GameSettings _gameSettings = null;
+    [SerializeField] GameObject _battleNode = null;
 
     [Header("References")]
-    [SerializeField] GameObject _battleNode = null;
     [SerializeField] GameObject _battleWinNode = null;
     [SerializeField] GameObject _battleLoseNode = null;
 
-    List<CreatureController> _battleParticipants;
     List<CreatureController> _deadCreatures;
 
     void Awake()
@@ -28,13 +23,19 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        _battleParticipants = new List<CreatureController>(_battleNode.GetComponentsInChildren<CreatureController>());
-        _deadCreatures      = new List<CreatureController>();
+        var allCreatures = _battleNode.GetComponentsInChildren<CreatureController>();
+        GameState.creaturesInBattle = new List<CreatureController>(allCreatures);
+        _deadCreatures              = new List<CreatureController>();
+
+        foreach (var creatureController in allCreatures)
+        {
+            creatureController.creature.Init();
+        }
 
         StartCoroutine(StartBattle());
     }
 
-    [SerializeField] float _waitBeforeBattle = 0;
+    [SerializeField] float _waitBeforeBattle = 0.1f;
 
     IEnumerator StartBattle()
     {
@@ -47,12 +48,14 @@ public class GameManager : MonoBehaviour
 
     void StartNewTurn()
     {
-        _currentUnitIndex = (_currentUnitIndex + 1) % _battleParticipants.Count;
+        _currentUnitIndex = (_currentUnitIndex + 1) % GameState.creaturesInBattle.Count;
 
-        var unit = _battleParticipants[_currentUnitIndex];
+        var unit = GameState.creaturesInBattle[_currentUnitIndex];
 
         GameState.actingCreature = unit;
         GameState.actingTeam = GameState.GetTeam(unit);
+
+        Debug.Log($"Starting {unit.name}'s turn.");
         
         EventController.TriggerEvent(new TurnStartEvent());
     }
@@ -94,7 +97,7 @@ public class GameManager : MonoBehaviour
 
         var removeList = new List<CreatureController>();
 
-        foreach (var creature in _battleParticipants)
+        foreach (var creature in GameState.creaturesInBattle)
         {
             if (!creature.IsAlive())
             {
@@ -114,7 +117,7 @@ public class GameManager : MonoBehaviour
 
         foreach (var creature in removeList)
         {
-            _battleParticipants.Remove(creature);
+            GameState.creaturesInBattle.Remove(creature);
         }
 
         if (leftTeamHasLivingUnit && rightTeamHasLivingUnit)

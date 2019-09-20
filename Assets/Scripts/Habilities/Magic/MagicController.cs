@@ -26,7 +26,7 @@ public class MagicController : HabilityController
     void Start()
     {
         var followCanvasObject = _particleSystem.GetComponent<FollowCanvasObject>();
-        followCanvasObject.depthReference = GameState.actingCreature.gameObject.GetComponent<CreatureTransforms>().head;
+        followCanvasObject.depthReference = GameState.actingCreature.head;
         followCanvasObject.enabled = true;
 
         _bigParticleColor = _bigParticle.GetComponent<ColorController>();
@@ -74,5 +74,9 @@ public class MagicController : HabilityController
         }
 
         // Do something while casting...
+        if (Input.GetMouseButton(0))
+            _cursorSkin.ChangeCursorTexture(CursorTexture.Aggressive);
+        else
+            _cursorSkin.ChangeCursorTexture(CursorTexture.Interactable);
     }
 }

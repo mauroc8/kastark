@@ -40,12 +40,17 @@ public static class Localization
             string key = fields[0];
 
             if (_englishLanguage.ContainsKey(key)) {
-                Debug.Log($"Duplicated key \"{key}\" in translations.csv:{i}");
+                Debug.LogWarning($"Duplicated key \"{key}\" in translations.csv:{i}");
             }
 
-            _englishLanguage.Add(key, fields[1].Replace("\\\"", "\""));
-            _spanishLanguage.Add(key, fields[2].Replace("\\\"", "\""));
+            _englishLanguage.Add(key, ParseField(fields[1]));
+            _spanishLanguage.Add(key, ParseField(fields[2]));
         }
+    }
+
+    static string ParseField(string field)
+    {
+        return field.Replace("\\\"", "\"").Replace("\\\n", "\n");
     }
 
     static Dictionary<string, string> _englishLanguage = null;
@@ -53,16 +58,23 @@ public static class Localization
 
     static Language _language;
 
+    public static void InitLanguage(Language newLang)
+    {
+        _language = newLang;
+    }
+
     public static void SetLanguage(Language newLang) {
         _language = newLang;
         EventController.TriggerEvent(new LanguageChangeEvent{});
     }
 
-    public static Language GetLanguage() {
+    public static Language GetLanguage()
+    {
         return _language;
     }
 
-    public static string GetLocalizedString(string key) {
+    public static string GetLocalizedString(string key)
+    {
         string value;
 
         if (_englishLanguage == null) Init();

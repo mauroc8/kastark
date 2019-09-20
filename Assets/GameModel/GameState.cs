@@ -6,9 +6,10 @@ public static class GameState
 {
     public static readonly Team PlayerTeam = Team.Left;
 
-    public static Team   actingTeam;
-    public static CreatureController   actingCreature;
-    public static Hability   selectedHability;
+    public static List<CreatureController> creaturesInBattle;       
+    public static Team                     actingTeam;
+    public static CreatureController       actingCreature;
+    public static Hability                 selectedHability;
 
     public static bool IsFromActingTeam(GameObject go)
     {

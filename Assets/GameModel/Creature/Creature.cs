@@ -8,13 +8,14 @@ public class Creature : ScriptableObject
     [Header("Show")]
     public string creatureName;
     public CreatureKind species;
+    public Team team;
 
     [Header("Stats")]
     [SerializeField] float _initialMaxHealth = 10;
     [SerializeField] float _initialPhysicalResistance = 1;
     [SerializeField] float _initialMagicalResistance = 1;
     [SerializeField] Hability[] _initialHabilities = null;
-    [SerializeField] Hability[] _initialConsumables = null;
+    [SerializeField] Consumable[] _initialConsumables = null;
 
     [System.NonSerialized] public float health;
     [System.NonSerialized] public float maxHealth;
@@ -31,11 +32,15 @@ public class Creature : ScriptableObject
         physicalResistance = _initialPhysicalResistance;
         magicalResistance = _initialMagicalResistance;
         habilities = new List<Hability>(_initialHabilities);
-        consumables = Consumable.GetConsumableList(_initialConsumables);
-    }
+        consumables = new List<Consumable>(_initialConsumables);
 
-    public void GrabAsConsumable(Hability hability)
-    {
-        
+        foreach (var hability in habilities)
+        {
+            hability.Init();
+        }
+        foreach (var consumable in consumables)
+        {
+            consumable.Init();
+        }
     }
 }

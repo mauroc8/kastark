@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class CreatureController : MonoBehaviour
 {
-    public float health = 10;
-    public float maxHealth = 10;
-    public float shield = 0;
+    public Creature creature = null;
 
-    public float physicalResistance = 0.95f;
-    public float magicalResistance  = 0.95f;
+    [Header("Refs")]
+    public Transform head;
+    public Transform chest;
 
     public bool IsAlive() {
-        return health > 0;
+        return creature.health > 0;
     }
 
     public void Attack(CreatureController other, float damage, DamageType damageType) {
@@ -24,23 +23,23 @@ public class CreatureController : MonoBehaviour
             case DamageType.Physical:
             case DamageType.Magical:
             {
-                damage *= damageType == DamageType.Physical ? physicalResistance : magicalResistance;
+                damage *= damageType == DamageType.Physical ? creature.physicalResistance : creature.magicalResistance;
 
-                if (damage > 0 && shield > 0) {
-                    shield -= damage;
-                    if (shield < 0) {
-                        health += shield;
-                        shield = 0;
+                if (damage > 0 && creature.shield > 0) {
+                    creature.shield -= damage;
+                    if (creature.shield < 0) {
+                        creature.health += creature.shield;
+                        creature.shield = 0;
                     }
                 } else {
-                    health -= damage;
+                    creature.health -= damage;
                 }
             } break;
             case DamageType.Shield: {
-                shield += damage;
+                creature.shield += damage;
             } break;
             case DamageType.Heal: {
-                health = Mathf.Min(maxHealth, health + damage);
+                creature.health = Mathf.Min(creature.maxHealth, creature.health + damage);
             } break;
             default: {
                 Debug.Log($"No handler for damageType {damageType}");

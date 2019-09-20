@@ -9,29 +9,29 @@ public class CreatureHealthbar : MonoBehaviour
     bool _show = false;
     bool _lastShow = true;
 
-    [Header("Settings")]
-    [SerializeField] float _imageMarginPercentage = 0;
-    [SerializeField] float _distanceToHeadVH = 0; // viewport height (percentage)
-    [SerializeField] float _fadeInDuration = 0;
-    [SerializeField] float _fadeInPower = 0;
+    float _imageMarginPercentage = 0.0032f;
+    float _distanceToHeadVH = 0.08f;
 
     [Header("Refs")]
     [SerializeField] GameObject _healthbarGroup = null;
-    [SerializeField] Transform _headTransform = null;
     [SerializeField] Image _healthImage = null;
     [SerializeField] Image _shieldImage = null;
 
-    CreatureController _creature = null;
+    Creature _creature;
     CanvasGroup _canvasGroup;
     Transform _healthbarTransform;
     Vector3 _headPosition;
     float _distanceToHeadPx;
 
     void Start() {
-        _creature = GetComponent<CreatureController>();
         _canvasGroup = _healthbarGroup.GetComponent<CanvasGroup>();
-        _headPosition = _headTransform.position;
-        _healthbarTransform = _healthbarGroup.transform;
+        _healthbarTransform = _canvasGroup.transform;
+        
+        var creatureController = GetComponent<CreatureController>();
+        _creature = creatureController.creature;
+        
+        _headPosition = creatureController.head.position;
+
         _distanceToHeadPx = Camera.main.pixelHeight * _distanceToHeadVH;
     }
 
@@ -66,38 +66,6 @@ public class CreatureHealthbar : MonoBehaviour
             }
         }
 
-        if (_fading) {
-            var t = (Time.time - _fadeInStart) / _fadeInDuration;
-
-            if (t < 1) {
-                t = Mathf.Pow(t, _fadeInPower);
-                _canvasGroup.alpha = t;
-            } else {
-                _canvasGroup.alpha = 1;
-                _fading = false;
-            }
-        }
-
         _lastShow = _show;
-    }
-
-    void OnEnable() {
-        EventController.AddListener<BattleStartEvent>(OnBattleStart);
-    }
-    void OnDisable() {
-        EventController.RemoveListener<BattleStartEvent>(OnBattleStart);
-    }
-
-    void OnBattleStart(BattleStartEvent e) {
-        _show = true;
-        FadeIn();
-    }
-
-    float _fadeInStart;
-    bool _fading;
-
-    void FadeIn() {
-        _fadeInStart = Time.time;
-        _fading = true;
     }
 }

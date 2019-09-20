@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class ConsumablePanelContent : HabilityPanelContent
 {
-    [SerializeField] Consumable[] _consumables = {};
+    List<Consumable> _consumables;
 
-    protected override void Start()
+    protected override void OnEnable()
     {
-        for (int i = _consumables.Length - 1; i >= 0; i--)
+        _consumables = GameState.actingCreature.creature.consumables;
+        var N = _consumables.Count;
+
+        for (int i = 0; i < N; i++)
         {
-            var instance = Instantiate(_prefab);
+            var instance = Instantiate(_buttonPrefab);
             instance.transform.SetParent(transform, false);
-            PositionInstance(instance, i);
+            PositionInstance(instance, i, N);
 
             var consumable = _consumables[i];
+
             instance.GetComponent<ConsumableButtonContent>()?.FillContent(consumable);
             instance.GetComponent<ConsumableButtonOnClick>()?.SetHandler(consumable);
         }

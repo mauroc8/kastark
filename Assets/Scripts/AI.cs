@@ -6,7 +6,6 @@ using Events;
 public class AI : MonoBehaviour
 {
     [SerializeField] Hability _hability = null;
-    [SerializeField] CreatureController _target = null;
 
     void OnEnable()
     {
@@ -28,8 +27,11 @@ public class AI : MonoBehaviour
     IEnumerator EnemyTurn()
     {
         yield return _briefWait;
+
+        var target = GameState.creaturesInBattle.Find(creature => !GameState.IsFromActingTeam(creature));
+
         EventController.TriggerEvent(new HabilitySelectEvent{ hability = _hability });
-        EventController.TriggerEvent(new HabilityCastEvent(_target, 0.7f));
+        EventController.TriggerEvent(new HabilityCastEvent(target, 0.7f));
         EventController.TriggerEvent(new TurnEndEvent());
     }
 }

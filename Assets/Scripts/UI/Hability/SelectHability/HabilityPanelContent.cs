@@ -4,24 +4,37 @@ using UnityEngine;
 
 public class HabilityPanelContent : MonoBehaviour
 {
-    [SerializeField] Hability[] _habilities = {};
-    [SerializeField] protected GameObject _prefab     = null;
+    [SerializeField] protected GameObject _buttonPrefab     = null;
 
-    protected virtual void Start()
+    List<Hability> _habilities;
+
+    protected virtual void OnEnable()
     {
-        for (int i = _habilities.Length - 1; i >= 0; i--)
+        _habilities = GameState.actingCreature.creature.habilities;
+        var N = _habilities.Count;
+
+        for (int i = N - 1; i >= 0; i--)
         {
-            var instance = Instantiate(_prefab);
+            var instance = Instantiate(_buttonPrefab);
             instance.transform.SetParent(transform, false);
-            PositionInstance(instance, i);
+            PositionInstance(instance, i, N);
 
             var hability = _habilities[i];
+
             instance.GetComponent<HabilityButtonContent>()?.FillContent(hability);
             instance.GetComponent<HabilityButtonOnClick>()?.SetHandler(hability);
         }
     }
 
-    protected void PositionInstance(GameObject instance, int i)
+    void OnDisable()
+    {
+        foreach (var child in Util.GetGameObjectChildrens(gameObject))
+        {
+            Destroy(child);
+        }
+    }
+
+    protected void PositionInstance(GameObject instance, int i, int N)
     {
         var pos = instance.transform.localPosition;
 
@@ -30,7 +43,7 @@ public class HabilityPanelContent : MonoBehaviour
 
         var bound = width/2;
 
-        pos.x = Mathf.Lerp(-bound, bound, (float) i / _habilities.Length);
+        pos.x = Mathf.Lerp(-bound, bound, (float)i / (float)N);
 
         instance.transform.localPosition = pos;
     }

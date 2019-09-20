@@ -9,15 +9,12 @@ public class HealHability : HabilityController
         if (_cast) return;
 
         if (Input.GetMouseButtonDown(0) && !Util.MouseIsOnUI()) {
-            Ray mRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var target = Util.GetHoveredGameObject();
 
-            RaycastHit hit;
-            if (Physics.Raycast(mRay, out hit)){
-                var target = hit.transform.gameObject;
-                if (target == GameState.actingCreature.gameObject) {
-                    _cast = true;
-                    EventController.TriggerEvent(new HabilityCastEvent(GameState.actingCreature, 1));
-                }
+            if (target == GameState.actingCreature.gameObject)
+            {
+                _cast = true;
+                EventController.TriggerEvent(new HabilityCastEvent(GameState.actingCreature, 1));
             }
         }
     }

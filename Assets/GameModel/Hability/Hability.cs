@@ -3,8 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName="Kastark/Hability")]
 public class Hability : ScriptableObject
 {
-    public string Name;
-
     [Header("Initial Stats")]
     [SerializeField] float _initialDamage = 5;
     [SerializeField] float _initialDifficulty = 1;
@@ -27,7 +25,7 @@ public class Hability : ScriptableObject
     public string LocalizedName => _localizedName;
     public string LocalizedDescription => _localizedDescription;
 
-    void Init()
+    public void Init()
     {
         _localizedName = Localization.GetLocalizedString(localizationKey);
         _localizedDescription = Localization.GetLocalizedString(localizationKey + "_description");

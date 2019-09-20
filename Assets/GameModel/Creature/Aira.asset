@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   creatureName: Aira
   species: 0
+  team: 0
   _initialMaxHealth: 10
   _initialPhysicalResistance: 1
   _initialMagicalResistance: 1
@@ -22,4 +23,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 868c58631dca2fc42944d7ffe5797b18, type: 2}
   - {fileID: 11400000, guid: fb45dffec50a8a448b1826f2085b6098, type: 2}
   _initialConsumables:
-  - {fileID: 11400000, guid: f62976b40e3134641964c73808564442, type: 2}
+  - {fileID: 11400000, guid: e97551f3574ed6344bc309190a23ea60, type: 2}

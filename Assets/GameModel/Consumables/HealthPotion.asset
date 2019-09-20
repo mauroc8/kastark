@@ -9,14 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 915087710799836499470a24963a39c1, type: 3}
-  m_Name: Othok
+  m_Script: {fileID: 11500000, guid: bd2fd95a54e432449b8e49983576418e, type: 3}
+  m_Name: HealthPotion
   m_EditorClassIdentifier: 
-  creatureName: Othok
-  species: 1
-  team: 1
-  _initialMaxHealth: 10
-  _initialPhysicalResistance: 1
-  _initialMagicalResistance: 1
-  _initialHabilities: []
-  _initialConsumables: []
+  hability: {fileID: 11400000, guid: 87521aab02a075047829c4bda376650e, type: 2}
+  _initialAmount: 1

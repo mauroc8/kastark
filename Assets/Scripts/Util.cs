@@ -34,6 +34,19 @@ public static class Util
         return false;
     }
 
+    public static GameObject GetHoveredGameObject()
+    {
+        Ray mRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hit;
+        
+        if (Physics.Raycast(mRay, out hit)){
+            return hit.transform.gameObject;
+        }
+
+        return null;
+    }
+
     public static float FloatToHDCoords(float value) {
         return value * 1080f / Camera.main.pixelHeight;
     }
