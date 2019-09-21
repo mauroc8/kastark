@@ -39,9 +39,10 @@ public class MagicController : HabilityController
     {
         if (_cast) return;
 
+        var diff = Vector2.Distance(_bigParticleTransform.position, Input.mousePosition);
+
         if (!_casting)
         {
-            var diff = Vector2.Distance(_bigParticleTransform.position, Input.mousePosition);
 
             if (diff <= _castDistancePX)
             {
@@ -49,8 +50,6 @@ public class MagicController : HabilityController
 
                 if (Input.GetMouseButton(0))
                 {
-                    _bigParticleColor.ChangeColor(_activeColor);
-                    _particleSystemColor.ChangeColor(_activeColor);
                     _casting = true;
                 }
                 else
@@ -70,9 +69,20 @@ public class MagicController : HabilityController
         }
 
         // Do something while casting...
+
         if (Input.GetMouseButton(0))
+        {
+            var color = Color.Lerp(_activeColor, _hoverColor, diff / _castDistancePX);
+            _bigParticleColor.ChangeColor(color);
+            _particleSystemColor.ChangeColor(color);
             _cursorSkin.ChangeCursorTexture(CursorTexture.Aggressive);
+
+        }
         else
+        {
+            _bigParticleColor.ChangeColor(_hoverColor);
+            _particleSystemColor.ChangeColor(_hoverColor);
             _cursorSkin.ChangeCursorTexture(CursorTexture.Interactable);
+        }
     }
 }

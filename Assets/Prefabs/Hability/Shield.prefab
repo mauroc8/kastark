@@ -119,8 +119,8 @@ MonoBehaviour:
   _circleTransform: {fileID: 6809123815065996451}
   _circleColor: {fileID: 1094216841455815766}
   _backgroundColor: {fileID: 4173110531348133798}
-  _changeCircleColorThreshold: 0.9
-  _alternativeCircleColor: {r: 1, g: 0.9642938, b: 0.5518868, a: 1}
+  _changeCircleColorThreshold: 0.85
+  _alternativeCircleColor: {r: 1, g: 0.94376856, b: 0.28773582, a: 1}
 --- !u!1 &6809123815065996460
 GameObject:
   m_ObjectHideFlags: 0

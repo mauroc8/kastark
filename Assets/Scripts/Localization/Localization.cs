@@ -50,7 +50,7 @@ public static class Localization
 
     static string ParseField(string field)
     {
-        return field.Replace("\\\"", "\"").Replace("\\\n", "\n");
+        return field.Replace("\\\"", "\"").Replace("\\n", "\n");
     }
 
     static Dictionary<string, string> _englishLanguage = null;

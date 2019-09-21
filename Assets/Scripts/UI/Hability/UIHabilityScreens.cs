@@ -14,14 +14,12 @@ public class UIHabilityScreens : MonoBehaviour
         EventController.AddListener<TurnStartEvent>(OnTurnStart);
         EventController.AddListener<HabilitySelectEvent>(OnHabilitySelect);
         EventController.AddListener<HabilityCancelEvent>(OnHabilityCancel);
-        EventController.AddListener<TurnEndEvent>(OnTurnEnd);
     }
 
     void OnDisable() {
         EventController.RemoveListener<TurnStartEvent>(OnTurnStart);
         EventController.RemoveListener<HabilitySelectEvent>(OnHabilitySelect);
         EventController.RemoveListener<HabilityCancelEvent>(OnHabilityCancel);
-        EventController.RemoveListener<TurnEndEvent>(OnTurnEnd);
     }
 
     void OnTurnStart(TurnStartEvent evt)
@@ -46,8 +44,6 @@ public class UIHabilityScreens : MonoBehaviour
         _selectHabilityScreen.SetActive(false);
         _castHabilityScreen.GetComponentInChildren<FillHabilityDescription>().selectedHability = evt.hability;
         _castHabilityScreen.SetActive(true);
-
-        _instance = Instantiate(evt.hability.controller);
     }
 
     void OnHabilityCancel(HabilityCancelEvent evt)
@@ -56,13 +52,5 @@ public class UIHabilityScreens : MonoBehaviour
 
         _selectHabilityScreen.SetActive(true);
         _castHabilityScreen.SetActive(false);
-
-        Destroy(_instance);
-    }
-
-    void OnTurnEnd(TurnEndEvent evt)
-    {
-        Destroy(_instance);
-        EventController.TriggerEvent(new TurnEndEvent());
     }
 }

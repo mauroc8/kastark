@@ -63,19 +63,33 @@ public class GameManager : MonoBehaviour
     void OnEnable()
     {
         EventController.AddListener<HabilitySelectEvent>(OnHabilitySelect);
+        EventController.AddListener<HabilityCancelEvent>(OnHabilityCancel);
         EventController.AddListener<HabilityCastEvent>(OnHabilityCast);
         EventController.AddListener<TurnEndEvent>(OnTurnEnd);
     }
     void OnDisable()
     {
         EventController.RemoveListener<HabilitySelectEvent>(OnHabilitySelect);
+        EventController.RemoveListener<HabilityCancelEvent>(OnHabilityCancel);
         EventController.RemoveListener<HabilityCastEvent>(OnHabilityCast);
         EventController.RemoveListener<TurnEndEvent>(OnTurnEnd);
     }
 
+    GameObject _selectedHabilityInstance = null;
+    
     void OnHabilitySelect(HabilitySelectEvent evt)
     {
         GameState.selectedHability = evt.hability;
+
+        _selectedHabilityInstance = Instantiate(evt.hability.controller);
+    }
+
+    void OnHabilityCancel(HabilityCancelEvent evt)
+    {
+        GameState.selectedHability = null;
+
+        Destroy(_selectedHabilityInstance);
+        _selectedHabilityInstance = null;
     }
 
     void OnHabilityCast(HabilityCastEvent evt)
@@ -86,12 +100,23 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < targets.Length; i++) {
             actingCreature.Attack(targets[i], baseDamage * evt.Effectiveness[i], evt.DamageType);
         }
+
+        if (targets.Length > 0)
+            Debug.Log($"{GameState.selectedHability.name} cast with {baseDamage} base damage and {evt.Effectiveness[0]} effectiveness.");
+        GameState.selectedHability = null;
+
     }
 
     WaitForSeconds _endTurnWait = new WaitForSeconds(0.3f);
     
     void OnTurnEnd(TurnEndEvent evt)
     {
+        if (_selectedHabilityInstance != null)
+        {
+            Destroy(_selectedHabilityInstance);
+            _selectedHabilityInstance = null;
+        }
+
         bool leftTeamHasLivingUnit = false;
         bool rightTeamHasLivingUnit = false;
 

@@ -33,8 +33,6 @@ public class Hability : ScriptableObject
         _localizedDescription = Localization.GetLocalizedString(localizationKey + "_description");
         _localizedTooltip = Localization.GetLocalizedString(localizationKey + "_tooltip");
 
-        Debug.Log("Localized tooltip: " + _localizedTooltip);
-
         Damage = _initialDamage;
         Difficulty = _initialDifficulty;
     }

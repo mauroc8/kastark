@@ -5049,7 +5049,7 @@ MonoBehaviour:
   _castDistanceVH: 0.1
   _bigParticle: {fileID: 1259224198754002601}
   _particleSystem: {fileID: 1259224198235130473}
-  _blurColor: {r: 0.8679245, g: 0.8679245, b: 0.75686276, a: 0.6431373}
-  _hoverColor: {r: 1, g: 1, b: 0.7137255, a: 0.85882354}
+  _blurColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 0.5372549}
+  _hoverColor: {r: 1, g: 1, b: 0.7137255, a: 0.7137255}
   _activeColor: {r: 1, g: 0.9597835, b: 0.495283, a: 1}
   _cursorSkin: {fileID: 11400000, guid: 187f42974cf7d404ab1a7f382341d125, type: 2}

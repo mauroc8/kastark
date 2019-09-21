@@ -39,7 +39,7 @@ public class ShieldController : HabilityController
         var time = Time.time;
 
         var scale = 0.5f + Mathf.Abs(1 - 2 * ((time / _duration) % 1));
-        var effectiveness = Mathf.Pow(Mathf.Abs(1 - scale), difficulty);
+        var effectiveness = Mathf.Pow(1 - 2 * Mathf.Abs(1 - scale), difficulty);
 
         _circleTransform.localScale = new Vector3(scale, scale, 1);
 
@@ -49,6 +49,8 @@ public class ShieldController : HabilityController
             _circleColor.ChangeColor(_alternativeCircleColor);
         else
             _circleColor.ChangeColor(_defaultCircleColor);
+        
+        _circleColor.ChangeOpacity(effectiveness);
 
         if (Input.GetMouseButtonDown(0) &&
             Vector2.Distance(Input.mousePosition, _unitScreenPos) < _maxCastDistancePx &&
