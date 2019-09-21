@@ -6,9 +6,10 @@ public class CreatureController : MonoBehaviour
 {
     public Creature creature = null;
 
-    [Header("Refs")]
+    [Header("Body Parts")]
     public Transform head;
     public Transform chest;
+    public Transform feet;
 
     public bool IsAlive() {
         return creature.health > 0;

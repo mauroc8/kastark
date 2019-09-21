@@ -146,7 +146,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7739504722496376532}
   - component: {fileID: 7739504722496376533}
-  - component: {fileID: 492938786978385908}
+  - component: {fileID: 4141244459750112284}
+  - component: {fileID: 166352706797274817}
+  - component: {fileID: 1011501852818858575}
   m_Layer: 0
   m_Name: Group
   m_TagString: Untagged
@@ -188,7 +190,39 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &492938786978385908
+--- !u!114 &4141244459750112284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7739504722496376535}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f1eb938e82a1064d8f531a04cd37850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _creature: {fileID: 7739504723204175229}
+  _bodyPart: 0
+  _xOffsetVH: 0
+  _yOffsetVH: 0.08
+  _negateXOffsetToFaceEnemy: 0
+--- !u!114 &166352706797274817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7739504722496376535}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a260cfa240063e42852cd6e8db2d565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fadeInDuration: 1
+  _fadePower: 2
+  _autoDisable: 1
+--- !u!114 &1011501852818858575
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -197,11 +231,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7739504722496376535}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abddbe0dcfbcfe14eb903a0d0beef0d0, type: 3}
+  m_Script: {fileID: 11500000, guid: b34e2b46dc6300545a8184aa785b6933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fadeInDuration: 1
-  _fadePower: 2
+  _waitSeconds: 1.2
+  _components:
+  - {fileID: 4141244459750112284}
+  - {fileID: 166352706797274817}
+  _autoDisable: 1
 --- !u!1 &7739504722559951909
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +464,7 @@ MonoBehaviour:
   creature: {fileID: 0}
   head: {fileID: 3303938696963508319}
   chest: {fileID: 6270619828737307277}
+  feet: {fileID: 0}
 --- !u!114 &7739504723204175226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,6 +480,7 @@ MonoBehaviour:
   _healthbarGroup: {fileID: 7739504722496376535}
   _healthImage: {fileID: 7739504723813171488}
   _shieldImage: {fileID: 7739504723012522026}
+  _show: 1
 --- !u!114 &7739504723204175227
 MonoBehaviour:
   m_ObjectHideFlags: 0

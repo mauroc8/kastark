@@ -44,6 +44,7 @@ public class UIHabilityScreens : MonoBehaviour
         if (!GameState.IsPlayersTurn()) return;
 
         _selectHabilityScreen.SetActive(false);
+        _castHabilityScreen.GetComponentInChildren<FillHabilityDescription>().selectedHability = evt.hability;
         _castHabilityScreen.SetActive(true);
 
         _instance = Instantiate(evt.hability.controller);

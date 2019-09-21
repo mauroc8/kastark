@@ -6,20 +6,15 @@ using TMPro;
 
 public class FillHabilityDescription : MonoBehaviour
 {
-    [SerializeField]
-    TextMeshProUGUI _title = null;
-    [SerializeField]
-    TextMeshProUGUI _description = null;
+    [SerializeField] TextMeshProUGUI _title = null;
+    [SerializeField] TextMeshProUGUI _description = null;
+    [SerializeField] TextMeshProUGUI _tooltip = null;
+
+    [System.NonSerialized] public Hability selectedHability;
 
     void OnEnable() {
-        EventController.AddListener<HabilitySelectEvent>(OnSelectHability);
-    }
-    void OnDisable() {
-        EventController.RemoveListener<HabilitySelectEvent>(OnSelectHability);
-    }
-
-    void OnSelectHability(HabilitySelectEvent evt) {
-       _title.text = evt.hability.LocalizedName;
-       _description.text = evt.hability.LocalizedDescription;
+       _title.text = selectedHability.LocalizedName;
+       _description.text = selectedHability.LocalizedDescription;
+       _tooltip.text = selectedHability.LocalizedTooltip;
     }
 }

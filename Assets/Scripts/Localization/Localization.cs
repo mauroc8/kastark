@@ -79,17 +79,11 @@ public static class Localization
 
         if (_englishLanguage == null) Init();
 
-        switch (_language) {
-            case Language.English: {
-                _englishLanguage.TryGetValue(key, out value);
-            } break;
-            case Language.Spanish: {
-                _spanishLanguage.TryGetValue(key, out value);
-            } break;
-            default: {
-                value = key;
-            } break;
-        }
+        var dictionary = _language == Language.English ? _englishLanguage :
+                         _language == Language.Spanish ? _spanishLanguage : null;
+        
+        if (dictionary == null || !dictionary.TryGetValue(key, out value))
+            value = key;
 
         return value;
     }

@@ -25,10 +25,6 @@ public class MagicController : HabilityController
 
     void Start()
     {
-        var followCanvasObject = _particleSystem.GetComponent<FollowCanvasObject>();
-        followCanvasObject.depthReference = GameState.actingCreature.head;
-        followCanvasObject.enabled = true;
-
         _bigParticleColor = _bigParticle.GetComponent<ColorController>();
         _particleSystemColor = _particleSystem.GetComponent<ColorController>();
 

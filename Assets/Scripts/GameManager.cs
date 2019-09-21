@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         var unit = GameState.creaturesInBattle[_currentUnitIndex];
 
         GameState.actingCreature = unit;
-        GameState.actingTeam = GameState.GetTeam(unit);
+        GameState.actingTeam = GameState.GetTeamOf(unit);
 
         Debug.Log($"Starting {unit.name}'s turn.");
         
@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
                 _deadCreatures.Add(creature);
             } else
             {
-                if (GameState.GetTeam(creature) == Team.Left)
+                if (GameState.GetTeamOf(creature) == Team.Left)
                 {
                     leftTeamHasLivingUnit = true;
                 } else

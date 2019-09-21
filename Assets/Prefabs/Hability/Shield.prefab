@@ -31,8 +31,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 6809123815065996451}
   - {fileID: 6809123816373172329}
+  - {fileID: 6809123815065996451}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 19.43, y: 0, z: 0}
@@ -114,9 +114,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficulty: 2
-  _circle: {fileID: 6809123815065996460}
-  _backgroundTransform: {fileID: 6809123816373172329}
   _duration: 2
+  _maxCastDistanceVh: 0.35
+  _circleTransform: {fileID: 6809123815065996451}
+  _circleColor: {fileID: 1094216841455815766}
+  _backgroundColor: {fileID: 4173110531348133798}
+  _changeCircleColorThreshold: 0.9
+  _alternativeCircleColor: {r: 1, g: 0.9642938, b: 0.5518868, a: 1}
 --- !u!1 &6809123815065996460
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,6 +133,8 @@ GameObject:
   - component: {fileID: 6809123815065996449}
   - component: {fileID: 6809123815065996450}
   - component: {fileID: 7343515540817972171}
+  - component: {fileID: 2530790749700102509}
+  - component: {fileID: 1094216841455815766}
   m_Layer: 5
   m_Name: Circle
   m_TagString: Untagged
@@ -148,7 +154,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1715831638473981861}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -204,6 +210,35 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2530790749700102509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6809123815065996460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f1eb938e82a1064d8f531a04cd37850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _creature: {fileID: 0}
+  _bodyPart: 1
+  _xOffsetVH: 0
+  _yOffsetVH: 0
+  _negateXOffsetToFaceEnemy: 0
+--- !u!114 &1094216841455815766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6809123815065996460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9effc1423b6d1f24f923288e6b41b950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6809123816373172330
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +250,8 @@ GameObject:
   - component: {fileID: 6809123816373172329}
   - component: {fileID: 6809123816373172335}
   - component: {fileID: 6809123816373172328}
+  - component: {fileID: 8000304357159267465}
+  - component: {fileID: 4173110531348133798}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -234,7 +271,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1715831638473981861}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -278,3 +315,32 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &8000304357159267465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6809123816373172330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f1eb938e82a1064d8f531a04cd37850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _creature: {fileID: 0}
+  _bodyPart: 1
+  _xOffsetVH: 0
+  _yOffsetVH: 0
+  _negateXOffsetToFaceEnemy: 0
+--- !u!114 &4173110531348133798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6809123816373172330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9effc1423b6d1f24f923288e6b41b950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class CreatureHealthbar : MonoBehaviour
 {
-    bool _show = false;
     bool _lastShow = true;
 
     float _imageMarginPercentage = 0.0032f;
@@ -16,6 +15,9 @@ public class CreatureHealthbar : MonoBehaviour
     [SerializeField] GameObject _healthbarGroup = null;
     [SerializeField] Image _healthImage = null;
     [SerializeField] Image _shieldImage = null;
+
+    [Header("Settings")]
+    [SerializeField] bool _show = true;
 
     Creature _creature;
     CanvasGroup _canvasGroup;

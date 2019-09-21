@@ -13,6 +13,14 @@ public class ColorController : MonoBehaviour
             var color = renderer.material.color;
             color.a = a;
             renderer.material.color = color;
+            return;
+        }
+        
+        var group = GetComponent<CanvasGroup>();
+        if (group)
+        {
+            group.alpha = a;
+            return;
         }
         var image = GetComponent<Image>();
         if (image)
@@ -20,7 +28,10 @@ public class ColorController : MonoBehaviour
             var color = image.color;
             color.a = a;
             image.color = color;
+            return;
         }
+
+        throw new MissingComponentException($"Expected a Renderer, CanvasGroup or Image component in {name}.");
     }
 
     public void ChangeColor(Color color)
@@ -35,5 +46,21 @@ public class ColorController : MonoBehaviour
         {
             image.color = color;
         }
+    }
+
+    public Color GetColor()
+    {
+        var renderer = GetComponent<Renderer>();
+        if (renderer)
+        {
+            return renderer.material.color;
+        }
+        var image = GetComponent<Image>();
+        if (image)
+        {
+            return image.color;
+        }
+        
+        throw new MissingComponentException($"Expected a Renderer or Image component in {name}.");
     }
 }

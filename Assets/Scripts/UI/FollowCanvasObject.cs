@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class FollowCanvasObject : MonoBehaviour
 {
-    public Transform depthReference = null;
-
+    [Tooltip("If null, the current active creature will be used.")]
+    [SerializeField] Transform _depthReference = null;
     [SerializeField] RectTransform _followMe = null;
 
     Plane _rayCastPlane;
-    
+
     void Start()
     {
+        if (_depthReference == null) _depthReference = GameState.actingCreature.transform;
+
         _rayCastPlane = new Plane(
-            Camera.main.transform.forward * -1,
-            depthReference.position);
+            Camera.main.transform.forward * -1, _depthReference.position);
     }
 
     void Update()

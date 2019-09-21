@@ -7,6 +7,7 @@ using Events;
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class TMProLocalizer : MonoBehaviour
 {
+    [Tooltip("Leave empty to use TextMeshProUGUI's text field.")]
     [SerializeField] string _key = "";
 
     void Awake()

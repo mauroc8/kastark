@@ -26,7 +26,7 @@ public static class GameState
         return go.CompareTag("LeftTeam") ? Team.Left : Team.Right;
     }
 
-    public static Team GetTeam(CreatureController creature)
+    public static Team GetTeamOf(CreatureController creature)
     {
         return GetTeam(creature.gameObject);
     }

@@ -1,0 +1,18 @@
+https://forum.unity.com/threads/draw-a-field-only-if-a-condition-is-met.448855/
+
+    using UnityEngine;
+     
+    public class Test : MonoBehaviour
+    {
+        [Range(0, 2)]
+        public float someFloat;
+     
+        [DrawIf("someFloat", 1f, ComparisonType.GreaterOrEqual)]
+        public int someInt;
+     
+        public bool someBool;
+     
+        [DrawIf("someBool", true, ComparisonType.Equals, DisablingType.ReadOnly)]
+        public int anotherInt;
+    }
+
