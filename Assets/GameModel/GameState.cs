@@ -20,6 +20,16 @@ public static class GameState
     {
         return IsFromActingTeam(creature.gameObject);
     }
+
+    public static bool IsFromEnemyTeam(GameObject go)
+    {
+        return go.CompareTag(actingTeam == Team.Left ? "RightTeam" : "LeftTeam");
+    }
+
+    public static bool IsFromEnemyTeam(CreatureController creature)
+    {
+        return IsFromEnemyTeam(creature.gameObject);
+    }
     
     public static Team GetTeam(GameObject go)
     {

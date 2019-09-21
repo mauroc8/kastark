@@ -34,9 +34,9 @@ public static class Util
         return false;
     }
 
-    public static GameObject GetHoveredGameObject()
+    public static GameObject GetGameObjectAtScreenPoint(Vector2 screenPoint)
     {
-        Ray mRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray mRay = Camera.main.ScreenPointToRay(screenPoint);
 
         RaycastHit hit;
         
@@ -45,6 +45,11 @@ public static class Util
         }
 
         return null;
+    }
+
+    public static GameObject GetHoveredGameObject()
+    {
+        return GetGameObjectAtScreenPoint(Input.mousePosition);
     }
 
     public static float FloatToHDCoords(float value) {

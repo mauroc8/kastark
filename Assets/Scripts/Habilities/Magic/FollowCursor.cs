@@ -10,6 +10,8 @@ public class FollowCursor : MonoBehaviour
 
     Vector2 _speed = Vector2.zero;
     float _attractionDistancePX;
+
+    public Vector2 Speed => _speed;
     
     void OnEnable()
     {

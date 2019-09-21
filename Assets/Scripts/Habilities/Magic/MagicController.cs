@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Events;
 
 public class MagicController : HabilityController
 {
     [Header("Config")]
-    [SerializeField] float _castDistanceVH = 0.2f;
+    [SerializeField] float _castDistanceVh = 0.2f;
+    [SerializeField] float _fullPowerSpeedVh = 0.017f;
 
     [Header("Refs")]
     [SerializeField] GameObject _bigParticle = null;
@@ -30,7 +32,7 @@ public class MagicController : HabilityController
 
         _bigParticleTransform = _bigParticle.GetComponent<RectTransform>();
 
-        _castDistancePX = _castDistanceVH * Camera.main.pixelHeight;
+        _castDistancePX = _castDistanceVh * Camera.main.pixelHeight;
     }
 
     bool _casting = false;
@@ -83,6 +85,18 @@ public class MagicController : HabilityController
             _bigParticleColor.ChangeColor(_hoverColor);
             _particleSystemColor.ChangeColor(_hoverColor);
             _cursorSkin.ChangeCursorTexture(CursorTexture.Interactable);
+        }
+
+        var target = Util.GetGameObjectAtScreenPoint(_bigParticleTransform.position);
+        if (GameState.IsFromEnemyTeam(target))
+        {
+            var speed = _bigParticle.GetComponent<FollowCursor>().Speed;
+            var magnitude = speed.magnitude / Camera.main.pixelHeight / _fullPowerSpeedVh;
+
+            var effectiveness = magnitude > 1 ? 1 : Mathf.Pow(magnitude, difficulty);
+
+            EventController.TriggerEvent(
+                new HabilityCastEvent(target.GetComponent<CreatureController>(), effectiveness));
         }
     }
 }

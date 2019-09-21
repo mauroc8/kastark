@@ -102,9 +102,11 @@ public class GameManager : MonoBehaviour
         }
 
         if (targets.Length > 0)
-            Debug.Log($"{GameState.selectedHability.name} cast with {baseDamage} base damage and {evt.Effectiveness[0]} effectiveness.");
+            Debug.Log($"{GameState.selectedHability.name} cast to {targets[0].name} with {baseDamage} base damage and {evt.Effectiveness[0]} effectiveness.");
+        else
+            Debug.Log($"{GameState.selectedHability.name} cast to noone.");
+        
         GameState.selectedHability = null;
-
     }
 
     WaitForSeconds _endTurnWait = new WaitForSeconds(0.3f);

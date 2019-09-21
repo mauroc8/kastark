@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class HabilityController : MonoBehaviour
 {
-    public float difficulty = 1;
+    [System.NonSerialized] public float difficulty = 1;
     protected bool _cast = false;
+
+    void Awake()
+    {
+        difficulty = GameState.selectedHability.Difficulty;
+    }
 }
