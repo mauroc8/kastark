@@ -14,7 +14,7 @@ public class FillHabilityDescription : MonoBehaviour
 
     void OnEnable() {
        _title.text = selectedHability.LocalizedName;
-       _description.text = selectedHability.LocalizedDescription;
+       _description.text = Util.GetParsedHabilityDescription(selectedHability);
        _tooltip.text = selectedHability.LocalizedTooltip;
     }
 }

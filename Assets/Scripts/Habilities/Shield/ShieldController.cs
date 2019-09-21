@@ -25,12 +25,10 @@ public class ShieldController : HabilityController
     float _maxCastDistancePx;
     Color _defaultCircleColor;
 
-    void OnEnable() {
+    void Start() {
         var unitWorldPos = GameState.actingCreature.transform.position;
         _unitScreenPos = Camera.main.WorldToScreenPoint(unitWorldPos);
-
         _maxCastDistancePx = Camera.main.pixelHeight * _maxCastDistanceVh;
-
         _defaultCircleColor = _circleColor.GetColor();
     }
 

@@ -59,4 +59,11 @@ public static class Util
     public static Vector2 ScreenPointToHDCoords(Vector2 screenPoint) {
         return screenPoint * 1080f / Camera.main.pixelHeight;
     }
+
+    public static string GetParsedHabilityDescription(Hability hability)
+    {
+        var description = hability.LocalizedDescription;
+        description = description.Replace("{damage}", hability.Damage.ToString());
+        return description;
+    }
 }
