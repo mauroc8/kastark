@@ -20,9 +20,11 @@ public class PositionNextToCreature : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] bool _negateXOffsetToFaceEnemy = false;
+    public bool updateEachFrame = false;
 
     float _xOffsetPx;
     float _yOffsetPx;
+    Transform _reference;
 
     void OnEnable()
     {
@@ -30,7 +32,7 @@ public class PositionNextToCreature : MonoBehaviour
 
         var creatureController = _creature == null ? GameState.actingCreature : _creature;
 
-        var reference = _bodyPart == BodyPart.Head  ? creatureController.head  :
+        _reference = _bodyPart == BodyPart.Head  ? creatureController.head  :
                         _bodyPart == BodyPart.Chest ? creatureController.chest :
                                                       creatureController.feet  ;
 
@@ -42,11 +44,21 @@ public class PositionNextToCreature : MonoBehaviour
             _xOffsetPx *= -1;
         }
 
-        Vector2 position = Camera.main.WorldToScreenPoint(reference.position); 
+        UpdatePosition();
+    }
+
+    void UpdatePosition()
+    {
+        Vector2 position = Camera.main.WorldToScreenPoint(_reference.position); 
 
         position.x += _xOffsetPx;
         position.y += _yOffsetPx;
 
         transform.position = position;
+    }
+
+    void Update()
+    {
+        if (updateEachFrame) UpdatePosition();
     }
 }

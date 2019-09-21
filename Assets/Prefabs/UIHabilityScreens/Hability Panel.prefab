@@ -117,7 +117,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 925c2e3aefda17c499113c59e8585cd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttonPrefab: {fileID: 0}
+  _buttonPrefab: {fileID: 1207603083050979631, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
+    type: 3}
 --- !u!114 &6658769017997095343
 MonoBehaviour:
   m_ObjectHideFlags: 0

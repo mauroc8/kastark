@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FairyShield
   m_EditorClassIdentifier: 
   _initialDamage: 3
-  _initialDifficulty: 2
+  _initialDifficulty: 1.7
   DamageType: 3
   localizationKey: shield
   imageSprite: {fileID: 21300000, guid: 919aa016a18722e4cb319d49535483d3, type: 3}

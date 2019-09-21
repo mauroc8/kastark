@@ -26,6 +26,8 @@ namespace Events{
         
         public HabilityCastEvent(CreatureController target, float effectiveness)
         {
+            Debug.Log($"Creating an HabilityCastEvent. Selected hability is {GameState.selectedHability?.name}.");
+
             _targets = new CreatureController[]{target};
             _effectiveness = new float[]{effectiveness};
             _damage = GameState.selectedHability.Damage;

@@ -5,62 +5,79 @@ using UnityEngine.UI;
 
 public class ColorController : MonoBehaviour
 {
+    CanvasGroup _canvasGroup = null;
+    Material    _material    = null;
+    Image       _image       = null;
+    
+    void Awake()
+    {
+        _canvasGroup = GetComponent<CanvasGroup>();
+        _image       = GetComponent<Image>();
+        var renderer = GetComponent<Renderer>();
+        if (renderer != null) _material = renderer.material;
+    }
+
     public void ChangeOpacity(float a)
     {
-        var renderer = GetComponent<Renderer>();
-        if (renderer)
+        if (_canvasGroup)
         {
-            var color = renderer.material.color;
+            _canvasGroup.alpha = a;
+            return;
+        }
+        if (_image)
+        {
+            var color = _image.color;
             color.a = a;
-            renderer.material.color = color;
+            _image.color = color;
             return;
         }
-        
-        var group = GetComponent<CanvasGroup>();
-        if (group)
+        if (_material)
         {
-            group.alpha = a;
-            return;
-        }
-        var image = GetComponent<Image>();
-        if (image)
-        {
-            var color = image.color;
+            var color = _material.color;
             color.a = a;
-            image.color = color;
+            _material.color = color;
             return;
         }
+        throw new MissingComponentException($"Expected a Renderer, CanvasGroup or Image component in {name}.");
+    }
+
+    public float GetOpacity()
+    {
+        if (_canvasGroup)
+            return _canvasGroup.alpha;
+        if (_image)
+            return _image.color.a;
+        if (_material)
+            return _material.color.a;
 
         throw new MissingComponentException($"Expected a Renderer, CanvasGroup or Image component in {name}.");
     }
 
     public void ChangeColor(Color color)
     {
-        var renderer = GetComponent<Renderer>();
-        if (renderer)
+        if (_image)
         {
-            renderer.material.color = color;
+            _image.color = color;
+            return;
         }
-        var image = GetComponent<Image>();
-        if (image)
+        if (_material)
         {
-            image.color = color;
+            _material.color = color;
+            return;
         }
+        throw new MissingComponentException($"Expected a Renderer or Image component in {name}.");
     }
 
     public Color GetColor()
     {
-        var renderer = GetComponent<Renderer>();
-        if (renderer)
+        if (_image)
         {
-            return renderer.material.color;
+            return _image.color;
         }
-        var image = GetComponent<Image>();
-        if (image)
+        if (_material)
         {
-            return image.color;
+            return _material.color;
         }
-        
         throw new MissingComponentException($"Expected a Renderer or Image component in {name}.");
     }
 }

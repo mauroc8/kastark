@@ -464,7 +464,7 @@ MonoBehaviour:
   creature: {fileID: 0}
   head: {fileID: 3303938696963508319}
   chest: {fileID: 6270619828737307277}
-  feet: {fileID: 0}
+  feet: {fileID: 7129928038216873559}
 --- !u!114 &7739504723204175226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -477,7 +477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ab3c52942fb974a9932ae536d3350c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthbarGroup: {fileID: 7739504722496376535}
+  _healthbarGroup: {fileID: 7739504722496376533}
   _healthImage: {fileID: 7739504723813171488}
   _shieldImage: {fileID: 7739504723012522026}
   _show: 1

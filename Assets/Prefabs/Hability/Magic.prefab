@@ -4893,6 +4893,7 @@ GameObject:
   - component: {fileID: 1259224198754002647}
   - component: {fileID: 4299384368727139268}
   - component: {fileID: 7184863409708943172}
+  - component: {fileID: 1918959170277340810}
   m_Layer: 5
   m_Name: Big Particle
   m_TagString: Untagged
@@ -4969,8 +4970,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attraction: 0.08
-  _friction: 0.97
-  _attractionDistanceVH: 0.8
+  _friction: 0.98
+  _attractionDistanceVh: 0.4
 --- !u!114 &4299384368727139268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4988,6 +4989,7 @@ MonoBehaviour:
   _xOffsetVH: 0.1
   _yOffsetVH: 0
   _negateXOffsetToFaceEnemy: 1
+  updateEachFrame: 1
 --- !u!114 &7184863409708943172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5000,6 +5002,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9effc1423b6d1f24f923288e6b41b950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1918959170277340810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259224198754002601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b00a8dff1a68e458ff6fdcc2f5e9c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: {x: 0.4, y: 3, z: 0}
+  _displacement: {x: 0.01, y: 0.02, z: 0}
+  _isStaticPositionedElement: 0
+  _useViewportHeight: 1
 --- !u!1 &1259224199978336840
 GameObject:
   m_ObjectHideFlags: 0
@@ -5010,6 +5028,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1259224199978336886}
   - component: {fileID: 1259224199978336841}
+  - component: {fileID: 2478903569472490134}
   m_Layer: 0
   m_Name: Magic
   m_TagString: Untagged
@@ -5045,11 +5064,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 981c2aaf894af184a90048969036633a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: 1
-  _castDistanceVH: 0.1
-  _bigParticle: {fileID: 1259224198754002601}
-  _particleSystem: {fileID: 1259224198235130473}
-  _blurColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 0.5372549}
-  _hoverColor: {r: 1, g: 1, b: 0.7137255, a: 0.7137255}
-  _activeColor: {r: 1, g: 0.9597835, b: 0.495283, a: 1}
+  _castDistanceVh: 0.2
+  _attractionDistanceVh: 0.8
+  _fullPowerSpeedVh: 0.017
+  _bigParticleTransform: {fileID: 1259224198754002646}
+  _bigParticlePositionNextToCreature: {fileID: 4299384368727139268}
+  _bigParticleFollowCursor: {fileID: 1259224198754002647}
+--- !u!114 &2478903569472490134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259224199978336840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4723b6749d5a6a7488cc7e274dce2766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _cursorSkin: {fileID: 11400000, guid: 187f42974cf7d404ab1a7f382341d125, type: 2}
+  _magicController: {fileID: 1259224199978336841}
+  _bigParticleColor: {fileID: 7184863409708943172}
+  _particleSystemColor: {fileID: 6762118290834596679}
+  _blurColor: {r: 0.8867924, g: 0.88271004, b: 0.8156817, a: 0.6156863}
+  _hoverColor: {r: 1, g: 1, b: 0.92156863, a: 0.7137255}
+  _primaryColor: {r: 1, g: 0.94509804, b: 0.33333334, a: 1}
+  _secondaryColor: {r: 1, g: 1, b: 0.9372549, a: 1}

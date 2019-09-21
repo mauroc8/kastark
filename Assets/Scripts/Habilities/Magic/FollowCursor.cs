@@ -6,16 +6,24 @@ public class FollowCursor : MonoBehaviour
 {
     [SerializeField] float _attraction = 0.3f;
     [SerializeField] float _friction   = 0.99f;
-    [SerializeField] float _attractionDistanceVH = 0.4f;
+    [SerializeField] float _attractionDistanceVh = 0.4f;
+
+    public float AttractionDistanceVh {
+        get => _attractionDistanceVh;
+        set {
+            _attractionDistanceVh = value;
+            _attractionDistancePx = Camera.main.pixelHeight * _attractionDistanceVh;
+        }
+    }
 
     Vector2 _speed = Vector2.zero;
-    float _attractionDistancePX;
+    float _attractionDistancePx;
 
     public Vector2 Speed => _speed;
     
     void OnEnable()
     {
-        _attractionDistancePX = Camera.main.pixelHeight * _attractionDistanceVH;
+        _attractionDistancePx = Camera.main.pixelHeight * _attractionDistanceVh;
     }
 
     void Update() {
@@ -28,7 +36,7 @@ public class FollowCursor : MonoBehaviour
         {
             Vector2 cursor = Input.mousePosition;
             var diff = cursor - pos;
-            var distanceFactor = Mathf.Max(0, (_attractionDistancePX - diff.magnitude) / diff.magnitude);
+            var distanceFactor = Mathf.Max(0, (_attractionDistancePx - diff.magnitude) / diff.magnitude);
 
             _speed += distanceFactor * diff * _attraction * Time.deltaTime;
         }

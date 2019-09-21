@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName="Kastark/Hability")]
 public class Hability : ScriptableObject
 {
-    [Header("Initial Stats")]
+    [Header("Stats")]
     [SerializeField] float _initialDamage = 5;
     [SerializeField] float _initialDifficulty = 1;
     
