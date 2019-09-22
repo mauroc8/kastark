@@ -63,7 +63,7 @@ public class ShieldController : HabilityController
             Vector2.Distance(Input.mousePosition, _unitScreenPos) < _maxCastDistancePx &&
             !Util.MouseIsOnUI()) {
                 _cast = true;
-                EventController.TriggerEvent(new HabilityCastEvent(GameState.actingCreature, effectiveness));
+                EventController.TriggerEvent(Util.NewHabilityCastEvent(GameState.actingCreature, effectiveness));
         }
     }
 }

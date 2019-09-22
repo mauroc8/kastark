@@ -14,34 +14,13 @@ namespace Events{
 
     public class HabilityCastEvent : GameEvent
     {
-        private CreatureController[] _targets;
-        private float _damage;
-        private float[] _effectiveness;
-        private DamageType _damageType;
-
-        public CreatureController[] Targets => _targets;
-        public float BaseDamage => _damage; // can be a negative number to heal
-        public float[] Effectiveness => _effectiveness;
-        public DamageType DamageType => _damageType;
-        
-        public HabilityCastEvent(CreatureController target, float effectiveness)
-        {
-            Debug.Log($"Creating an HabilityCastEvent. Selected hability is {GameState.selectedHability?.name}.");
-
-            _targets = new CreatureController[]{target};
-            _effectiveness = new float[]{effectiveness};
-            _damage = GameState.selectedHability.Damage;
-            _damageType = GameState.selectedHability.DamageType;
-        }
-
-        public HabilityCastEvent(CreatureController[] targets, float[] effectiveness)
-        {
-            _targets = targets;
-            _effectiveness = effectiveness;
-            _damage = GameState.selectedHability.Damage;
-            _damageType = GameState.selectedHability.DamageType;
-        }
+        public CreatureController[] targets;
+        public float damage;
+        public float[] effectiveness;
+        public DamageType damageType;
     }
+
+    public class HabilityCastEndEvent : GameEvent {}
 
     public class LanguageChangeEvent : GameEvent {}
 }

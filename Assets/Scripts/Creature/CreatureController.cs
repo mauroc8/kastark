@@ -11,6 +11,11 @@ public class CreatureController : MonoBehaviour
     public Transform chest;
     public Transform feet;
 
+    public Vector3 GetCenter()
+    {
+        return (head.position + feet.position) / 2;
+    }
+
     public bool IsAlive() {
         return creature.health > 0;
     }

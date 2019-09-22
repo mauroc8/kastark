@@ -4969,9 +4969,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3477da25dfd14954a99097f9e44215b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attraction: 0.08
-  _friction: 0.98
-  _attractionDistanceVh: 0.4
+  _attraction: 0.06
+  _friction: 0.99999
+  _attractionDistanceVh: 1.2
 --- !u!114 &4299384368727139268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5065,7 +5065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _castDistanceVh: 0.2
-  _attractionDistanceVh: 0.8
+  _attractionDistanceVh: 1.2
   _fullPowerSpeedVh: 0.017
   _bigParticleTransform: {fileID: 1259224198754002646}
   _bigParticlePositionNextToCreature: {fileID: 4299384368727139268}

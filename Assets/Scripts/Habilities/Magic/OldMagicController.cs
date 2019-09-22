@@ -42,7 +42,7 @@ public class OldMagicController : HabilityController
         if (power > _selfHarmThreshold)
         {
             _cast = true;
-            EventController.TriggerEvent(new HabilityCastEvent(GameState.actingCreature, selfHarmPower));
+            EventController.TriggerEvent(Util.NewHabilityCastEvent(GameState.actingCreature, selfHarmPower));
             return;
         }
         
@@ -59,7 +59,7 @@ public class OldMagicController : HabilityController
                     var creature = target.GetComponent<CreatureController>();
                     _cast = true;
                     _stopAnimation = true;
-                    EventController.TriggerEvent(new HabilityCastEvent(creature, effectiveness));
+                    EventController.TriggerEvent(Util.NewHabilityCastEvent(creature, effectiveness));
                 }
             }
         }

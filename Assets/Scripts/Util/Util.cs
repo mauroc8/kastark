@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -65,5 +66,21 @@ public static class Util
         var description = hability.LocalizedDescription;
         description = description.Replace("{damage}", hability.Damage.ToString());
         return description;
+    }
+
+    public static HabilityCastEvent NewHabilityCastEvent(CreatureController target, float effectiveness)
+    {
+        return NewHabilityCastEvent(new CreatureController[]{target}, new float[]{effectiveness});
+    }
+
+    public static HabilityCastEvent NewHabilityCastEvent(CreatureController[] targets, float[] effectiveness)
+    {
+        //Debug.Log($"Creating an HabilityCastEvent. Selected hability is {GameState.selectedHability?.name}.");
+        return new HabilityCastEvent{
+            targets = targets,
+            effectiveness = effectiveness,
+            damage = GameState.selectedHability.Damage,
+            damageType = GameState.selectedHability.DamageType,
+        };
     }
 }

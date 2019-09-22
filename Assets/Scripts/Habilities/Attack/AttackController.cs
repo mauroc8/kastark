@@ -53,7 +53,7 @@ public class AttackController : HabilityController
         if (targetsAsList.Exists(creature => !GameState.IsFromActingTeam(creature.gameObject)))
         {
             var effectivenessArray = _attackTrail.GetEffectiveness(difficulty);
-            EventController.TriggerEvent(new HabilityCastEvent(targets, effectivenessArray));
+            EventController.TriggerEvent(Util.NewHabilityCastEvent(targets, effectivenessArray));
         } else
         {
             // if (habilityLevel < 2) {

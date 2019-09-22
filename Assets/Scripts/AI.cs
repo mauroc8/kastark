@@ -31,7 +31,7 @@ public class AI : MonoBehaviour
         var target = GameState.creaturesInBattle.Find(creature => !GameState.IsFromActingTeam(creature));
 
         EventController.TriggerEvent(new HabilitySelectEvent{ hability = _hability });
-        EventController.TriggerEvent(new HabilityCastEvent(target, 0.7f));
+        EventController.TriggerEvent(Util.NewHabilityCastEvent(target, 0.7f));
         EventController.TriggerEvent(new TurnEndEvent());
     }
 }

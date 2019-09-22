@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class SessionSampleController : MonoBehaviour
@@ -16,15 +17,18 @@ public class SessionSampleController : MonoBehaviour
                     _instance.name = "SessionSampleController";
                     DontDestroyOnLoad(_instance);
                 }
-                _instance.Init();
             }
             return _instance;
         }
     }
 
-    void Init()
+    public static SessionSample SessionSample {
+        get { return Instance._sessionSample; }
+    }
+
+    public static void Init()
     {
-        if (_sessionSample.sessionId != -1) return;
+        if (SessionSample.sessionId != -1) return;
 
         int key = 0;
 
@@ -38,66 +42,25 @@ public class SessionSampleController : MonoBehaviour
         if (key == int.MaxValue)
             Debug.LogWarning("Are PlayerPrefs saturated with samples?");
 
-        _sessionSample.sessionId = key;
+        SessionSample.sessionId = key;
+        PlayerPrefs.SetString($"battle-scene-session-{key}", "{}");
     }
 
     public static void Save()
     {
-        var jsonString = JsonUtility.ToJson(Instance._sessionSample);
-        PlayerPrefs.SetString($"battle-scene-session-{Instance._sessionSample.sessionId}", jsonString);
+        var jsonString = JsonUtility.ToJson(SessionSample);
+        PlayerPrefs.SetString($"battle-scene-session-{SessionSample.sessionId}", jsonString);
         PlayerPrefs.Save();
+
+        string path = $"Assets/Resources/SessionSamples/battle-scene-session-{SessionSample.sessionId}.txt";
+        StreamWriter writer = new StreamWriter(path, false);
+        writer.Write(jsonString);
+        writer.Close();
     }
 
     public static SessionSample Load(int sessionId)
     {
-        var jsonString = PlayerPrefs.GetString($"battle-scene-session-{Instance._sessionSample.sessionId}");
+        var jsonString = PlayerPrefs.GetString($"battle-scene-session-{SessionSample.sessionId}");
         return JsonUtility.FromJson<SessionSample>(jsonString);
-    }
-
-    protected virtual bool Equals(SessionSample other)
-    {
-        if (!base.Equals(other))
-            return false;
-        
-        if (!SampleListEquality<LanguageSample>(Instance._sessionSample.chosenLanguages, other.chosenLanguages))
-            return false;
-        
-        if (!SampleListEquality<HabilityCastSample>(Instance._sessionSample.castHabilities, other.castHabilities))
-            return false;
-        
-        if (!SampleListEquality<TeamSample>(Instance._sessionSample.battleResults, other.battleResults))
-            return false;
-
-        return true;
-    }
-
-    static bool SampleListEquality<T>(List<T> samplesA, List<T> samplesB) where T : Sample
-    {
-        if (samplesA.Count != samplesB.Count)
-            return false;
-
-        for (int i = 0; i < samplesA.Count; i++)
-        {
-            if (!samplesA[i].Equals(samplesB[i]))
-                return false;
-        }
-
-        return true;
-    }
-
-    public static void Test()
-    {
-        Save();
-
-        bool result = Load(Instance._sessionSample.sessionId).Equals(Instance);
-
-        if (result == false)
-        {
-            Debug.Log($"SessionSampleController test failed.");
-        }
-        else
-        {
-            Debug.Log($"SessionSampleController test succeeded.");
-        }
     }
 }

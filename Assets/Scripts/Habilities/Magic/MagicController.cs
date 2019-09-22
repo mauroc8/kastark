@@ -66,7 +66,7 @@ public class MagicController : HabilityController
             var effectiveness = magnitude > 1 ? 1 : Mathf.Pow(magnitude, difficulty);
 
             EventController.TriggerEvent(
-                new HabilityCastEvent(target.GetComponent<CreatureController>(), effectiveness));
+                Util.NewHabilityCastEvent(target.GetComponent<CreatureController>(), effectiveness));
             
             _cast = true;
         }

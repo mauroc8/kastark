@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
     }
 
     GameObject _selectedHabilityInstance = null;
-    
+
     void OnHabilitySelect(HabilitySelectEvent evt)
     {
         GameState.selectedHability = evt.hability;
@@ -94,15 +94,15 @@ public class GameManager : MonoBehaviour
 
     void OnHabilityCast(HabilityCastEvent evt)
     {
-        var targets = evt.Targets;
+        var targets = evt.targets;
         var actingCreature = GameState.actingCreature;
-        var baseDamage = evt.BaseDamage;
+        var baseDamage = evt.damage;
         for (int i = 0; i < targets.Length; i++) {
-            actingCreature.Attack(targets[i], baseDamage * evt.Effectiveness[i], evt.DamageType);
+            actingCreature.Attack(targets[i], baseDamage * evt.effectiveness[i], evt.damageType);
         }
 
         if (targets.Length > 0)
-            Debug.Log($"{GameState.selectedHability.name} cast to {targets[0].name} with {baseDamage} base damage and {evt.Effectiveness[0]} effectiveness.");
+            Debug.Log($"{GameState.selectedHability.name} cast to {targets[0].name} with {baseDamage} base damage and {evt.effectiveness[0]} effectiveness.");
         else
             Debug.Log($"{GameState.selectedHability.name} cast to noone.");
         
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
     }
 
     WaitForSeconds _endTurnWait = new WaitForSeconds(0.3f);
-    
+
     void OnTurnEnd(TurnEndEvent evt)
     {
         if (_selectedHabilityInstance != null)
