@@ -8,24 +8,26 @@ public class AttackTrail : MonoBehaviour
     private bool _open;
     public bool IsOpen => _open;
 
-
     public float worstScenarioDirectionStdDev = 0.3f;
 
     [SerializeField] float _distanceToCamera = 4;
 
     [Header("Configuration")]
-    public float minLengthVH = 0.1f;
-    public float maxLengthVH = 0.3f;
-    public float maxLifetime = 2.3f;
+    public float minLengthVh = 0.07f;
+    public float maxLengthVh = 0.37f;
+    public float maxLifetime = 3.87f;
 
     private List<Vector2> _screenPoints = new List<Vector2>(30);
     private List<CreatureController> _targetCreatures = new List<CreatureController>(30);
-    private float _length; // in VH (viewport height) units (1 = full height).
+    private float _length;
     private float _trailLifetime;
 
     TrailRenderer _trailRenderer;
     float _trailExtraLifetime;
     float _minVertexDistance;
+
+    float _minLengthPx;
+    float _maxLengthPx;
 
     void Start()
     {
@@ -33,7 +35,10 @@ public class AttackTrail : MonoBehaviour
         _minVertexDistance = _trailRenderer.minVertexDistance;
         _trailExtraLifetime = _trailRenderer.time;
         _trailRenderer.time = float.PositiveInfinity;
-        _trailRenderer.widthMultiplier *= (float) 300 / Camera.main.pixelHeight; // adjust over screen height
+        _trailRenderer.widthMultiplier *= 300.0f / Screen.height;
+
+        _minLengthPx = minLengthVh * Screen.height;
+        _maxLengthPx = maxLengthVh * Screen.height;
     }
 
     Plane _rayCastPlane;
@@ -47,28 +52,23 @@ public class AttackTrail : MonoBehaviour
         _open = true;
         _length = 0;
         _openTime = Time.time;
+        _lastScreenPoint = screenPoint;
 
-        AddPoint(screenPoint);
+        Move(screenPoint);
 
         _trailRenderer.Clear();
     }
 
-    Vector2 _lastScreenPoint;
-
-    public void Move(Vector2 screenPoint)
-    {
-        float screenDistancePX = (screenPoint - _lastScreenPoint).magnitude;
-        float screenDistanceVH = screenDistancePX / Camera.main.pixelHeight;
-
-        _length += screenDistanceVH;
-
-        AddPoint(screenPoint);
-    }
 
     public bool IsOutOfBounds()
     {
         // Trail is too long or too slow.
-        if (_length > maxLengthVH || Time.time - _openTime > maxLifetime) {
+        if (_length > _maxLengthPx) {
+            Debug.Log($"[AttackTrail] Length > maxLength\n{_length} > {_maxLengthPx}");
+            return true;
+        }
+        if (Time.time - _openTime > maxLifetime) {
+            Debug.Log("[AttackTrail] lifetime > maxLifetime");
             return true;
         }
         return false;
@@ -98,7 +98,9 @@ public class AttackTrail : MonoBehaviour
         _targetCreatures.Clear();
     }
 
-    void AddPoint(Vector2 screenPoint) {
+    Vector2 _lastScreenPoint;
+
+    public void Move(Vector2 screenPoint) {
         Ray mRay = Camera.main.ScreenPointToRay(screenPoint);
 
         float rayDistance;
@@ -109,6 +111,9 @@ public class AttackTrail : MonoBehaviour
             if (Vector3.Distance(transform.position, worldPoint) < _minVertexDistance) {
                 return;
             }
+
+            float screenDistance = Vector2.Distance(screenPoint, _lastScreenPoint);
+            _length += screenDistance;
 
             _screenPoints.Add(screenPoint);
             _lastScreenPoint = screenPoint;
@@ -128,7 +133,7 @@ public class AttackTrail : MonoBehaviour
     }
 
     public bool IsAcceptable() {
-        return _length >= minLengthVH && _screenPoints.Count >= 3;
+        return _length >= _minLengthPx && _screenPoints.Count >= 3;
     }
 
     public CreatureController[] GetTargets() {

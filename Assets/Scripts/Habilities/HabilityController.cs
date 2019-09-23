@@ -7,7 +7,7 @@ public class HabilityController : MonoBehaviour
     [System.NonSerialized] public float difficulty = 1;
     protected bool _cast = false;
 
-    void Awake()
+    void Start()
     {
         difficulty = GameState.selectedHability.Difficulty;
     }

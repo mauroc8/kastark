@@ -1,69 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using Events;
-using UnityEngine.EventSystems;
 
 public class ShieldController : HabilityController
 {
-    [Header("Shield settings")]
-    [SerializeField] float _duration = 0;
-    [SerializeField] float _maxCastDistanceVh = 0.35f;
-
     [Header("Refs")]
-    [SerializeField] RectTransform   _circleTransform = null;
-    [SerializeField] ColorController     _circleColor = null;
-    //[SerializeField] ColorController _backgroundColor = null;
+    [SerializeField] GameObject _shield = null;
+    [SerializeField] ColorController _shieldColorController = null;
+    
+    [Header("Settings")]
+    [SerializeField] float _speed = 1;
+    [SerializeField] float _maxOpacity = 0.5f;
 
-    [Header("View settings")]
-    [SerializeField] float _changeCircleColorThreshold = 0.9f;
-    [SerializeField] float _colorBlendThreshold = 0.08f;
-    [SerializeField] Color _alternativeCircleColor = Color.yellow;
-
-    Vector2 _unitScreenPos;
-    float _maxCastDistancePx;
-    Color _defaultCircleColor;
-
-    void Start() {
-        var unitWorldPos = GameState.actingCreature.transform.position;
-        _unitScreenPos = Camera.main.WorldToScreenPoint(unitWorldPos);
-        _maxCastDistancePx = Camera.main.pixelHeight * _maxCastDistanceVh;
-        _defaultCircleColor = _circleColor.GetColor();
-    }
-
-    void Update() {
+    void Update()
+    {
         if (_cast) return;
 
-        var time = Time.time;
+        var t = Time.time;
+        var effectiveness = GetEffectiveness(t);
+        effectiveness = Mathf.Pow(effectiveness, difficulty);
 
-        var scale = 0.5f + Mathf.Abs(1 - 2 * ((time / _duration) % 1));
-        var effectiveness = Mathf.Pow(1 - 2 * Mathf.Abs(1 - scale), difficulty);
-        var opacity = 0.3f + 0.7f * effectiveness;
+        _shieldColorController.ChangeOpacity(effectiveness * _maxOpacity);
 
-        _circleTransform.localScale = new Vector3(scale, scale, 1);
-
-        //_backgroundColor.ChangeOpacity(opacity);
-
-        if (effectiveness >= _changeCircleColorThreshold)
-            _circleColor.ChangeColor(_alternativeCircleColor);
-        else
+        if (Input.GetMouseButtonDown(0) && Util.GetHoveredGameObject() == _shield && !Util.MouseIsOnUI())
         {
-            var diff = _changeCircleColorThreshold - effectiveness;
-            Color color;
-            if (diff <= _colorBlendThreshold)
-                color = Color.Lerp(_alternativeCircleColor, _defaultCircleColor, diff / _colorBlendThreshold);
-            else
-                _circleColor.ChangeColor(_defaultCircleColor);
+            _cast = true;
+            var habilityCastController = new HabilityCastController{
+                targets = new CreatureController[]{ GameState.actingCreature },
+                effectiveness = new float[]{ effectiveness },
+                hability = GameState.selectedHability
+            };
+            habilityCastController.Cast();
         }
-        
-        _circleColor.ChangeOpacity(opacity);
+    }
 
-        if (Input.GetMouseButtonDown(0) &&
-            Vector2.Distance(Input.mousePosition, _unitScreenPos) < _maxCastDistancePx &&
-            !Util.MouseIsOnUI()) {
-                _cast = true;
-                EventController.TriggerEvent(Util.NewHabilityCastEvent(GameState.actingCreature, effectiveness));
-        }
+    float GetEffectiveness(float t)
+    {
+        var cycle = (Time.time * _speed) % 2;
+        if (cycle > 1) cycle = 2 - cycle;
+
+        return cycle;
     }
 }

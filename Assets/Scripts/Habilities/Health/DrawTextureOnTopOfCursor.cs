@@ -18,7 +18,7 @@ public class DrawTextureOnTopOfCursor : MonoBehaviour
     void OnGUI()
     {
         var pos = Input.mousePosition;
-        pos.y = Camera.main.pixelHeight - pos.y;
+        pos.y = Screen.height - pos.y;
 
         GUI.depth = 0;
         GUI.DrawTexture(new Rect(pos.x, pos.y, _width, _height), _texture);

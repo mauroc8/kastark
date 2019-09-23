@@ -6,11 +6,8 @@ using Events;
 
 public class AttackController : HabilityController
 {
-    [SerializeField] AttackTrail _attackTrail;
-
-    void Start() {
-        _attackTrail = GetComponentInChildren<AttackTrail>();
-    }
+    [SerializeField] AttackTrail _attackTrail = null;
+    [SerializeField] UIRectCountdown _uiRectCountdown = null;
 
     void Update()
     {
@@ -21,6 +18,7 @@ public class AttackController : HabilityController
             if (!_attackTrail.IsOpen)
             {
                 _attackTrail.Open(Input.mousePosition);
+                _uiRectCountdown.StartCountdown(_attackTrail.maxLifetime);
             } else {
                 _attackTrail.Move(Input.mousePosition);
             }
@@ -39,6 +37,8 @@ public class AttackController : HabilityController
     {
         _cast = true;
 
+        _uiRectCountdown.StopCountdown();
+
         if (!_attackTrail.IsAcceptable())
         {
             TryAgain();
@@ -53,12 +53,16 @@ public class AttackController : HabilityController
         if (targetsAsList.Exists(creature => !GameState.IsFromActingTeam(creature.gameObject)))
         {
             var effectivenessArray = _attackTrail.GetEffectiveness(difficulty);
-            EventController.TriggerEvent(Util.NewHabilityCastEvent(targets, effectivenessArray));
+            var habilityCastController = new HabilityCastController{
+                targets = targets,
+                effectiveness = effectivenessArray,
+                hability = GameState.selectedHability
+            };
+            habilityCastController.Cast();
         } else
         {
-            // if (habilityLevel < 2) {
-                TryAgain();
-            //} else "Miss!"
+            TryAgain();
+            
             if (targetsAsList.Exists(creature => GameState.IsFromActingTeam(creature.gameObject)))
             {
                 // [HitCreature] "Aw! Are you trying to hurt me?"

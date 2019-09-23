@@ -12,7 +12,7 @@ public class FollowCursor : MonoBehaviour
         get => _attractionDistanceVh;
         set {
             _attractionDistanceVh = value;
-            _attractionDistancePx = Camera.main.pixelHeight * _attractionDistanceVh;
+            _attractionDistancePx = Screen.height * _attractionDistanceVh;
         }
     }
 
@@ -23,14 +23,14 @@ public class FollowCursor : MonoBehaviour
     
     void OnEnable()
     {
-        _attractionDistancePx = Camera.main.pixelHeight * _attractionDistanceVh;
+        _attractionDistancePx = Screen.height * _attractionDistanceVh;
     }
 
     void Update() {
         Vector2 pos = transform.position;
 
         _speed *= Mathf.Pow(1 - _friction, Time.deltaTime);
-        pos += _speed;
+        pos += _speed * Time.deltaTime;
 
         if (Input.GetMouseButton(0))
         {

@@ -32,7 +32,7 @@ public class CreatureHealthbar : MonoBehaviour
         
         _headTransform = creatureController.head;
 
-        _distanceToHeadPx = Camera.main.pixelHeight * _distanceToHeadVH;
+        _distanceToHeadPx = Screen.height * _distanceToHeadVH;
     }
 
     void Update() {

@@ -54,11 +54,11 @@ public static class Util
     }
 
     public static float FloatToHDCoords(float value) {
-        return value * 1080f / Camera.main.pixelHeight;
+        return value * 1080f / Screen.height;
     }
 
     public static Vector2 ScreenPointToHDCoords(Vector2 screenPoint) {
-        return screenPoint * 1080f / Camera.main.pixelHeight;
+        return screenPoint * 1080f / Screen.height;
     }
 
     public static string GetParsedHabilityDescription(Hability hability)
@@ -66,21 +66,5 @@ public static class Util
         var description = hability.LocalizedDescription;
         description = description.Replace("{damage}", hability.Damage.ToString());
         return description;
-    }
-
-    public static HabilityCastEvent NewHabilityCastEvent(CreatureController target, float effectiveness)
-    {
-        return NewHabilityCastEvent(new CreatureController[]{target}, new float[]{effectiveness});
-    }
-
-    public static HabilityCastEvent NewHabilityCastEvent(CreatureController[] targets, float[] effectiveness)
-    {
-        //Debug.Log($"Creating an HabilityCastEvent. Selected hability is {GameState.selectedHability?.name}.");
-        return new HabilityCastEvent{
-            targets = targets,
-            effectiveness = effectiveness,
-            damage = GameState.selectedHability.Damage,
-            damageType = GameState.selectedHability.DamageType,
-        };
     }
 }

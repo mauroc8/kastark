@@ -4969,8 +4969,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3477da25dfd14954a99097f9e44215b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attraction: 0.06
-  _friction: 0.99999
+  _attraction: 1.2
+  _friction: 0.98
   _attractionDistanceVh: 1.2
 --- !u!114 &4299384368727139268
 MonoBehaviour:
@@ -4990,6 +4990,7 @@ MonoBehaviour:
   _yOffsetVH: 0
   _negateXOffsetToFaceEnemy: 1
   updateEachFrame: 1
+  _useScreenSpace: 1
 --- !u!114 &7184863409708943172
 MonoBehaviour:
   m_ObjectHideFlags: 0

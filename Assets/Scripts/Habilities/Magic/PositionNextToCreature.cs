@@ -21,6 +21,8 @@ public class PositionNextToCreature : MonoBehaviour
     [Header("Settings")]
     [SerializeField] bool _negateXOffsetToFaceEnemy = false;
     public bool updateEachFrame = false;
+    [Tooltip("Use true only if the component is in a 2D object.")]
+    [SerializeField] bool _useScreenSpace = true;
 
     float _xOffsetPx;
     float _yOffsetPx;
@@ -36,8 +38,8 @@ public class PositionNextToCreature : MonoBehaviour
                         _bodyPart == BodyPart.Chest ? creatureController.chest :
                                                       creatureController.feet  ;
 
-        _xOffsetPx = Camera.main.pixelHeight * _xOffsetVH;
-        _yOffsetPx = Camera.main.pixelHeight * _yOffsetVH;
+        _xOffsetPx = Screen.height * _xOffsetVH;
+        _yOffsetPx = Screen.height * _yOffsetVH;
 
         if (_negateXOffsetToFaceEnemy && GameState.GetTeamOf(creatureController) == Team.Right)
         {
@@ -49,7 +51,7 @@ public class PositionNextToCreature : MonoBehaviour
 
     void UpdatePosition()
     {
-        Vector2 position = Camera.main.WorldToScreenPoint(_reference.position); 
+        Vector2 position = _useScreenSpace ? Camera.main.WorldToScreenPoint(_reference.position) : _reference.position; 
 
         position.x += _xOffsetPx;
         position.y += _yOffsetPx;

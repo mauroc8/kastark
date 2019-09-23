@@ -28,7 +28,7 @@ public class CircularMovement : MonoBehaviour
         _lastDisplacement = GetDisplacementAtTime(_lastTime);
 
         if (_useViewportHeight)
-            _displacement *= Camera.main.pixelHeight;
+            _displacement *= Screen.height;
     }
 
     Vector3 GetDisplacementAtTime(float t)

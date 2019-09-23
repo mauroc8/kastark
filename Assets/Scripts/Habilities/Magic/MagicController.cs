@@ -21,8 +21,8 @@ public class MagicController : HabilityController
 
     void OnEnable()
     {
-        _castDistancePx = _castDistanceVh * Camera.main.pixelHeight;
-        _attractionDistancePx = _attractionDistanceVh * Camera.main.pixelHeight;
+        _castDistancePx = _castDistanceVh * Screen.height;
+        _attractionDistancePx = _attractionDistanceVh * Screen.height;
         _bigParticleFollowCursor.AttractionDistanceVh = _attractionDistanceVh;
     }
 
@@ -60,15 +60,20 @@ public class MagicController : HabilityController
         if (GameState.IsFromEnemyTeam(target))
         {
             var speed = _bigParticleFollowCursor.Speed;
-            var magnitude = speed.magnitude / Camera.main.pixelHeight / _fullPowerSpeedVh;
+            var magnitude = speed.magnitude / Screen.height / _fullPowerSpeedVh;
             _bigParticleFollowCursor.enabled = false;
-
-            var effectiveness = magnitude > 1 ? 1 : Mathf.Pow(magnitude, difficulty);
-
-            EventController.TriggerEvent(
-                Util.NewHabilityCastEvent(target.GetComponent<CreatureController>(), effectiveness));
             
             _cast = true;
+
+            var targetCreature = target.GetComponent<CreatureController>();
+            var effectiveness = magnitude > 1 ? 1 : Mathf.Pow(magnitude, difficulty);
+
+            var habilityCastController = new HabilityCastController{
+                targets = new CreatureController[]{ targetCreature },
+                effectiveness = new float[]{ effectiveness },
+                hability = GameState.selectedHability
+            };
+            habilityCastController.Cast();
         }
     }
 }
