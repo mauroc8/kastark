@@ -104,32 +104,58 @@ public class AttackTrail : MonoBehaviour
         Ray mRay = Camera.main.ScreenPointToRay(screenPoint);
 
         float rayDistance;
-        if (_rayCastPlane.Raycast(mRay, out rayDistance))
+        if (!_rayCastPlane.Raycast(mRay, out rayDistance))
         {
-            Vector3 worldPoint = mRay.GetPoint(rayDistance);
+            Debug.Log("Error raycasting to plane.");
+            return;
+        }
+    
+        Vector3 worldPoint = mRay.GetPoint(rayDistance);
+        float distance = Vector3.Distance(transform.position, worldPoint);
 
-            if (Vector3.Distance(transform.position, worldPoint) < _minVertexDistance) {
-                return;
-            }
+        if (distance < _minVertexDistance)
+            return;
 
-            float screenDistance = Vector2.Distance(screenPoint, _lastScreenPoint);
-            _length += screenDistance;
+        RaycastHit hit;
+        GameObject target;
 
-            _screenPoints.Add(screenPoint);
-            _lastScreenPoint = screenPoint;
-            transform.position = worldPoint;
-
-            RaycastHit hit;
-            if (Physics.Raycast(mRay, out hit)){
-                var target = hit.transform.gameObject;
-                if (!GameState.IsFromActingTeam(target)) {
-                    var creature = target.GetComponent<CreatureController>();
-
-                    if (creature && !_targetCreatures.Contains(creature))
-                        _targetCreatures.Add(creature);
+        if (Physics.Raycast(mRay, out hit) &&
+            GameState.IsFromEnemyTeam(target = hit.transform.gameObject))
+        {
+            AddTarget(target);
+        }
+        else
+        {
+            // Search Intermediate Targets. @Robustness. It can be commented out.
+            var vertexUnit = _minVertexDistance / distance; // 0 < vertexUnit <= 1
+            if (vertexUnit <= 0.6)
+            {
+                float t = vertexUnit;
+                while (t < 1)
+                {
+                    var intermediatePoint = Vector2.Lerp(screenPoint, _lastScreenPoint, t);
+                    target = Util.GetGameObjectAtScreenPoint(intermediatePoint);
+                    if (target != null && GameState.IsFromEnemyTeam(target))
+                        AddTarget(target);
+                    t += vertexUnit;
                 }
             }
         }
+
+        float screenDistance = Vector2.Distance(screenPoint, _lastScreenPoint);
+        _length += screenDistance;
+
+        _screenPoints.Add(screenPoint);
+        _lastScreenPoint = screenPoint;
+        transform.position = worldPoint;
+    }
+
+    void AddTarget(GameObject target)
+    {
+        var creature = target.GetComponent<CreatureController>();
+
+        if (creature && !_targetCreatures.Contains(creature))
+            _targetCreatures.Add(creature);
     }
 
     public bool IsAcceptable() {
