@@ -11,9 +11,12 @@ public class CreatureController : MonoBehaviour
     public Transform chest;
     public Transform feet;
 
-    public Vector3 GetCenter()
+    public Transform GetBodyPart(BodyPart bodyPart)
     {
-        return (head.position + feet.position) / 2;
+        return bodyPart == BodyPart.Head  ? head :
+               bodyPart == BodyPart.Chest ? chest :
+               bodyPart == BodyPart.Feet  ? feet :
+               null;
     }
 
     public bool IsAlive() {

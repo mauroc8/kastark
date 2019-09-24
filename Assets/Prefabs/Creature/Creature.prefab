@@ -511,7 +511,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a98c4e8d113bd242a22d422be729172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _creatureController: {fileID: 0}
+  _creatureController: {fileID: 7739504723204175229}
+  _creatureColorController: {fileID: 3086977617435005773}
+  _creatureColorFadeController: {fileID: 7371751847644947846}
+  _healColor: {r: 0, g: 1, b: 0, a: 1}
+  _shieldColor: {r: 0.5235849, g: 0.92607653, b: 1, a: 1}
+  _damageColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!65 &7739504723204175224
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -536,6 +541,8 @@ GameObject:
   - component: {fileID: 7739504723316784717}
   - component: {fileID: 7739504723316784716}
   - component: {fileID: 7739504723316784719}
+  - component: {fileID: 3086977617435005773}
+  - component: {fileID: 7371751847644947846}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -602,6 +609,33 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &3086977617435005773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7739504723316784705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9011bd94e0121045ba66d2516de87de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7371751847644947846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7739504723316784705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5278e0549df526d44b67536f433c2d19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _colorController: {fileID: 3086977617435005773}
+  _fadeDuration: 0.3
+  _fadePower: 2
 --- !u!1 &7739504723813171490
 GameObject:
   m_ObjectHideFlags: 0

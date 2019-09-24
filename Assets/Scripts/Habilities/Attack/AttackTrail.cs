@@ -113,7 +113,7 @@ public class AttackTrail : MonoBehaviour
             return;
 
         RaycastHit hit;
-        GameObject target;
+        GameObject target = null;
 
         if (Physics.Raycast(mRay, out hit) &&
             GameState.IsFromEnemyTeam(target = hit.transform.gameObject))

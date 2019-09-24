@@ -48,9 +48,8 @@ public class AttackController : HabilityController
         _attackTrail.Close();
 
         var targets = _attackTrail.GetTargets();
-        var targetsAsList = new List<CreatureController>(targets);
 
-        if (targetsAsList.Exists(creature => !GameState.IsFromActingTeam(creature.gameObject)))
+        if (targets.Length > 0)
         {
             var effectivenessArray = _attackTrail.GetEffectiveness(difficulty);
             var habilityCastController = new HabilityCastController{
@@ -59,14 +58,11 @@ public class AttackController : HabilityController
                 hability = GameState.selectedHability
             };
             habilityCastController.Cast();
-        } else
+        }
+        else
         {
+            Debug.Log($"Attack trail has no enemy targets.");
             TryAgain();
-            
-            if (targetsAsList.Exists(creature => GameState.IsFromActingTeam(creature.gameObject)))
-            {
-                // [HitCreature] "Aw! Are you trying to hurt me?"
-            }
         }
     }
 
@@ -80,6 +76,7 @@ public class AttackController : HabilityController
     IEnumerator RestartTrail()
     {
         yield return _briefWait;
+        Debug.Log("Try Again!");
         _attackTrail.Restart();
         _cast = false;
     }
