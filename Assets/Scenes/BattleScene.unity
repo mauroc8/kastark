@@ -621,6 +621,7 @@ GameObject:
   - component: {fileID: 266863023}
   - component: {fileID: 266863022}
   - component: {fileID: 266863027}
+  - component: {fileID: 266863028}
   - component: {fileID: 266863026}
   m_Layer: 5
   m_Name: Select Hability
@@ -722,9 +723,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a260cfa240063e42852cd6e8db2d565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fadeInDuration: 0.4
-  _fadePower: 1.6
-  _autoDisable: 0
+  _fadeInDuration: 1
+  _fadePower: 2
+  _autoDisable: 1
+  _fadeOnEnable: 1
+  _alphaController: {fileID: 266863028}
 --- !u!225 &266863027
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -737,6 +740,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &266863028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266863021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0de3492af9aa044d931e753f911adcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 266863027}
 --- !u!1 &351799663
 GameObject:
   m_ObjectHideFlags: 0
@@ -3265,6 +3281,7 @@ GameObject:
   - component: {fileID: 1898954124}
   - component: {fileID: 1898954123}
   - component: {fileID: 1898954128}
+  - component: {fileID: 1898954129}
   - component: {fileID: 1898954127}
   - component: {fileID: 1898954126}
   m_Layer: 5
@@ -3384,6 +3401,8 @@ MonoBehaviour:
   _fadeInDuration: 0.4
   _fadePower: 1.6
   _autoDisable: 0
+  _fadeOnEnable: 1
+  _alphaController: {fileID: 1898954129}
 --- !u!225 &1898954128
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -3396,6 +3415,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1898954129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898954121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0de3492af9aa044d931e753f911adcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 1898954128}
 --- !u!1 &1905196428
 GameObject:
   m_ObjectHideFlags: 0
@@ -4025,5 +4057,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1207603083050979631, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
         type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 841c80a4ec7ad80429f598ea67d8674b, type: 3}

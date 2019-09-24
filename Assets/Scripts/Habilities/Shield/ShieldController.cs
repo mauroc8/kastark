@@ -6,7 +6,7 @@ public class ShieldController : HabilityController
 {
     [Header("Refs")]
     [SerializeField] GameObject _shield = null;
-    [SerializeField] ColorController _shieldColorController = null;
+    [SerializeField] AlphaController _shieldAlphaController = null;
     
     [Header("Settings")]
     [SerializeField] float _speed = 1;
@@ -20,7 +20,7 @@ public class ShieldController : HabilityController
         var effectiveness = GetEffectiveness(t);
         effectiveness = Mathf.Pow(effectiveness, difficulty);
 
-        _shieldColorController.ChangeOpacity(effectiveness * _maxOpacity);
+        _shieldAlphaController.ChangeAlpha(effectiveness * _maxOpacity);
 
         if (Input.GetMouseButtonDown(0) && Util.GetHoveredGameObject() == _shield && !Util.MouseIsOnUI())
         {

@@ -57,7 +57,7 @@ public class ShieldControllerOld : HabilityController
                 _circleColor.ChangeColor(_defaultCircleColor);
         }
         
-        _circleColor.ChangeOpacity(opacity);
+        //_circleColor.ChangeOpacity(opacity);
 
         if (Input.GetMouseButtonDown(0) &&
             Vector2.Distance(Input.mousePosition, _unitScreenPos) < _maxCastDistancePx &&

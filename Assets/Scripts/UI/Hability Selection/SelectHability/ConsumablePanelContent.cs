@@ -20,7 +20,7 @@ public class ConsumablePanelContent : HabilityPanelContent
             var consumable = _consumables[i];
 
             instance.GetComponent<ConsumableButtonContent>()?.FillContent(consumable);
-            instance.GetComponent<ConsumableButtonOnClick>()?.SetHandler(consumable);
+            instance.GetComponent<ConsumableButtonHandler>()?.SetHandler(consumable);
         }
     }
 }

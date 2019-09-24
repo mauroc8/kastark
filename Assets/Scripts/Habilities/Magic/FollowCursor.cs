@@ -8,13 +8,7 @@ public class FollowCursor : MonoBehaviour
     [SerializeField] float _friction   = 0.99f;
     [SerializeField] float _attractionDistanceVh = 0.4f;
 
-    public float AttractionDistanceVh {
-        get => _attractionDistanceVh;
-        set {
-            _attractionDistanceVh = value;
-            _attractionDistancePx = Screen.height * _attractionDistanceVh;
-        }
-    }
+    public float AttractionDistanceVh => _attractionDistanceVh;
 
     Vector2 _speed = Vector2.zero;
     float _attractionDistancePx;

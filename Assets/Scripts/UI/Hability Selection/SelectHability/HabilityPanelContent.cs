@@ -22,7 +22,7 @@ public class HabilityPanelContent : MonoBehaviour
             var hability = _habilities[i];
 
             instance.GetComponent<HabilityButtonContent>()?.FillContent(hability);
-            instance.GetComponent<HabilityButtonOnClick>()?.SetHandler(hability);
+            instance.GetComponent<HabilityButtonHandler>()?.SetHandler(hability);
         }
     }
 

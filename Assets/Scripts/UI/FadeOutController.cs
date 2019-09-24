@@ -4,32 +4,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ImageFadeOutController : MonoBehaviour
+[RequireComponent(typeof(AlphaController))]
+public class FadeOutController : MonoBehaviour
 {
-    [Tooltip("Leave null to look for an Image component in this GameObject.")]
-    [SerializeField] Image _image = null;
+    [SerializeField] AlphaController _alphaController = null;
 
     [Header("Fade settings")]
     [SerializeField] float _fadeTime = 0.2f;
     [SerializeField] float _fadePower = 1.6f;
-    [SerializeField] bool _fadeOnStart = false;
+
+    [SerializeField] bool _fadeOnEnable = false;
 
     bool _fading;
     float _time = 0;
 
-    void Start()
+    void OnEnable()
     {
-        if (_image == null) _image = GetComponent<Image>();
-        _fading = _fadeOnStart;
+        if (_fadeOnEnable)
+        {
+            _alphaController.ChangeAlpha(1);
+            FadeOut();
+        }
     }
 
     Action _callback = null;
 
-    public void FadeOut(Action callback)
+    public void FadeOut()
     {
         _time = _fadeTime;
-        _callback = callback;
         _fading = true;
+    }
+
+    public void FadeOut(Action callback)
+    {
+        FadeOut();
+        _callback = callback;
     }
 
     void Update()
@@ -46,8 +55,7 @@ public class ImageFadeOutController : MonoBehaviour
                 _callback.Invoke();
         }
 
-        var color = _image.color;
-        color.a = Mathf.Pow(_time / _fadeTime, _fadePower);
-        _image.color = color;
+        var alpha = Mathf.Pow(_time / _fadeTime, _fadePower);
+        _alphaController.ChangeAlpha(alpha);
     }
 }

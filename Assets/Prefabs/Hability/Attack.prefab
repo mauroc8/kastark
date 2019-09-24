@@ -157,6 +157,7 @@ GameObject:
   - component: {fileID: 972653885162590838}
   - component: {fileID: 7818891886039578260}
   - component: {fileID: 999875494813691935}
+  - component: {fileID: 8115069959813916087}
   - component: {fileID: 4640293909642785611}
   - component: {fileID: 3572578353234598324}
   m_Layer: 5
@@ -222,6 +223,19 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &8115069959813916087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4733827532755741657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57133cd58e2b70c41b22d290b6f2fa93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _image: {fileID: 999875494813691935}
 --- !u!114 &4640293909642785611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,10 +260,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbfba993d99db3649bb72484cf6b09bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _image: {fileID: 0}
+  _alphaController: {fileID: 8115069959813916087}
   _fadeTime: 0.29
   _fadePower: 1.6
-  _fadeOnStart: 0
+  _fadeOnEnable: 0
 --- !u!1 &8027526181272486134
 GameObject:
   m_ObjectHideFlags: 0

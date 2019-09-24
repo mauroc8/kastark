@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(RectTransform))]
-[RequireComponent(typeof(ImageFadeOutController))]
+[RequireComponent(typeof(FadeOutController))]
 public class UIRectCountdown : MonoBehaviour
 {
     float _countdownTime = 0;
     float _time;
 
     RectTransform _transform;
-    ImageFadeOutController _fadeOutController;
+    FadeOutController _fadeOutController;
 
     void Start()
     {
         _transform = GetComponent<RectTransform>();
-        _fadeOutController = GetComponent<ImageFadeOutController>();
+        _fadeOutController = GetComponent<FadeOutController>();
     }
 
     void Update()

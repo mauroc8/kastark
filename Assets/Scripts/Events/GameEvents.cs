@@ -10,6 +10,7 @@ namespace Events{
     public class TurnEndEvent    : GameEvent { }
 
     public class HabilitySelectEvent : GameEvent { public Hability hability; }
+    public class ConsumableSelectEvent : GameEvent { public Consumable consumable; }
     public class HabilityCancelEvent : GameEvent {}
 
     public class HabilityCastEvent : GameEvent

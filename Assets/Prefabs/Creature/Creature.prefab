@@ -146,6 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7739504722496376532}
   - component: {fileID: 7739504722496376533}
+  - component: {fileID: 8404001752685471081}
   - component: {fileID: 4141244459750112284}
   - component: {fileID: 166352706797274817}
   - component: {fileID: 1011501852818858575}
@@ -190,6 +191,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &8404001752685471081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7739504722496376535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0de3492af9aa044d931e753f911adcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 7739504722496376533}
 --- !u!114 &4141244459750112284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,6 +221,8 @@ MonoBehaviour:
   _xOffsetVH: 0
   _yOffsetVH: 0.08
   _negateXOffsetToFaceEnemy: 0
+  updateEachFrame: 0
+  _useScreenSpace: 1
 --- !u!114 &166352706797274817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +238,8 @@ MonoBehaviour:
   _fadeInDuration: 1
   _fadePower: 2
   _autoDisable: 1
+  _fadeOnEnable: 1
+  _alphaController: {fileID: 8404001752685471081}
 --- !u!114 &1011501852818858575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,7 +511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a98c4e8d113bd242a22d422be729172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cursorSkin: {fileID: 11400000, guid: 187f42974cf7d404ab1a7f382341d125, type: 2}
+  _creatureController: {fileID: 0}
 --- !u!65 &7739504723204175224
 BoxCollider:
   m_ObjectHideFlags: 0

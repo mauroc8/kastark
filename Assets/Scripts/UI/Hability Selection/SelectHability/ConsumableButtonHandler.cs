@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Events;
 
-public class ConsumableButtonOnClick : HabilityButtonOnClick
+public class ConsumableButtonHandler : HabilityButtonHandler
 {
     public void SetHandler(Consumable consumable)
     {
@@ -12,9 +12,10 @@ public class ConsumableButtonOnClick : HabilityButtonOnClick
 
         if (consumable.amount > 0)
         {
-            button.onClick.AddListener(() =>
-                EventController.TriggerEvent(new HabilitySelectEvent{ hability = consumable.hability }));
-            consumable.amount--; // TO DO: Esto haría que al cancelar se pierda!
+            button.onClick.AddListener(() => {
+                EventController.TriggerEvent(new HabilitySelectEvent{ hability = consumable.hability });
+                EventController.TriggerEvent(new ConsumableSelectEvent{ consumable = consumable });
+            });
         }
         else
         {

@@ -84,9 +84,15 @@ public class GameManager : MonoBehaviour
         _selectedHabilityInstance = Instantiate(evt.hability.controller);
     }
 
+    void OnConsumableSelect(ConsumableSelectEvent evt)
+    {
+        GameState.selectedConsumable = evt.consumable;
+    }
+
     void OnHabilityCancel(HabilityCancelEvent evt)
     {
         GameState.selectedHability = null;
+        GameState.selectedConsumable = null;
 
         Destroy(_selectedHabilityInstance);
         _selectedHabilityInstance = null;
@@ -101,12 +107,18 @@ public class GameManager : MonoBehaviour
             actingCreature.Attack(targets[i], baseDamage * evt.effectiveness[i], evt.damageType);
         }
 
+        if (GameState.selectedConsumable != null)
+        {
+            GameState.selectedConsumable.amount--;
+        }
+
         if (targets.Length > 0)
             Debug.Log($"{GameState.selectedHability.name} cast to {targets[0].name} with {baseDamage} base damage and {evt.effectiveness[0]} effectiveness.");
         else
             Debug.Log($"{GameState.selectedHability.name} cast to noone.");
         
         GameState.selectedHability = null;
+        GameState.selectedConsumable = null;
     }
 
     WaitForSeconds _endTurnWait = new WaitForSeconds(0.3f);

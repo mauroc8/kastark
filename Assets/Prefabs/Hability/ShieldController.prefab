@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shield: {fileID: 949740092096044478}
-  _shieldColorController: {fileID: 683511389723769010}
+  _shieldAlphaController: {fileID: 1486235068765180191}
   _speed: 1
   _maxOpacity: 0.5
 --- !u!1 &949740092096044478
@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 949740092096044476}
   - component: {fileID: 7491850915484322358}
   - component: {fileID: 3729624205557990008}
-  - component: {fileID: 683511389723769010}
+  - component: {fileID: 1486235068765180191}
   m_Layer: 0
   m_Name: Shield
   m_TagString: Untagged
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cursorSkin: {fileID: 11400000, guid: 187f42974cf7d404ab1a7f382341d125, type: 2}
---- !u!114 &683511389723769010
+--- !u!114 &1486235068765180191
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,6 +198,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 949740092096044478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9effc1423b6d1f24f923288e6b41b950, type: 3}
+  m_Script: {fileID: 11500000, guid: e9011bd94e0121045ba66d2516de87de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

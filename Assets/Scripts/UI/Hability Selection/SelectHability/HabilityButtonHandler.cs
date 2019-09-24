@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Events;
 
-public class HabilityButtonOnClick : MonoBehaviour
+public class HabilityButtonHandler : MonoBehaviour
 {
     public void SetHandler(Hability hability)
     {

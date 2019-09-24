@@ -12,9 +12,7 @@ GameObject:
   - component: {fileID: 8255537297039746242}
   - component: {fileID: 8255537297039746245}
   - component: {fileID: 8255537297039746244}
-  - component: {fileID: 5998968488977727405}
   - component: {fileID: 8121196616063920428}
-  - component: {fileID: 6658769017997095343}
   m_Layer: 5
   m_Name: Hability Panel
   m_TagString: Untagged
@@ -93,18 +91,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 8.11, y: -6.14}
   m_UseGraphicAlpha: 1
---- !u!225 &5998968488977727405
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8255537297039746246}
-  m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &8121196616063920428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,18 +105,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _buttonPrefab: {fileID: 1207603083050979631, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
     type: 3}
---- !u!114 &6658769017997095343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8255537297039746246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a260cfa240063e42852cd6e8db2d565, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fadeInDuration: 0.4
-  _fadePower: 1.6
-  _autoDisable: 1

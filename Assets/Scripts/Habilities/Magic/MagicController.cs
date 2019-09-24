@@ -7,9 +7,7 @@ public class MagicController : HabilityController
 {
     [Header("Config")]
     [SerializeField] float _castDistanceVh = 0.2f;
-    [Tooltip("Overrides bigParticle's FollowCursor settings.")]
-    [SerializeField] float _attractionDistanceVh = 0.8f;
-    [SerializeField] float _fullPowerSpeedVh = 0.017f;
+    [SerializeField] float _fullPowerSpeedVh = 23f;
 
     [Header("Refs")]
     [SerializeField] Transform _bigParticleTransform = null;
@@ -22,8 +20,7 @@ public class MagicController : HabilityController
     void OnEnable()
     {
         _castDistancePx = _castDistanceVh * Screen.height;
-        _attractionDistancePx = _attractionDistanceVh * Screen.height;
-        _bigParticleFollowCursor.AttractionDistanceVh = _attractionDistanceVh;
+        _attractionDistancePx = _bigParticleFollowCursor.AttractionDistanceVh * Screen.height;
     }
 
     bool _casting = false;
@@ -60,7 +57,9 @@ public class MagicController : HabilityController
         if (GameState.IsFromEnemyTeam(target))
         {
             var speed = _bigParticleFollowCursor.Speed;
+            Debug.Log(speed.magnitude / Screen.height);
             var magnitude = speed.magnitude / Screen.height / _fullPowerSpeedVh;
+
             _bigParticleFollowCursor.enabled = false;
             
             _cast = true;

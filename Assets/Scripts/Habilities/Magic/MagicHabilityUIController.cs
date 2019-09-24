@@ -9,8 +9,8 @@ public class MagicHabilityUIController : MonoBehaviour
 
     [Header("Refs")]
     [SerializeField] MagicController _magicController     = null;
-    [SerializeField] ColorController _bigParticleColor    = null;
-    [SerializeField] ColorController _particleSystemColor = null;
+    [SerializeField] ColorController _bigParticleColorController    = null;
+    [SerializeField] ColorController _particleSystemColorController = null;
 
     [Header("Colors prior to casting")]
     [SerializeField] Color _blurColor = Color.gray;
@@ -24,8 +24,8 @@ public class MagicHabilityUIController : MonoBehaviour
     void Start()
     {
         _cursorSkin.ChangeCursorTexture(CursorTexture.None);
-        _bigParticleColor.ChangeColor(_blurColor);
-        _particleSystemColor.ChangeColor(_blurColor);
+        _bigParticleColorController.ChangeColor(_blurColor);
+        _particleSystemColorController.ChangeColor(_blurColor);
     }
 
     void Update()
@@ -42,15 +42,15 @@ public class MagicHabilityUIController : MonoBehaviour
                 }
 
                 var color = Color.Lerp(_primaryColor, _secondaryColor, _magicController.NormalizedDistanceToAttractionCenter);
-                _bigParticleColor.ChangeColor(color);
-                _particleSystemColor.ChangeColor(color);
+                _bigParticleColorController.ChangeColor(color);
+                _particleSystemColorController.ChangeColor(color);
             }
             else if (Input.GetMouseButtonUp(0))
             {
                 _cursorSkin.ChangeCursorTexture(CursorTexture.Interactable);
 
-                _bigParticleColor.ChangeColor(_secondaryColor);
-                _particleSystemColor.ChangeColor(_secondaryColor);
+                _bigParticleColorController.ChangeColor(_secondaryColor);
+                _particleSystemColorController.ChangeColor(_secondaryColor);
             }
         }
         else
@@ -61,8 +61,8 @@ public class MagicHabilityUIController : MonoBehaviour
                 {
                     _cursorSkin.ChangeCursorTexture(CursorTexture.Interactable);
 
-                    _bigParticleColor.ChangeColor(_hoverColor);
-                    _particleSystemColor.ChangeColor(_hoverColor);
+                    _bigParticleColorController.ChangeColor(_hoverColor);
+                    _particleSystemColorController.ChangeColor(_hoverColor);
                 }
             }
             else
@@ -71,8 +71,8 @@ public class MagicHabilityUIController : MonoBehaviour
                 {
                     _cursorSkin.ChangeCursorTexture(CursorTexture.None);
 
-                    _bigParticleColor.ChangeColor(_blurColor);
-                    _particleSystemColor.ChangeColor(_blurColor);
+                    _bigParticleColorController.ChangeColor(_blurColor);
+                    _particleSystemColorController.ChangeColor(_blurColor);
                 }
             }
         }

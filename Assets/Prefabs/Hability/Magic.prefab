@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1259224198235130772}
   - component: {fileID: 1259224198235130775}
   - component: {fileID: 1259224198235130773}
-  - component: {fileID: 6762118290834596679}
+  - component: {fileID: 8324995598119217883}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -4768,7 +4768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _depthReference: {fileID: 0}
   _followMe: {fileID: 1259224198754002646}
---- !u!114 &6762118290834596679
+--- !u!114 &8324995598119217883
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4777,7 +4777,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1259224198235130473}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9effc1423b6d1f24f923288e6b41b950, type: 3}
+  m_Script: {fileID: 11500000, guid: e9011bd94e0121045ba66d2516de87de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1259224198523282082
@@ -4890,9 +4890,9 @@ GameObject:
   - component: {fileID: 1259224198754002646}
   - component: {fileID: 1259224198754002645}
   - component: {fileID: 1259224198754002644}
+  - component: {fileID: 5688449668220871055}
   - component: {fileID: 1259224198754002647}
   - component: {fileID: 4299384368727139268}
-  - component: {fileID: 7184863409708943172}
   - component: {fileID: 1918959170277340810}
   m_Layer: 5
   m_Name: Big Particle
@@ -4957,6 +4957,19 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &5688449668220871055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259224198754002601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57133cd58e2b70c41b22d290b6f2fa93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _image: {fileID: 1259224198754002644}
 --- !u!114 &1259224198754002647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4969,7 +4982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3477da25dfd14954a99097f9e44215b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attraction: 1.2
+  _attraction: 2.1
   _friction: 0.98
   _attractionDistanceVh: 1.2
 --- !u!114 &4299384368727139268
@@ -4991,18 +5004,6 @@ MonoBehaviour:
   _negateXOffsetToFaceEnemy: 1
   updateEachFrame: 1
   _useScreenSpace: 1
---- !u!114 &7184863409708943172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259224198754002601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9effc1423b6d1f24f923288e6b41b950, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1918959170277340810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5066,8 +5067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _castDistanceVh: 0.2
-  _attractionDistanceVh: 1.2
-  _fullPowerSpeedVh: 0.017
+  _fullPowerSpeedVh: 0.7
   _bigParticleTransform: {fileID: 1259224198754002646}
   _bigParticlePositionNextToCreature: {fileID: 4299384368727139268}
   _bigParticleFollowCursor: {fileID: 1259224198754002647}
@@ -5085,8 +5085,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cursorSkin: {fileID: 11400000, guid: 187f42974cf7d404ab1a7f382341d125, type: 2}
   _magicController: {fileID: 1259224199978336841}
-  _bigParticleColor: {fileID: 7184863409708943172}
-  _particleSystemColor: {fileID: 6762118290834596679}
+  _bigParticleColorController: {fileID: 5688449668220871055}
+  _particleSystemColorController: {fileID: 8324995598119217883}
   _blurColor: {r: 0.8867924, g: 0.88271004, b: 0.8156817, a: 0.6156863}
   _hoverColor: {r: 1, g: 1, b: 0.92156863, a: 0.7137255}
   _primaryColor: {r: 1, g: 0.94509804, b: 0.33333334, a: 1}
