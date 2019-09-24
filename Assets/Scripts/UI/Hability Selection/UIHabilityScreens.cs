@@ -7,32 +7,26 @@ public class UIHabilityScreens : MonoBehaviour
 {
     [SerializeField] GameObject _selectHabilityScreen = null;
     [SerializeField] GameObject _castHabilityScreen = null;
+    [SerializeField] HabilityDescriptionFiller _habilityDescriptionFiller = null;
 
     GameObject _currentScreen;
 
     void OnEnable() {
         EventController.AddListener<TurnStartEvent>(OnTurnStart);
+        EventController.AddListener<HabilityCancelEvent>(OnTurnStart);
         EventController.AddListener<HabilitySelectEvent>(OnHabilitySelect);
-        EventController.AddListener<HabilityCancelEvent>(OnHabilityCancel);
     }
 
     void OnDisable() {
         EventController.RemoveListener<TurnStartEvent>(OnTurnStart);
+        EventController.RemoveListener<HabilityCancelEvent>(OnTurnStart);
         EventController.RemoveListener<HabilitySelectEvent>(OnHabilitySelect);
-        EventController.RemoveListener<HabilityCancelEvent>(OnHabilityCancel);
     }
 
-    void OnTurnStart(TurnStartEvent evt)
+    void OnTurnStart(GameEvent evt)
     {
-        if (GameState.IsPlayersTurn())
-        {
-            _selectHabilityScreen.SetActive(true);
-        }
-        else
-        {
-            _selectHabilityScreen.SetActive(false);
-            _castHabilityScreen.SetActive(false);
-        }
+        _selectHabilityScreen.SetActive(GameState.IsPlayersTurn());
+        _castHabilityScreen.SetActive(false);
     }
 
     GameObject _instance;
@@ -42,16 +36,7 @@ public class UIHabilityScreens : MonoBehaviour
         if (!GameState.IsPlayersTurn()) return;
 
         _selectHabilityScreen.SetActive(false);
-        _castHabilityScreen.GetComponentInChildren<FillHabilityDescription>().selectedHability = evt.hability;
+        _habilityDescriptionFiller.FillWithHability(evt.hability);
         _castHabilityScreen.SetActive(true);
-    }
-    
-
-    void OnHabilityCancel(HabilityCancelEvent evt)
-    {
-        if (!GameState.IsPlayersTurn()) return;
-
-        _selectHabilityScreen.SetActive(true);
-        _castHabilityScreen.SetActive(false);
     }
 }

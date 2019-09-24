@@ -2138,6 +2138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _selectHabilityScreen: {fileID: 266863021}
   _castHabilityScreen: {fileID: 1898954121}
+  _habilityDescriptionFiller: {fileID: 1898954126}
 --- !u!1001 &1247666082
 PrefabInstance:
   m_ObjectHideFlags: 0
