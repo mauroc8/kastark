@@ -8,6 +8,7 @@ public class MagicController : HabilityController
     [Header("Config")]
     [SerializeField] float _castDistanceVh = 0.2f;
     [SerializeField] float _fullPowerSpeedVh = 23f;
+    [SerializeField] float _countdownTime = 0.8f;
 
     [Header("Refs")]
     [SerializeField] Transform _bigParticleTransform = null;
@@ -31,6 +32,9 @@ public class MagicController : HabilityController
     public bool Casting => _casting;
     public bool MouseIsWithinCastDistance => _mouseIsWithinCastDistance;
     public float NormalizedDistanceToAttractionCenter => _normalizedDistanceToAttractionCenter;
+    public float CountdownTime => _countdownTime;
+
+    float _castStartTime;
 
     void Update()
     {
@@ -45,11 +49,20 @@ public class MagicController : HabilityController
         {
             if (_mouseIsWithinCastDistance && Input.GetMouseButtonDown(0))
             {
+                // Lock position:
                 _bigParticlePositionNextToCreature.updateEachFrame = false;
+                _castStartTime = Time.time;
                 _casting = true;
             }
 
             return;
+        }
+
+        if (Time.time - _castStartTime >= _countdownTime)
+        {
+            _bigParticleFollowCursor.enabled = false;
+            _casting = false;
+            _cast = true;
         }
 
         var target = Util.GetGameObjectAtScreenPoint(_bigParticleTransform.position);
@@ -61,7 +74,7 @@ public class MagicController : HabilityController
             var magnitude = speed.magnitude / Screen.height / _fullPowerSpeedVh;
 
             _bigParticleFollowCursor.enabled = false;
-            
+            _casting = false;
             _cast = true;
 
             var targetCreature = target.GetComponent<CreatureController>();

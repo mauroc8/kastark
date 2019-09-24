@@ -23,7 +23,7 @@ public class AttackController : HabilityController
                 _attackTrail.Move(Input.mousePosition);
             }
 
-            if (_attackTrail.IsOutOfBounds())
+            if (_attackTrail.IsOutOfBounds() || !_uiRectCountdown.Running)
             {
                 CloseTrail();
             }

@@ -4810,6 +4810,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 9112200482004723928}
   - {fileID: 1259224198754002646}
   m_Father: {fileID: 1259224199978336886}
   m_RootOrder: 0
@@ -4913,7 +4914,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1259224198523282083}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5068,6 +5069,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _castDistanceVh: 0.2
   _fullPowerSpeedVh: 0.7
+  _countdownTime: 3.4
   _bigParticleTransform: {fileID: 1259224198754002646}
   _bigParticlePositionNextToCreature: {fileID: 4299384368727139268}
   _bigParticleFollowCursor: {fileID: 1259224198754002647}
@@ -5087,7 +5089,71 @@ MonoBehaviour:
   _magicController: {fileID: 1259224199978336841}
   _bigParticleColorController: {fileID: 5688449668220871055}
   _particleSystemColorController: {fileID: 8324995598119217883}
+  _particleSystem: {fileID: 1259224198235130772}
+  _uiRectCountdown: {fileID: 3706224143296317925}
   _blurColor: {r: 0.8867924, g: 0.88271004, b: 0.8156817, a: 0.6156863}
   _hoverColor: {r: 1, g: 1, b: 0.92156863, a: 0.7137255}
   _primaryColor: {r: 1, g: 0.94509804, b: 0.33333334, a: 1}
   _secondaryColor: {r: 1, g: 1, b: 0.9372549, a: 1}
+--- !u!1001 &7451028358993387511
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1259224198523282083}
+    m_Modifications:
+    - target: {fileID: 6186877569224855168, guid: cfbc97ed7269f8b4abd64a444ae44551,
+        type: 3}
+      propertyPath: m_Name
+      value: Countdown
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806599721060497199, guid: cfbc97ed7269f8b4abd64a444ae44551,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806599721060497199, guid: cfbc97ed7269f8b4abd64a444ae44551,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806599721060497199, guid: cfbc97ed7269f8b4abd64a444ae44551,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806599721060497199, guid: cfbc97ed7269f8b4abd64a444ae44551,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806599721060497199, guid: cfbc97ed7269f8b4abd64a444ae44551,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806599721060497199, guid: cfbc97ed7269f8b4abd64a444ae44551,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cfbc97ed7269f8b4abd64a444ae44551, type: 3}
+--- !u!224 &9112200482004723928 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1806599721060497199, guid: cfbc97ed7269f8b4abd64a444ae44551,
+    type: 3}
+  m_PrefabInstance: {fileID: 7451028358993387511}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3706224143296317925 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6055223738386798098, guid: cfbc97ed7269f8b4abd64a444ae44551,
+    type: 3}
+  m_PrefabInstance: {fileID: 7451028358993387511}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d8af1afe191af54da837e4342b4bd60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

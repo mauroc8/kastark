@@ -67,10 +67,6 @@ public class AttackTrail : MonoBehaviour
             Debug.Log($"[AttackTrail] Length > maxLength\n{_length} > {_maxLengthPx}");
             return true;
         }
-        if (Time.time - _openTime > maxLifetime) {
-            Debug.Log("[AttackTrail] lifetime > maxLifetime");
-            return true;
-        }
         return false;
     }
 
