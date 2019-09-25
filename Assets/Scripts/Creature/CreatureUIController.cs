@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Events;
 
-public class CreatureUIHandler : MonoBehaviour
+public class CreatureUIController : MonoBehaviour
 {
     [SerializeField] CreatureController  _creatureController          = null;
     [SerializeField] ColorController     _creatureColorController     = null;
@@ -30,14 +30,17 @@ public class CreatureUIHandler : MonoBehaviour
     
     void OnHabilityCast(HabilityCastEvent evt)
     {
-        foreach (var target in evt.targets) if (target == _creatureController)
+        foreach (var target in evt.targets)
         {
-            ReceiveDamage(evt.damage * evt.effectiveness[0], evt.damageType);
-            return;
+            if (target == _creatureController)
+            {
+                ChangeColorToDamageType(evt.damageType);
+                return;
+            }
         }
     }
 
-    void ReceiveDamage(float damage, DamageType damageType)
+    void ChangeColorToDamageType(DamageType damageType)
     {
         var damageColor  =
             damageType == DamageType.Heal ? _healColor :

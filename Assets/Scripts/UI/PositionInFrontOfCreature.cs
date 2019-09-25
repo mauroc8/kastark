@@ -6,11 +6,14 @@ public class PositionInFrontOfCreature : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] BodyPart _bodyPart = BodyPart.Chest;
-    [SerializeField] float _zOffset = 0;
+    [Tooltip("Relative to -Camera.forward")]
+    [SerializeField] Vector3 _offset = Vector3.zero;
+    [SerializeField] bool _offsetRelativeToCamera = true;
 
     [Header("Creature")]
     [SerializeField] bool _useRandomEnemy = false;
-    [Tooltip("Ignored if Use Random Enemy is true.")]
+    [SerializeField] bool _useActingCreature = false;
+    [Tooltip("Ignored if some of the above is true.")]
     [SerializeField] CreatureController _creature = null;
     
     void Start()
@@ -23,9 +26,23 @@ public class PositionInFrontOfCreature : MonoBehaviour
                 break;
             }
         }
+        else if (_useActingCreature)
+        {
+            _creature = GameState.actingCreature;
+        }
 
         var position = _creature.GetBodyPart(_bodyPart).position;
-        position -= Camera.main.transform.forward * _zOffset;
+
+        if (_offsetRelativeToCamera)
+        {
+            position += Camera.main.transform.forward * _offset.z;
+            position += Camera.main.transform.right * _offset.x;
+            position += Camera.main.transform.up * _offset.y;
+        }
+        else
+        {
+            position += _offset;
+        }
         
         transform.position = position;
     }

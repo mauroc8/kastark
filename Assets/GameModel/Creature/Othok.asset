@@ -18,5 +18,6 @@ MonoBehaviour:
   _initialMaxHealth: 10
   _initialPhysicalResistance: 1
   _initialMagicalResistance: 1
-  _initialHabilities: []
+  _initialHabilities:
+  - {fileID: 11400000, guid: be014d44bf74bd74facb0723b73125c4, type: 2}
   _initialConsumables: []

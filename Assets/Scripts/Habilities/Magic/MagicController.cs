@@ -44,7 +44,6 @@ public class MagicController : HabilityController
         {
             if (_mouseIsWithinCastDistance && Input.GetMouseButtonDown(0))
             {
-                // Lock position:
                 _bigParticlePositionNextToCreature.updateEachFrame = false;
                 _castStartTime = Time.time;
                 _casting = true;
@@ -58,6 +57,12 @@ public class MagicController : HabilityController
             _bigParticleFollowCursor.enabled = false;
             _casting = false;
             _cast = true;
+            EventController.TriggerEvent(new HabilityCastEvent{
+                targets = new CreatureController[0],
+                effectiveness = new float[0],
+                damageType = DamageType.None,
+                damage = 0
+            });
         }
 
         var target = Util.GetGameObjectAtScreenPoint(_bigParticleTransform.position);
@@ -65,7 +70,6 @@ public class MagicController : HabilityController
         if (GameState.IsFromEnemyTeam(target))
         {
             var speed = _bigParticleFollowCursor.Speed;
-            Debug.Log(speed.magnitude / Screen.height);
             var magnitude = speed.magnitude / Screen.height / _fullPowerSpeedVh;
 
             _bigParticleFollowCursor.enabled = false;
@@ -75,12 +79,12 @@ public class MagicController : HabilityController
             var targetCreature = target.GetComponent<CreatureController>();
             var effectiveness = magnitude > 1 ? 1 : Mathf.Pow(magnitude, difficulty);
 
-            var habilityCastController = new HabilityCastController{
+            EventController.TriggerEvent(new HabilityCastEvent{
                 targets = new CreatureController[]{ targetCreature },
                 effectiveness = new float[]{ effectiveness },
-                hability = GameState.selectedHability
-            };
-            habilityCastController.Cast();
+                damageType = GameState.selectedHability.DamageType,
+                damage = GameState.selectedHability.Damage
+            });
         }
     }
 }

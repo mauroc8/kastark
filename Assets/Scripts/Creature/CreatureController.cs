@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Events;
 
 public class CreatureController : MonoBehaviour
 {
@@ -54,5 +55,31 @@ public class CreatureController : MonoBehaviour
                 Debug.Log($"No handler for damageType {damageType}");
             } break;
         }
+    }
+
+    void OnEnable()
+    {
+        EventController.AddListener<HabilityCastEvent>(OnHabilityCast);
+    }
+
+    void OnDisable()
+    {
+        EventController.RemoveListener<HabilityCastEvent>(OnHabilityCast);
+    }
+
+    void OnHabilityCast(HabilityCastEvent evt)
+    {
+        if (GameState.actingCreature == this)
+        {
+            StartCoroutine(CastHabilityCoroutine());
+        }
+    }
+
+    WaitForSeconds _castHabilityWait = new WaitForSeconds(0.3f);
+
+    IEnumerator CastHabilityCoroutine()
+    {
+        yield return _castHabilityWait;
+        EventController.TriggerEvent(new TurnEndEvent());
     }
 }

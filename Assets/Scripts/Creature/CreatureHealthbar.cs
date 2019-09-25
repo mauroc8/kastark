@@ -8,7 +8,7 @@ public class CreatureHealthbar : MonoBehaviour
 {
     bool _lastShow = true;
 
-    float _imageMarginPercentage = 0.0032f;
+    float _imageMarginPercentage = 0.0033f;
     float _distanceToHeadVH = 0.08f;
 
     [Header("Refs")]

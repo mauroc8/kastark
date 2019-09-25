@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Events;
 
-public class AttackUIController : MonoBehaviour
+public class HabilityTutorialController : MonoBehaviour
 {
-    static bool _isFirstTime = true;
+    bool _isFirstTime = true;
 
     [SerializeField] GameObject _tutorial = null;
 
@@ -16,6 +16,7 @@ public class AttackUIController : MonoBehaviour
         if (_isFirstTime)
         {
             _wait = new WaitForSeconds(0.3f);
+            _isFirstTime = false;
         }
         else
         {

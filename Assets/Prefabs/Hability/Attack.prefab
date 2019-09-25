@@ -221,8 +221,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bodyPart: 1
-  _zOffset: 2
+  _offset: {x: 0, y: 0, z: -2}
+  _offsetRelativeToCamera: 1
   _useRandomEnemy: 1
+  _useActingCreature: 0
   _creature: {fileID: 0}
 --- !u!1 &2235179931106278154
 GameObject:

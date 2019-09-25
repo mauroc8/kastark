@@ -81,7 +81,10 @@ public class GameManager : MonoBehaviour
     {
         GameState.selectedHability = evt.hability;
 
-        _selectedHabilityInstance = Instantiate(evt.hability.controller);
+        if (GameState.IsPlayersTurn())
+        {
+            _selectedHabilityInstance = Instantiate(evt.hability.controller);
+        }
     }
 
     void OnConsumableSelect(ConsumableSelectEvent evt)
@@ -94,8 +97,11 @@ public class GameManager : MonoBehaviour
         GameState.selectedHability = null;
         GameState.selectedConsumable = null;
 
-        Destroy(_selectedHabilityInstance);
-        _selectedHabilityInstance = null;
+        if (_selectedHabilityInstance != null)
+        {
+            Destroy(_selectedHabilityInstance);
+            _selectedHabilityInstance = null;
+        }
     }
 
     void OnHabilityCast(HabilityCastEvent evt)
