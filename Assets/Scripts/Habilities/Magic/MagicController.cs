@@ -13,25 +13,21 @@ public class MagicController : HabilityController
     [Header("Refs")]
     [SerializeField] Transform _bigParticleTransform = null;
     [SerializeField] PositionNextToCreature _bigParticlePositionNextToCreature = null;
-    [SerializeField] FollowCursor _bigParticleFollowCursor = null;
+    [SerializeField] MagicalEnergyFollowCursor _bigParticleFollowCursor = null;
 
     float _castDistancePx;
-    float _attractionDistancePx;
 
     void OnEnable()
     {
         _castDistancePx = _castDistanceVh * Screen.height;
-        _attractionDistancePx = _bigParticleFollowCursor.AttractionDistanceVh * Screen.height;
     }
 
     bool _casting = false;
     bool _mouseIsWithinCastDistance = false;
-    float _normalizedDistanceToAttractionCenter = 0;
 
     public bool Cast => _cast;
     public bool Casting => _casting;
     public bool MouseIsWithinCastDistance => _mouseIsWithinCastDistance;
-    public float NormalizedDistanceToAttractionCenter => _normalizedDistanceToAttractionCenter;
     public float CountdownTime => _countdownTime;
 
     float _castStartTime;
@@ -43,7 +39,6 @@ public class MagicController : HabilityController
         var diff = Vector2.Distance(_bigParticleTransform.position, Input.mousePosition);
         
         _mouseIsWithinCastDistance = diff <= _castDistancePx;
-        _normalizedDistanceToAttractionCenter = diff / _attractionDistancePx;
 
         if (!_casting)
         {

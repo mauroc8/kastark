@@ -4780,6 +4780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9011bd94e0121045ba66d2516de87de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _material: {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1 &1259224198523282082
 GameObject:
   m_ObjectHideFlags: 0
@@ -4891,10 +4892,11 @@ GameObject:
   - component: {fileID: 1259224198754002646}
   - component: {fileID: 1259224198754002645}
   - component: {fileID: 1259224198754002644}
-  - component: {fileID: 5688449668220871055}
   - component: {fileID: 1259224198754002647}
   - component: {fileID: 4299384368727139268}
   - component: {fileID: 1918959170277340810}
+  - component: {fileID: 5688449668220871055}
+  - component: {fileID: 4217013836552261014}
   m_Layer: 5
   m_Name: Big Particle
   m_TagString: Untagged
@@ -4958,19 +4960,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &5688449668220871055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259224198754002601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57133cd58e2b70c41b22d290b6f2fa93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _image: {fileID: 1259224198754002644}
 --- !u!114 &1259224198754002647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4983,9 +4972,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3477da25dfd14954a99097f9e44215b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attraction: 2.1
-  _friction: 0.98
-  _attractionDistanceVh: 1.2
+  _accelerationVh: 0.9
+  _friction: 0.1
 --- !u!114 &4299384368727139268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5021,6 +5009,35 @@ MonoBehaviour:
   _displacement: {x: 0.01, y: 0.02, z: 0}
   _isStaticPositionedElement: 0
   _useViewportHeight: 1
+--- !u!114 &5688449668220871055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259224198754002601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57133cd58e2b70c41b22d290b6f2fa93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _image: {fileID: 1259224198754002644}
+--- !u!114 &4217013836552261014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259224198754002601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbfba993d99db3649bb72484cf6b09bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alphaController: {fileID: 5688449668220871055}
+  _fadeTime: 0.3
+  _fadePower: 1.6
+  _fadeOnEnable: 0
 --- !u!1 &1259224199978336840
 GameObject:
   m_ObjectHideFlags: 0
@@ -5069,7 +5086,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _castDistanceVh: 0.2
   _fullPowerSpeedVh: 0.7
-  _countdownTime: 3.4
+  _countdownTime: 2
   _bigParticleTransform: {fileID: 1259224198754002646}
   _bigParticlePositionNextToCreature: {fileID: 4299384368727139268}
   _bigParticleFollowCursor: {fileID: 1259224198754002647}
@@ -5085,11 +5102,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4723b6749d5a6a7488cc7e274dce2766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cursorSkin: {fileID: 11400000, guid: 187f42974cf7d404ab1a7f382341d125, type: 2}
   _magicController: {fileID: 1259224199978336841}
+  _cursorSkin: {fileID: 11400000, guid: 187f42974cf7d404ab1a7f382341d125, type: 2}
   _bigParticleColorController: {fileID: 5688449668220871055}
   _particleSystemColorController: {fileID: 8324995598119217883}
   _particleSystem: {fileID: 1259224198235130772}
+  _bigParticleFadeOutController: {fileID: 4217013836552261014}
   _uiRectCountdown: {fileID: 3706224143296317925}
   _blurColor: {r: 0.8867924, g: 0.88271004, b: 0.8156817, a: 0.6156863}
   _hoverColor: {r: 1, g: 1, b: 0.92156863, a: 0.7137255}

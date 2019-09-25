@@ -7,12 +7,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Renderer))]
 public class MaterialColorController : ColorController
 {
-    Material _material = null;
-    
-    void Awake()
-    {
-        _material = GetComponent<Renderer>().material;
-    }
+    [SerializeField] Material _material = null;
 
     public override void ChangeColor(Color color)
     {

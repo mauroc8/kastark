@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class MagicHabilityUIController : MonoBehaviour
 {
+    [SerializeField] MagicController _magicController     = null;
+
     [Header("Cursor")]
     [SerializeField] CursorSkin _cursorSkin = null;
 
-    [Header("Refs")]
-    [SerializeField] MagicController _magicController     = null;
+    [Header("Color controllers")]
     [SerializeField] ColorController _bigParticleColorController    = null;
     [SerializeField] ColorController _particleSystemColorController = null;
+
+    [Header("Fade Out controllers")]
     [SerializeField] ParticleSystem  _particleSystem = null;
+    [SerializeField] FadeOutController _bigParticleFadeOutController = null;
+    
+    [Header("Countdown")]
     [SerializeField] UIRectCountdown _uiRectCountdown = null;
 
     [Header("Colors prior to casting")]
@@ -23,19 +29,15 @@ public class MagicHabilityUIController : MonoBehaviour
 
     bool _lastMouseIsWithinCastDistance;
     bool _lastCasting;
-    bool _cleaned;
 
     void Start()
     {
         _cursorSkin.ChangeCursorTexture(CursorTexture.None);
         _bigParticleColorController.ChangeColor(_blurColor);
         _particleSystemColorController.ChangeColor(_blurColor);
-
-        var emission = _particleSystem.emission;
-        emission.enabled = false;
-
-        _cleaned = false;
     }
+
+    bool _cleaned = false;
 
     void Update()
     {
@@ -47,6 +49,8 @@ public class MagicHabilityUIController : MonoBehaviour
 
                 var emission = _particleSystem.emission;
                 emission.enabled = false;
+
+                _bigParticleFadeOutController.FadeOut();
 
                 _cleaned = true;
             }
@@ -65,9 +69,6 @@ public class MagicHabilityUIController : MonoBehaviour
                     var emission = _particleSystem.emission;
                     emission.enabled = true;
                 }
-                var color = Color.Lerp(_primaryColor, _secondaryColor, _magicController.NormalizedDistanceToAttractionCenter);
-                _bigParticleColorController.ChangeColor(color);
-                _particleSystemColorController.ChangeColor(color);
             }
             else if (Input.GetMouseButtonUp(0))
             {
