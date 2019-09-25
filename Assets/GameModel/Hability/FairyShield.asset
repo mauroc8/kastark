@@ -17,5 +17,5 @@ MonoBehaviour:
   DamageType: 3
   localizationKey: shield
   imageSprite: {fileID: 21300000, guid: 919aa016a18722e4cb319d49535483d3, type: 3}
-  controller: {fileID: 949740091347993858, guid: 53c3eb75b65a3c841a96505855573f0a,
+  controller: {fileID: 1715831638473981881, guid: 417f388ab3ae4de458b3a12bf635c499,
     type: 3}

@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 1715831638473981863}
   - component: {fileID: 1715831638473981880}
   - component: {fileID: 1715831638473981860}
+  - component: {fileID: 4212852267667531063}
   m_Layer: 5
-  m_Name: ShieldOld
+  m_Name: ShieldController2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,13 +113,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84dbf8b790fb19846a866de3e6260610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _duration: 2
-  _maxCastDistanceVh: 0.35
   _circleTransform: {fileID: 6809123815065996451}
-  _circleColor: {fileID: 1094216841455815766}
-  _changeCircleColorThreshold: 0.85
+  _speed: 1
+  _maxCastDistanceVh: 0.25
+--- !u!114 &4212852267667531063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715831638473981881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816bb934f1e8ce849b8d4940eb2c4357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shieldController: {fileID: 1715831638473981860}
+  _backgroundColor: {fileID: 1304519558168281918}
+  _circleColor: {fileID: 2737196809658543069}
+  _changeCircleColorThreshold: 0.9
   _colorBlendThreshold: 0.08
-  _alternativeCircleColor: {r: 1, g: 0.94376856, b: 0.28773582, a: 1}
+  _defaultCircleColor: {r: 1, g: 1, b: 1, a: 1}
+  _alternativeCircleColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  _cursorSkin: {fileID: 11400000, guid: 187f42974cf7d404ab1a7f382341d125, type: 2}
 --- !u!1 &4375356752413881065
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,6 +192,7 @@ MonoBehaviour:
   _yOffsetVH: 0
   _negateXOffsetToFaceEnemy: 0
   updateEachFrame: 1
+  _useScreenSpace: 1
 --- !u!1 &6809123815065996460
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,8 +204,7 @@ GameObject:
   - component: {fileID: 6809123815065996451}
   - component: {fileID: 6809123815065996449}
   - component: {fileID: 6809123815065996450}
-  - component: {fileID: 7343515540817972171}
-  - component: {fileID: 1094216841455815766}
+  - component: {fileID: 2737196809658543069}
   m_Layer: 5
   m_Name: Circle
   m_TagString: Untagged
@@ -251,19 +268,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!225 &7343515540817972171
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6809123815065996460}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
---- !u!114 &1094216841455815766
+--- !u!114 &2737196809658543069
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -272,9 +277,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6809123815065996460}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9effc1423b6d1f24f923288e6b41b950, type: 3}
+  m_Script: {fileID: 11500000, guid: 57133cd58e2b70c41b22d290b6f2fa93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _image: {fileID: 6809123815065996450}
 --- !u!1 &6809123816373172330
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +292,7 @@ GameObject:
   - component: {fileID: 6809123816373172329}
   - component: {fileID: 6809123816373172335}
   - component: {fileID: 6809123816373172328}
-  - component: {fileID: 4173110531348133798}
+  - component: {fileID: 1304519558168281918}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -350,7 +356,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &4173110531348133798
+--- !u!114 &1304519558168281918
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -359,6 +365,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6809123816373172330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9effc1423b6d1f24f923288e6b41b950, type: 3}
+  m_Script: {fileID: 11500000, guid: 57133cd58e2b70c41b22d290b6f2fa93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _image: {fileID: 6809123816373172328}
