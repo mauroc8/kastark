@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AlwaysFaceCamera : MonoBehaviour
+public class FaceCamera : MonoBehaviour
 {
     [SerializeField] bool _updateEachFrame = true;
 

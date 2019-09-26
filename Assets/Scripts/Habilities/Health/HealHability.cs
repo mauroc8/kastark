@@ -14,12 +14,9 @@ public class HealHability : HabilityController
             if (target == GameState.actingCreature.gameObject)
             {
                 _cast = true;
-                var habilityCastController = new HabilityCastController{
-                    targets = new CreatureController[]{ GameState.actingCreature },
-                    effectiveness = new float[]{ 1 },
-                    hability = GameState.selectedHability
-                };
-                habilityCastController.Cast();            }
+                GameState.selectedHability.Cast(GameState.actingCreature, 1);
+                EventController.TriggerEvent(new HabilityCastEvent{});
+            }
         }
     }
 }

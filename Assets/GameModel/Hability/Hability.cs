@@ -6,11 +6,14 @@ public class Hability : ScriptableObject
     [Header("Stats")]
     [SerializeField] float _initialDamage = 5;
     [SerializeField] float _initialDifficulty = 1;
-    
-    public DamageType DamageType;
+    [SerializeField] DamageType _damageType = DamageType.None;
 
-    [System.NonSerialized] public float Damage;
-    [System.NonSerialized] public float Difficulty;
+    float _damage;
+    float _difficulty;
+
+    public float Damage => _damage;
+    public float Difficulty => _difficulty;
+    public DamageType DamageType => _damageType;
 
     [Header("UI")]
     public string localizationKey;
@@ -33,7 +36,34 @@ public class Hability : ScriptableObject
         _localizedDescription = Localization.GetLocalizedString(localizationKey + "_description");
         _localizedTooltip = Localization.GetLocalizedString(localizationKey + "_tooltip");
 
-        Damage = _initialDamage;
-        Difficulty = _initialDifficulty;
+        _damage = _initialDamage;
+        _difficulty = _initialDifficulty;
+    }
+
+    public static float desiredEffectiveness = 0.7549f;
+    public static float effectivenessAdjustFactor = 0.2104f;
+
+    public void Cast(CreatureController target, float unadjustedEffectiveness)
+    {
+        var effectiveness = Mathf.Pow(unadjustedEffectiveness, _difficulty);
+
+        _difficulty *= // Adjust difficulty.
+            (1 + (effectiveness - desiredEffectiveness) * effectivenessAdjustFactor);
+        
+        switch (_damageType)
+        {
+            case DamageType.Physical:
+                target.ReceiveAttack(_damage * effectiveness);
+                break;
+            case DamageType.Magical:
+                target.ReceiveMagic(_damage * effectiveness);
+                break;
+            case DamageType.Shield:
+                target.ReceiveShield(_damage * effectiveness);
+                break;
+            case DamageType.Heal:
+                target.ReceiveHeal(_damage * effectiveness);
+                break;
+        }
     }
 }

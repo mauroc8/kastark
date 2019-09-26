@@ -28,6 +28,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: {x: 0.4, y: 3, z: 0.41011012}
   _displacement: {x: 0.11, y: 1.1, z: 0.09}
+  _isStaticPositionedElement: 1
+  _useViewportHeight: 0
 --- !u!114 &4750797720600683668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,6 +44,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: {x: 0.4, y: 3, z: 0.41011012}
   _displacement: {x: 0.11, y: 1.1, z: 0.09}
+  _isStaticPositionedElement: 1
+  _useViewportHeight: 0
 --- !u!1001 &5145776798432997480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -186,6 +190,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -4083693545763357160, guid: 299caa6a3ed26994ead0036de95629d1,
         type: 3}
+    - target: {fileID: 7739504723316784719, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bec29f31c90f219449c06609d050c558, type: 2}
+    - target: {fileID: 3086977617435005773, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: _material
+      value: 
+      objectReference: {fileID: 2100000, guid: bec29f31c90f219449c06609d050c558, type: 2}
     m_RemovedComponents:
     - {fileID: 7739504723204175224, guid: 87da043f95164dd409504ae4d9388d3c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 87da043f95164dd409504ae4d9388d3c, type: 3}

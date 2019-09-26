@@ -47,17 +47,13 @@ public class AttackController : HabilityController
 
         _attackTrail.Close();
 
-        var targets = _attackTrail.GetTargets();
+        var target = _attackTrail.GetTarget();
 
-        if (targets.Length > 0)
+        if (target != null)
         {
-            var effectivenessArray = _attackTrail.GetEffectiveness(difficulty);
-            var habilityCastController = new HabilityCastController{
-                targets = targets,
-                effectiveness = effectivenessArray,
-                hability = GameState.selectedHability
-            };
-            habilityCastController.Cast();
+            var effectiveness = _attackTrail.Effectiveness;
+            GameState.selectedHability.Cast(target, effectiveness);
+            EventController.TriggerEvent(new HabilityCastEvent{});
         }
         else
         {

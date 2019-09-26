@@ -29,15 +29,14 @@ public class CreatureAI : MonoBehaviour
     {
         yield return _briefWait;
 
-        var target = GameState.creaturesInBattle.Find(creature => !GameState.IsFromActingTeam(creature));
         var hability = _creatureController.creature.habilities[0];
+        var target = GameState.creaturesInBattle.Find(creature => !GameState.IsFromActingTeam(creature));
+        var effectiveness = 0.5f + Random.Range(0, 0.5f);
 
         EventController.TriggerEvent(new HabilitySelectEvent{ hability = hability });
-        EventController.TriggerEvent(new HabilityCastEvent{
-            targets = new CreatureController[]{target},
-            effectiveness = new float[]{0.5f + Random.Range(0, 0.5f)},
-            damageType = hability.DamageType,
-            damage = hability.Damage
-        });
+        
+        hability.Cast(target, effectiveness);
+
+        EventController.TriggerEvent(new HabilityCastEvent{});
     }
 }

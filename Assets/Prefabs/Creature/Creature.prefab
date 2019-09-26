@@ -483,6 +483,7 @@ MonoBehaviour:
   head: {fileID: 3303938696963508319}
   chest: {fileID: 6270619828737307277}
   feet: {fileID: 7129928038216873559}
+  _uiController: {fileID: 7739504723204175227}
 --- !u!114 &7739504723204175226
 MonoBehaviour:
   m_ObjectHideFlags: 0

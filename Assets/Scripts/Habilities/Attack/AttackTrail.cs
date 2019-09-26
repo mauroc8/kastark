@@ -6,7 +6,10 @@ using UnityEngine;
 public class AttackTrail : MonoBehaviour
 {
     private bool _open;
+    float _effectiveness;
+
     public bool IsOpen => _open;
+    public float Effectiveness => _effectiveness;
 
     public float worstScenarioDirectionStdDev = 0.3f;
 
@@ -78,8 +81,6 @@ public class AttackTrail : MonoBehaviour
         TrailAnalysis trailAnalyzer = new TrailAnalysis(_screenPoints.ToArray());
         InterpretAnalysisResult(trailAnalyzer);
     }
-
-    float _effectiveness;
 
     void InterpretAnalysisResult(TrailAnalysis trailAnalysis) {
         var stdDev = trailAnalysis.DirectionStdDev;
@@ -158,19 +159,7 @@ public class AttackTrail : MonoBehaviour
         return _length >= _minLengthPx && _screenPoints.Count >= 3;
     }
 
-    public CreatureController[] GetTargets() {
-        return _targetCreatures.ToArray();
-    }
-
-    public float[] GetEffectiveness(float difficulty) {
-        var effectivenessArray = new float[_targetCreatures.Count];
-
-        var adjusted = Mathf.Pow(_effectiveness, difficulty);
-
-        for (int i = 0; i < effectivenessArray.Length; i++) {
-            effectivenessArray[i] = adjusted;
-        }
-        
-        return effectivenessArray;
+    public CreatureController GetTarget() {
+        return _targetCreatures.Count > 0 ? _targetCreatures[0] : null;
     }
 }

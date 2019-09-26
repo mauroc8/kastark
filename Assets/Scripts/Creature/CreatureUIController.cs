@@ -11,41 +11,33 @@ public class CreatureUIController : MonoBehaviour
 
     [Header("Colors")]
     [SerializeField] Color _healColor = Color.green;
-    [SerializeField] Color _shieldColor = Color.white;
+    [SerializeField] Color _shieldColor = Color.gray;
     [SerializeField] Color _damageColor = Color.red;
 
     Color _defaultColor;
 
     void OnEnable()
     {
-        EventController.AddListener<HabilityCastEvent>(OnHabilityCast);
-
         _defaultColor = _creatureColorController.GetColor();
     }
 
-    void OnDisable()
+    public void ReceiveDamage(float damage)
     {
-        EventController.RemoveListener<HabilityCastEvent>(OnHabilityCast);
-    }
-    
-    void OnHabilityCast(HabilityCastEvent evt)
-    {
-        foreach (var target in evt.targets)
-        {
-            if (target == _creatureController)
-            {
-                ChangeColorToDamageType(evt.damageType);
-                return;
-            }
-        }
+        ChangeColorAndFadeBack(_damageColor);
     }
 
-    void ChangeColorToDamageType(DamageType damageType)
+    public void ReceiveShield(float shield)
     {
-        var damageColor  =
-            damageType == DamageType.Heal ? _healColor :
-            damageType == DamageType.Shield ? _shieldColor :
-            _damageColor;
+        ChangeColorAndFadeBack(_shieldColor);
+    }
+
+    public void ReceiveHeal(float heal)
+    {
+        ChangeColorAndFadeBack(_healColor);
+    }
+    
+    void ChangeColorAndFadeBack(Color damageColor)
+    {
         _creatureColorController.ChangeColor(damageColor);
         _creatureColorFadeController.FadeTo(_defaultColor);
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Events;
 
 public class ShieldController : HabilityController
 {
@@ -18,19 +19,14 @@ public class ShieldController : HabilityController
 
         var t = Time.time;
         var effectiveness = GetEffectiveness(t);
-        effectiveness = Mathf.Pow(effectiveness, difficulty);
 
         _shieldAlphaController.ChangeAlpha(effectiveness * _maxOpacity);
 
         if (Input.GetMouseButtonDown(0) && Util.GetHoveredGameObject() == _shield && !Util.MouseIsOnUI())
         {
             _cast = true;
-            var habilityCastController = new HabilityCastController{
-                targets = new CreatureController[]{ GameState.actingCreature },
-                effectiveness = new float[]{ effectiveness },
-                hability = GameState.selectedHability
-            };
-            habilityCastController.Cast();
+            GameState.selectedHability.Cast(GameState.actingCreature, effectiveness);
+            EventController.TriggerEvent(new HabilityCastEvent{});
         }
     }
 

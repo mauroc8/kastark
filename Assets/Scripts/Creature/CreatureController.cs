@@ -12,6 +12,9 @@ public class CreatureController : MonoBehaviour
     public Transform chest;
     public Transform feet;
 
+    [Header("UI")]
+    [SerializeField] CreatureUIController _uiController = null;
+
     public Transform GetBodyPart(BodyPart bodyPart)
     {
         return bodyPart == BodyPart.Head  ? head :
@@ -24,37 +27,38 @@ public class CreatureController : MonoBehaviour
         return creature.health > 0;
     }
 
-    public void Attack(CreatureController other, float damage, DamageType damageType) {
-        other.ReceiveAttack(damage, damageType);
+    public void ReceiveDamage(float damage)
+    {
+        if (creature.shield > 0)
+        {
+            damage = Mathf.Max(0, damage - creature.shield);
+            creature.shield = 0;
+        }
+        creature.health -= damage;
     }
 
-    public void ReceiveAttack(float damage, DamageType damageType) {
-        switch (damageType) {
-            case DamageType.Physical:
-            case DamageType.Magical:
-            {
-                damage *= damageType == DamageType.Physical ? creature.physicalResistance : creature.magicalResistance;
+    public void ReceiveAttack(float damage)
+    {
+        ReceiveDamage(damage * creature.physicalResistance);
+        _uiController.ReceiveDamage(damage);
+    }
 
-                if (damage > 0 && creature.shield > 0) {
-                    creature.shield -= damage;
-                    if (creature.shield < 0) {
-                        creature.health += creature.shield;
-                        creature.shield = 0;
-                    }
-                } else {
-                    creature.health -= damage;
-                }
-            } break;
-            case DamageType.Shield: {
-                creature.shield += damage;
-            } break;
-            case DamageType.Heal: {
-                creature.health = Mathf.Min(creature.maxHealth, creature.health + damage);
-            } break;
-            default: {
-                Debug.Log($"No handler for damageType {damageType}");
-            } break;
-        }
+    public void ReceiveMagic(float damage)
+    {
+        ReceiveDamage(damage * creature.magicalResistance);
+        _uiController.ReceiveDamage(damage);
+    }
+
+    public void ReceiveShield(float shield)
+    {
+        creature.shield += shield;
+        _uiController.ReceiveShield(shield);
+    }
+
+    public void ReceiveHeal(float heal)
+    {
+        creature.health = Mathf.Min(creature.health + heal, creature.maxHealth);
+        _uiController.ReceiveHeal(heal);
     }
 
     void OnEnable()
