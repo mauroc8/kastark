@@ -117,7 +117,7 @@ public class AttackTrail : MonoBehaviour
         GameObject target = null;
 
         if (Physics.Raycast(mRay, out hit) &&
-            GameState.IsFromEnemyTeam(target = hit.transform.gameObject))
+            Global.IsFromEnemyTeam(target = hit.transform.gameObject))
         {
             AddTarget(target);
         }
@@ -132,7 +132,7 @@ public class AttackTrail : MonoBehaviour
                 {
                     var intermediatePoint = Vector2.Lerp(screenPoint, _lastScreenPoint, t);
                     target = Util.GetGameObjectAtScreenPoint(intermediatePoint);
-                    if (target != null && GameState.IsFromEnemyTeam(target))
+                    if (target != null && Global.IsFromEnemyTeam(target))
                         AddTarget(target);
                     t += vertexUnit;
                 }

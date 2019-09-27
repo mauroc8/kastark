@@ -25,7 +25,7 @@ public class UIHabilityScreens : MonoBehaviour
 
     void OnTurnStart(GameEvent evt)
     {
-        _selectHabilityScreen.SetActive(GameState.IsPlayersTurn());
+        _selectHabilityScreen.SetActive(Global.IsPlayersTurn());
         _castHabilityScreen.SetActive(false);
     }
 
@@ -33,7 +33,7 @@ public class UIHabilityScreens : MonoBehaviour
 
     void OnHabilitySelect(HabilitySelectEvent evt)
     {
-        if (!GameState.IsPlayersTurn()) return;
+        if (!Global.IsPlayersTurn()) return;
 
         _selectHabilityScreen.SetActive(false);
         _habilityDescriptionFiller.FillWithHability(evt.hability);

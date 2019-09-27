@@ -18,9 +18,9 @@ public class PositionInFrontOfCreature : MonoBehaviour
     
     void Start()
     {
-        if (_useRandomEnemy) foreach (var creature in GameState.creaturesInBattle)
+        if (_useRandomEnemy) foreach (var creature in Global.creaturesInBattle)
         {
-            if (GameState.IsFromEnemyTeam(creature))
+            if (Global.IsFromEnemyTeam(creature))
             {
                 _creature = creature;
                 break;
@@ -28,7 +28,7 @@ public class PositionInFrontOfCreature : MonoBehaviour
         }
         else if (_useActingCreature)
         {
-            _creature = GameState.actingCreature;
+            _creature = Global.actingCreature;
         }
 
         var position = _creature.GetBodyPart(_bodyPart).position;

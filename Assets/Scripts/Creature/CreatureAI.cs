@@ -17,7 +17,7 @@ public class CreatureAI : MonoBehaviour
     }
     void OnTurnStart(TurnStartEvent evt)
     {
-        if (GameState.actingCreature == _creatureController)
+        if (Global.actingCreature == _creatureController)
         {
             StartCoroutine(ItsMyTurnCoroutine());
         }
@@ -30,7 +30,7 @@ public class CreatureAI : MonoBehaviour
         yield return _briefWait;
 
         var hability = _creatureController.creature.habilities[0];
-        var target = GameState.creaturesInBattle.Find(creature => !GameState.IsFromActingTeam(creature));
+        var target = Global.creaturesInBattle.Find(creature => !Global.IsFromActingTeam(creature));
         var effectiveness = 0.5f + Random.Range(0, 0.5f);
 
         EventController.TriggerEvent(new HabilitySelectEvent{ hability = hability });

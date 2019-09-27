@@ -63,7 +63,7 @@ public class MagicController : HabilityController
 
         var target = Util.GetGameObjectAtScreenPoint(_bigParticleTransform.position);
 
-        if (GameState.IsFromEnemyTeam(target))
+        if (Global.IsFromEnemyTeam(target))
         {
             var speed = _bigParticleFollowCursor.Speed;
             var unadjustedEffectiveness = speed.magnitude / Screen.height / _fullPowerSpeedVh;
@@ -76,7 +76,7 @@ public class MagicController : HabilityController
 
             var targetCreature = target.GetComponent<CreatureController>();
             
-            GameState.selectedHability.Cast(targetCreature, unadjustedEffectiveness);
+            Global.selectedHability.Cast(targetCreature, unadjustedEffectiveness);
             EventController.TriggerEvent(new HabilityCastEvent{});
         }
     }

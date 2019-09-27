@@ -73,7 +73,7 @@ public class CreatureController : MonoBehaviour
 
     void OnHabilityCast(HabilityCastEvent evt)
     {
-        if (GameState.actingCreature == this)
+        if (Global.actingCreature == this)
         {
             StartCoroutine(CastHabilityCoroutine());
         }

@@ -11,6 +11,6 @@ public class HabilityController : MonoBehaviour
 
     void Start()
     {
-        _difficulty = GameState.selectedHability.Difficulty;
+        _difficulty = Global.selectedHability.Difficulty;
     }
 }

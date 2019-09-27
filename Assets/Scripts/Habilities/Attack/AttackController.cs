@@ -52,7 +52,7 @@ public class AttackController : HabilityController
         if (target != null)
         {
             var effectiveness = _attackTrail.Effectiveness;
-            GameState.selectedHability.Cast(target, effectiveness);
+            Global.selectedHability.Cast(target, effectiveness);
             EventController.TriggerEvent(new HabilityCastEvent{});
         }
         else

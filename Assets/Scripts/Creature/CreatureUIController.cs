@@ -5,7 +5,6 @@ using Events;
 
 public class CreatureUIController : MonoBehaviour
 {
-    [SerializeField] CreatureController  _creatureController          = null;
     [SerializeField] ColorController     _creatureColorController     = null;
     [SerializeField] ColorFadeController _creatureColorFadeController = null;
 

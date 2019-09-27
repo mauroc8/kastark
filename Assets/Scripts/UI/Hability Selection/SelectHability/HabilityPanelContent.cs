@@ -10,7 +10,7 @@ public class HabilityPanelContent : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        _habilities = GameState.actingCreature.creature.habilities;
+        _habilities = Global.actingCreature.creature.habilities;
         var N = _habilities.Count;
 
         for (int i = N - 1; i >= 0; i--)

@@ -8,7 +8,7 @@ public class ConsumablePanelContent : HabilityPanelContent
 
     protected override void OnEnable()
     {
-        _consumables = GameState.actingCreature.creature.consumables;
+        _consumables = Global.actingCreature.creature.consumables;
         var N = _consumables.Count;
 
         for (int i = 0; i < N; i++)

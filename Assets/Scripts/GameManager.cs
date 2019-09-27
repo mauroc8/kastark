@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         var allCreatures = _battleNode.GetComponentsInChildren<CreatureController>();
-        GameState.creaturesInBattle = new List<CreatureController>(allCreatures);
+        Global.creaturesInBattle = new List<CreatureController>(allCreatures);
         _deadCreatures              = new List<CreatureController>();
 
         foreach (var creatureController in allCreatures)
@@ -48,12 +48,12 @@ public class GameManager : MonoBehaviour
 
     void StartNewTurn()
     {
-        _currentUnitIndex = (_currentUnitIndex + 1) % GameState.creaturesInBattle.Count;
+        _currentUnitIndex = (_currentUnitIndex + 1) % Global.creaturesInBattle.Count;
 
-        var unit = GameState.creaturesInBattle[_currentUnitIndex];
+        var unit = Global.creaturesInBattle[_currentUnitIndex];
 
-        GameState.actingCreature = unit;
-        GameState.actingTeam = GameState.GetTeamOf(unit);
+        Global.actingCreature = unit;
+        Global.actingTeam = Global.GetTeamOf(unit);
 
         Debug.Log($"Starting {unit.name}'s turn.");
         
@@ -79,9 +79,9 @@ public class GameManager : MonoBehaviour
 
     void OnHabilitySelect(HabilitySelectEvent evt)
     {
-        GameState.selectedHability = evt.hability;
+        Global.selectedHability = evt.hability;
 
-        if (GameState.IsPlayersTurn())
+        if (Global.IsPlayersTurn())
         {
             _selectedHabilityInstance = Instantiate(evt.hability.controller);
         }
@@ -89,13 +89,13 @@ public class GameManager : MonoBehaviour
 
     void OnConsumableSelect(ConsumableSelectEvent evt)
     {
-        GameState.selectedConsumable = evt.consumable;
+        Global.selectedConsumable = evt.consumable;
     }
 
     void OnHabilityCancel(HabilityCancelEvent evt)
     {
-        GameState.selectedHability = null;
-        GameState.selectedConsumable = null;
+        Global.selectedHability = null;
+        Global.selectedConsumable = null;
 
         if (_selectedHabilityInstance != null)
         {
@@ -106,13 +106,13 @@ public class GameManager : MonoBehaviour
 
     void OnHabilityCast(HabilityCastEvent evt)
     {
-        if (GameState.selectedConsumable != null)
+        if (Global.selectedConsumable != null)
         {
-            GameState.selectedConsumable.amount--;
+            Global.selectedConsumable.amount--;
         }
 
-        GameState.selectedHability = null;
-        GameState.selectedConsumable = null;
+        Global.selectedHability = null;
+        Global.selectedConsumable = null;
     }
 
     WaitForSeconds _endTurnWait = new WaitForSeconds(0.7f);
@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
 
         var removeList = new List<CreatureController>();
 
-        foreach (var creature in GameState.creaturesInBattle)
+        foreach (var creature in Global.creaturesInBattle)
         {
             if (!creature.IsAlive())
             {
@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
                 _deadCreatures.Add(creature);
             } else
             {
-                if (GameState.GetTeamOf(creature) == Team.Left)
+                if (Global.GetTeamOf(creature) == Team.Left)
                 {
                     leftTeamHasLivingUnit = true;
                 } else
@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour
 
         foreach (var creature in removeList)
         {
-            GameState.creaturesInBattle.Remove(creature);
+            Global.creaturesInBattle.Remove(creature);
         }
 
         if (leftTeamHasLivingUnit && rightTeamHasLivingUnit)
@@ -158,8 +158,8 @@ public class GameManager : MonoBehaviour
             StartNewTurn();
         } else
         {
-            if (leftTeamHasLivingUnit && GameState.PlayerTeam == Team.Left ||
-                rightTeamHasLivingUnit && GameState.PlayerTeam == Team.Right)
+            if (leftTeamHasLivingUnit && Global.PlayerTeam == Team.Left ||
+                rightTeamHasLivingUnit && Global.PlayerTeam == Team.Right)
             {
                 PlayerWins();
             } else

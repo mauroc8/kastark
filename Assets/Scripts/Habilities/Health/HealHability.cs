@@ -11,10 +11,10 @@ public class HealHability : HabilityController
         if (Input.GetMouseButtonDown(0) && !Util.MouseIsOnUI()) {
             var target = Util.GetHoveredGameObject();
 
-            if (target == GameState.actingCreature.gameObject)
+            if (target == Global.actingCreature.gameObject)
             {
                 _cast = true;
-                GameState.selectedHability.Cast(GameState.actingCreature, 1);
+                Global.selectedHability.Cast(Global.actingCreature, 1);
                 EventController.TriggerEvent(new HabilityCastEvent{});
             }
         }

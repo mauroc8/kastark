@@ -25,7 +25,7 @@ public class ShieldController : HabilityController
         if (Input.GetMouseButtonDown(0) && Util.GetHoveredGameObject() == _shield && !Util.MouseIsOnUI())
         {
             _cast = true;
-            GameState.selectedHability.Cast(GameState.actingCreature, effectiveness);
+            Global.selectedHability.Cast(Global.actingCreature, effectiveness);
             EventController.TriggerEvent(new HabilityCastEvent{});
         }
     }

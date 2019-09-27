@@ -32,7 +32,7 @@ public class PositionNextToCreature : MonoBehaviour
     {
         if (_bodyPart == BodyPart.None) return;
 
-        var creatureController = _creature == null ? GameState.actingCreature : _creature;
+        var creatureController = _creature == null ? Global.actingCreature : _creature;
 
         _reference = _bodyPart == BodyPart.Head  ? creatureController.head  :
                         _bodyPart == BodyPart.Chest ? creatureController.chest :
@@ -41,7 +41,7 @@ public class PositionNextToCreature : MonoBehaviour
         _xOffsetPx = Screen.height * _xOffsetVH;
         _yOffsetPx = Screen.height * _yOffsetVH;
 
-        if (_negateXOffsetToFaceEnemy && GameState.GetTeamOf(creatureController) == Team.Right)
+        if (_negateXOffsetToFaceEnemy && Global.GetTeamOf(creatureController) == Team.Right)
         {
             _xOffsetPx *= -1;
         }

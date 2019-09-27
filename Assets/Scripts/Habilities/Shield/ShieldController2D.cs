@@ -34,7 +34,7 @@ public class ShieldController2D : HabilityController
     void Update() {
         if (_cast) return;
 
-        _unitScreenPos = Camera.main.WorldToScreenPoint(GameState.actingCreature.chest.position);
+        _unitScreenPos = Camera.main.WorldToScreenPoint(Global.actingCreature.chest.position);
         
         var unadjustedEffectiveness = GetEffectiveness(Time.time);
         
@@ -49,7 +49,7 @@ public class ShieldController2D : HabilityController
         if (Input.GetMouseButtonDown(0) && _hovering && !Util.MouseIsOnUI())
         {
             _cast = true;
-            GameState.selectedHability.Cast(GameState.actingCreature, unadjustedEffectiveness);
+            Global.selectedHability.Cast(Global.actingCreature, unadjustedEffectiveness);
             EventController.TriggerEvent(new HabilityCastEvent{});
         }
     }

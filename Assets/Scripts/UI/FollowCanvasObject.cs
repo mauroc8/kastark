@@ -12,7 +12,7 @@ public class FollowCanvasObject : MonoBehaviour
 
     void Start()
     {
-        if (_depthReference == null) _depthReference = GameState.actingCreature.transform;
+        if (_depthReference == null) _depthReference = Global.actingCreature.transform;
 
         _rayCastPlane = new Plane(
             Camera.main.transform.forward * -1, _depthReference.position);

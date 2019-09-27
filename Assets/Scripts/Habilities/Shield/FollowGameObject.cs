@@ -11,7 +11,7 @@ public class FollowGameObject : MonoBehaviour
     void Start()
     {
         if (_followMe == null)
-            _followMe = GameState.actingCreature.chest;
+            _followMe = Global.actingCreature.chest;
     }
 
     void Update()
