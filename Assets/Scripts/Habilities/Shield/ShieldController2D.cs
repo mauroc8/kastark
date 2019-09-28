@@ -38,9 +38,9 @@ public class ShieldController2D : HabilityController
         
         var unadjustedEffectiveness = GetEffectiveness(Time.time);
         
-        _effectiveness = Mathf.Pow(unadjustedEffectiveness, _difficulty);
+        _effectiveness = Mathf.Pow(unadjustedEffectiveness, Difficulty);
 
-        var scale         = 0.5f + 0.5f * _effectiveness;
+        var scale = 0.5f + 0.5f * _effectiveness;
 
         _circleTransform.localScale = new Vector3(scale, scale, 1);
 

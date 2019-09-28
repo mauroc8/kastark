@@ -10,6 +10,8 @@ public class ColorFadeController : MonoBehaviour
     [SerializeField] float _fadeDuration = 1;
     [SerializeField] float _fadePower    = 2;
 
+    public float FadeDuration => _fadeDuration;
+
     bool _fading = false;
 
     Color _fadeFrom;

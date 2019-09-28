@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Events;
 using UnityEngine;
 
 // https://www.youtube.com/watch?v=c-dzg4M20wY
@@ -58,14 +57,8 @@ public static class Localization
 
     static Language _language;
 
-    public static void InitLanguage(Language newLang)
-    {
-        _language = newLang;
-    }
-
     public static void SetLanguage(Language newLang) {
         _language = newLang;
-        EventController.TriggerEvent(new LanguageChangeEvent{});
     }
 
     public static Language GetLanguage()

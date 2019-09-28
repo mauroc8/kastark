@@ -20,9 +20,6 @@ public class MagicalEnergyFollowCursor : MonoBehaviour
     void Update() {
         Vector2 pos = transform.position;
 
-        _speed *= Mathf.Pow(1 - _friction, Time.deltaTime);
-        pos += _speed * Time.deltaTime;
-
         if (Input.GetMouseButton(0))
         {
             Vector2 cursor = Input.mousePosition;
@@ -30,6 +27,9 @@ public class MagicalEnergyFollowCursor : MonoBehaviour
             
             _speed += (Vector2)Vector3.Normalize(diff) * _accelerationPx * Time.deltaTime;
         }
+
+        _speed *= Mathf.Pow(1 - _friction, Time.deltaTime);
+        pos += _speed * Time.deltaTime;
 
         transform.position = pos;
     }

@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8186dfad205d34d8eef8850d07e2b9, type: 3}
   m_Name: HealthPotion
   m_EditorClassIdentifier: 
-  Name: Health potion
   _initialDamage: 5
   _initialDifficulty: 1
-  DamageType: 2
+  _damageType: 2
   localizationKey: heal
   imageSprite: {fileID: 21300000, guid: 919aa016a18722e4cb319d49535483d3, type: 3}
   controller: {fileID: 4861203174460205112, guid: b920207b7dc070e46b91342deaf9f322,

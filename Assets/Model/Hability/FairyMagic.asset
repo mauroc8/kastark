@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initialDamage: 5
   _initialDifficulty: 1.4
-  DamageType: 1
+  _damageType: 1
   localizationKey: magic
   imageSprite: {fileID: 21300000, guid: 919aa016a18722e4cb319d49535483d3, type: 3}
   controller: {fileID: 1259224199978336840, guid: 5b2fab65b14497341a53921d6b9bfa88,

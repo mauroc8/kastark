@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/ChooseLanguage.unity
+    guid: ac07ef632a155384aae4334893109f6b
+  - enabled: 1
     path: Assets/Scenes/BattleScene.unity
     guid: d9e198d893d8d024d9b684b21e6f88f2
   m_configObjects: {}

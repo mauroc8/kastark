@@ -42,6 +42,9 @@ public class ShieldHabilityUIController : MonoBehaviour
         
         _circleColor.ChangeAlpha(_shieldController.Effectiveness);
 
+        // Scale.
+        
+
         // Cursor.
         if (_shieldController.Hovering)
         {

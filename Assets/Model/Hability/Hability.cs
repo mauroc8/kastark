@@ -64,6 +64,9 @@ public class Hability : ScriptableObject
             case DamageType.Heal:
                 target.ReceiveHeal(_damage * effectiveness);
                 break;
+            default:
+                Debug.Log($"DamageType.{_damageType} unhandled by Hability.Cast()");
+                break;
         }
     }
 }

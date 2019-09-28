@@ -5,11 +5,11 @@ using UnityEngine;
 public class HabilityController : MonoBehaviour
 {
     protected bool _cast = false;
-    protected float _difficulty;
-
+    
+    private float _difficulty;
     public float Difficulty => _difficulty;
 
-    void Start()
+    void Awake()
     {
         _difficulty = Global.selectedHability.Difficulty;
     }

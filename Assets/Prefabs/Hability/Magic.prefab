@@ -5164,8 +5164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _castDistanceVh: 0.2
-  _fullPowerSpeedVh: 0.7
-  _countdownTime: 2
+  _fullPowerSpeedVh: 1.1
+  _countdownTime: 2.8
   _bigParticleTransform: {fileID: 1259224198754002646}
   _bigParticlePositionNextToCreature: {fileID: 4299384368727139268}
   _bigParticleFollowCursor: {fileID: 1259224198754002647}

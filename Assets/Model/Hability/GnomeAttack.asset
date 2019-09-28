@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initialDamage: 3
   _initialDifficulty: 1
-  DamageType: 0
+  _damageType: 0
   localizationKey: attack
   imageSprite: {fileID: 21300000, guid: 919aa016a18722e4cb319d49535483d3, type: 3}
   controller: {fileID: 0}

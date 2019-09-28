@@ -134,7 +134,7 @@ MonoBehaviour:
   _changeCircleColorThreshold: 0.9
   _colorBlendThreshold: 0.08
   _defaultCircleColor: {r: 1, g: 1, b: 1, a: 1}
-  _alternativeCircleColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  _alternativeCircleColor: {r: 1, g: 0.9657972, b: 0.5707547, a: 1}
   _cursorSkin: {fileID: 11400000, guid: 187f42974cf7d404ab1a7f382341d125, type: 2}
 --- !u!1 &4375356752413881065
 GameObject:

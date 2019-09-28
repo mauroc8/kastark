@@ -13,17 +13,23 @@ public class UIHabilityScreens : MonoBehaviour
 
     void OnEnable() {
         EventController.AddListener<TurnStartEvent>(OnTurnStart);
-        EventController.AddListener<HabilityCancelEvent>(OnTurnStart);
+        EventController.AddListener<HabilityCancelEvent>(OnHabilityCancel);
         EventController.AddListener<HabilitySelectEvent>(OnHabilitySelect);
     }
 
     void OnDisable() {
         EventController.RemoveListener<TurnStartEvent>(OnTurnStart);
-        EventController.RemoveListener<HabilityCancelEvent>(OnTurnStart);
+        EventController.RemoveListener<HabilityCancelEvent>(OnHabilityCancel);
         EventController.RemoveListener<HabilitySelectEvent>(OnHabilitySelect);
     }
 
-    void OnTurnStart(GameEvent evt)
+    void OnTurnStart(TurnStartEvent evt)
+    {
+        _selectHabilityScreen.SetActive(Global.IsPlayersTurn());
+        _castHabilityScreen.SetActive(false);
+    }
+
+    void OnHabilityCancel(HabilityCancelEvent evt)
     {
         _selectHabilityScreen.SetActive(Global.IsPlayersTurn());
         _castHabilityScreen.SetActive(false);

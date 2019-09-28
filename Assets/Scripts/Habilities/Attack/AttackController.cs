@@ -15,10 +15,14 @@ public class AttackController : HabilityController
 
         if (Input.GetMouseButton(0))
         {
+            
             if (!_attackTrail.IsOpen)
             {
-                _attackTrail.Open(Input.mousePosition);
-                _uiRectCountdown.StartCountdown(_attackTrail.maxLifetime);
+                if (!Util.MouseIsOnUI())
+                {
+                    _attackTrail.Open(Input.mousePosition);
+                    _uiRectCountdown.StartCountdown(_attackTrail.maxLifetime);
+                }
             } else {
                 _attackTrail.Move(Input.mousePosition);
             }
