@@ -4974,6 +4974,7 @@ GameObject:
   - component: {fileID: 1918959170277340810}
   - component: {fileID: 5688449668220871055}
   - component: {fileID: 4217013836552261014}
+  - component: {fileID: 7141842964037285561}
   m_Layer: 5
   m_Name: Big Particle
   m_TagString: Untagged
@@ -5044,7 +5045,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1259224198754002601}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3477da25dfd14954a99097f9e44215b6, type: 3}
   m_Name: 
@@ -5115,6 +5116,18 @@ MonoBehaviour:
   _fadeTime: 0.3
   _fadePower: 1.6
   _fadeOnEnable: 0
+--- !u!114 &7141842964037285561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259224198754002601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08535ff483ba2414d98cd5d6c2e07a8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1259224199978336840
 GameObject:
   m_ObjectHideFlags: 0
@@ -5168,7 +5181,7 @@ MonoBehaviour:
   _countdownTime: 2.8
   _bigParticleTransform: {fileID: 1259224198754002646}
   _bigParticlePositionNextToCreature: {fileID: 4299384368727139268}
-  _bigParticleFollowCursor: {fileID: 1259224198754002647}
+  _bigParticleFollowCursor: {fileID: 7141842964037285561}
 --- !u!114 &2478903569472490134
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class MagicController : HabilityController
     [Header("Refs")]
     [SerializeField] Transform _bigParticleTransform = null;
     [SerializeField] PositionNextToCreature _bigParticlePositionNextToCreature = null;
-    [SerializeField] MagicalEnergyFollowCursor _bigParticleFollowCursor = null;
+    [SerializeField] MagicalEnergyFollowCursor2 _bigParticleFollowCursor = null;
 
     float _castDistancePx;
 
@@ -66,7 +66,7 @@ public class MagicController : HabilityController
         if (Global.IsFromEnemyTeam(target))
         {
             var speed = _bigParticleFollowCursor.Speed;
-            var unadjustedEffectiveness = speed.magnitude / Screen.height / _fullPowerSpeedVh;
+            var unadjustedEffectiveness = speed / Screen.height / _fullPowerSpeedVh;
 
             if (unadjustedEffectiveness > 1) unadjustedEffectiveness = 1;
 
