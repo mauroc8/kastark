@@ -5,20 +5,13 @@ using Events;
 
 public class CreatureUIController : MonoBehaviour
 {
-    [SerializeField] ColorController     _creatureColorController     = null;
     [SerializeField] ColorFadeController _creatureColorFadeController = null;
 
     [Header("Colors")]
     [SerializeField] Color _healColor = Color.green;
     [SerializeField] Color _shieldColor = Color.gray;
     [SerializeField] Color _damageColor = Color.red;
-
-    Color _defaultColor;
-
-    void OnEnable()
-    {
-        _defaultColor = _creatureColorController.GetColor();
-    }
+    [SerializeField] Color _deadColor   = Color.black;
 
     public void ReceiveDamage(float damage)
     {
@@ -37,7 +30,6 @@ public class CreatureUIController : MonoBehaviour
     
     void ChangeColorAndFadeBack(Color damageColor)
     {
-        _creatureColorController.ChangeColor(damageColor);
-        _creatureColorFadeController.FadeTo(_defaultColor);
+        _creatureColorFadeController.FadeFrom(damageColor);
     }
 }

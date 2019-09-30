@@ -2239,6 +2239,31 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: bec29f31c90f219449c06609d050c558, type: 2}
+    - target: {fileID: 7616373630328580438, guid: 9b36c70a9c0903d42a20ee6dde472cdd,
+        type: 3}
+      propertyPath: _colorController
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7616373630328580438, guid: 9b36c70a9c0903d42a20ee6dde472cdd,
+        type: 3}
+      propertyPath: _fadeDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7616373630328580438, guid: 9b36c70a9c0903d42a20ee6dde472cdd,
+        type: 3}
+      propertyPath: _fadePower
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7616373630328580438, guid: 9b36c70a9c0903d42a20ee6dde472cdd,
+        type: 3}
+      propertyPath: _fadeTo.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7616373630328580438, guid: 9b36c70a9c0903d42a20ee6dde472cdd,
+        type: 3}
+      propertyPath: _fadeTo.b
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3372427923234768516, guid: 9b36c70a9c0903d42a20ee6dde472cdd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9b36c70a9c0903d42a20ee6dde472cdd, type: 3}

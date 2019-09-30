@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8186dfad205d34d8eef8850d07e2b9, type: 3}
   m_Name: FairyShield
   m_EditorClassIdentifier: 
-  _initialDamage: 3
+  _initialDamage: 6
   _initialDifficulty: 1.8
   _damageType: 3
   localizationKey: shield

@@ -30,7 +30,7 @@ public class UIRectCountdown : MonoBehaviour
             if (_time < 0) _time = 0;
 
             var sizeDelta = _transform.sizeDelta;
-            sizeDelta.x = _time / _countdownTime * 1920;
+            sizeDelta.x = 1920 - _time / _countdownTime * 1920;
             _transform.sizeDelta = sizeDelta;
 
             _running = _time > 0;

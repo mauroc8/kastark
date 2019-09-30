@@ -5049,8 +5049,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3477da25dfd14954a99097f9e44215b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _accelerationVh: 0.9
-  _friction: 0.1
+  _accelerationVh: 0.8
+  _friction: 0.03
 --- !u!114 &4299384368727139268
 MonoBehaviour:
   m_ObjectHideFlags: 0

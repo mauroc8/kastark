@@ -15,7 +15,7 @@ MonoBehaviour:
   creatureName: Othok
   species: 1
   team: 1
-  _initialMaxHealth: 10
+  _initialMaxHealth: 50
   _initialPhysicalResistance: 1
   _initialMagicalResistance: 1
   _initialHabilities:
