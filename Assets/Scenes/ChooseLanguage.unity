@@ -169,12 +169,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 279859353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5278e0549df526d44b67536f433c2d19, type: 3}
+  m_Script: {fileID: 11500000, guid: 216caafc85a796b409b9d8c1ce7b16ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _colorController: {fileID: 279859356}
   _fadeDuration: 3
-  _fadePower: 2
+  _fadePower: 1
+  _colorController: {fileID: 279859356}
 --- !u!114 &279859356
 MonoBehaviour:
   m_ObjectHideFlags: 0
