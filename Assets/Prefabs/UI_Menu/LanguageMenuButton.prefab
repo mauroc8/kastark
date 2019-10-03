@@ -238,8 +238,9 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: "Espa\xF1ol"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9917367b538eb064d848221fde25ffed, type: 2}
+  m_sharedMaterial: {fileID: -6580228756896398948, guid: 9917367b538eb064d848221fde25ffed,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -312,7 +313,7 @@ MonoBehaviour:
     linkCount: 0
     lineCount: 1
     pageCount: 1
-    materialCount: 1
+    materialCount: 2
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -340,7 +341,7 @@ GameObject:
   - component: {fileID: 3299560601078031560}
   - component: {fileID: 2292406223060513505}
   m_Layer: 5
-  m_Name: TMP SubMeshUI [Chewy SDF Material + LiberationSans SDF Atlas]
+  m_Name: TMP SubMeshUI [BOOTERZZ SDF Material + LiberationSans SDF Atlas]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -398,7 +399,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 8.5625
+  m_padding: 1.25
   m_canvasRenderer: {fileID: 3299560601078031560}
   m_TextComponent: {fileID: 1473647965865315487}
   m_materialReferenceIndex: 1

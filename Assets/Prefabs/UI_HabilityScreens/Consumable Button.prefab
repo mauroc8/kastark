@@ -94,8 +94,9 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: x1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9917367b538eb064d848221fde25ffed, type: 2}
+  m_sharedMaterial: {fileID: -6580228756896398948, guid: 9917367b538eb064d848221fde25ffed,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -120,8 +121,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 30.97
-  m_fontSizeBase: 30.97
+  m_fontSize: 47.38
+  m_fontSizeBase: 47.38
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -311,6 +312,11 @@ PrefabInstance:
       propertyPath: m_Type
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1207603084050252461, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1207603084050252460, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
         type: 3}
       propertyPath: m_text
@@ -342,16 +348,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: -6580228756896398948, guid: 9917367b538eb064d848221fde25ffed,
+        type: 2}
     - target: {fileID: 1207603084050252460, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
         type: 3}
       propertyPath: m_fontSizeBase
       value: 31.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1207603084050252461, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1207603084050252462, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
         type: 3}

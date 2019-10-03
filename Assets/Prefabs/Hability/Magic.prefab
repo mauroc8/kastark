@@ -194,7 +194,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 3.8
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -247,7 +247,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.43
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1398,7 +1398,7 @@ ParticleSystem:
         ctime5: 0
         ctime6: 0
         ctime7: 0
-        atime0: 0
+        atime0: 15613
         atime1: 65535
         atime2: 0
         atime3: 0
@@ -4969,7 +4969,6 @@ GameObject:
   - component: {fileID: 1259224198754002646}
   - component: {fileID: 1259224198754002645}
   - component: {fileID: 1259224198754002644}
-  - component: {fileID: 1259224198754002647}
   - component: {fileID: 4299384368727139268}
   - component: {fileID: 1918959170277340810}
   - component: {fileID: 5688449668220871055}
@@ -5038,20 +5037,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &1259224198754002647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259224198754002601}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3477da25dfd14954a99097f9e44215b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _accelerationVh: 0.8
-  _friction: 0.03
 --- !u!114 &4299384368727139268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5066,7 +5051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _creature: {fileID: 0}
   _bodyPart: 1
-  _xOffsetVH: 0.1
+  _xOffsetVH: 0.22
   _yOffsetVH: 0
   _negateXOffsetToFaceEnemy: 1
   updateEachFrame: 1
@@ -5123,7 +5108,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1259224198754002601}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08535ff483ba2414d98cd5d6c2e07a8f, type: 3}
   m_Name: 

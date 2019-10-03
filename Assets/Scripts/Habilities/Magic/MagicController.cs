@@ -13,7 +13,7 @@ public class MagicController : HabilityController
     [Header("Refs")]
     [SerializeField] Transform _bigParticleTransform = null;
     [SerializeField] PositionNextToCreature _bigParticlePositionNextToCreature = null;
-    [SerializeField] MagicalEnergyFollowCursor2 _bigParticleFollowCursor = null;
+    [SerializeField] MagicalEnergyFollowCursor _bigParticleFollowCursor = null;
 
     float _castDistancePx;
 
@@ -44,6 +44,7 @@ public class MagicController : HabilityController
         {
             if (_mouseIsWithinCastDistance && Input.GetMouseButtonDown(0))
             {
+                _bigParticleFollowCursor.enabled = true;
                 _bigParticlePositionNextToCreature.updateEachFrame = false;
                 _castStartTime = Time.time;
                 _casting = true;

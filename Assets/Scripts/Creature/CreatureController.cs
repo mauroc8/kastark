@@ -13,7 +13,7 @@ public class CreatureController : MonoBehaviour
     public Transform feet;
 
     [Header("UI")]
-    [SerializeField] CreatureUIController _uiController = null;
+    [SerializeField] CreatureColorController _colorController = null;
 
     public Transform GetBodyPart(BodyPart bodyPart)
     {
@@ -40,35 +40,45 @@ public class CreatureController : MonoBehaviour
     public void ReceiveAttack(float damage)
     {
         ReceiveDamage(damage * creature.physicalResistance);
-        _uiController.ReceiveDamage(damage);
+        _colorController.ReceiveDamage(damage);
     }
 
     public void ReceiveMagic(float damage)
     {
         ReceiveDamage(damage * creature.magicalResistance);
-        _uiController.ReceiveDamage(damage);
+        _colorController.ReceiveDamage(damage);
     }
 
     public void ReceiveShield(float shield)
     {
         creature.shield += shield;
-        _uiController.ReceiveShield(shield);
+        _colorController.ReceiveShield(shield);
     }
 
     public void ReceiveHeal(float heal)
     {
         creature.health = Mathf.Min(creature.health + heal, creature.maxHealth);
-        _uiController.ReceiveHeal(heal);
+        _colorController.ReceiveHeal(heal);
     }
 
     void OnEnable()
     {
+        EventController.AddListener<TurnStartEvent>(OnTurnStart);
         EventController.AddListener<HabilityCastEvent>(OnHabilityCast);
     }
 
     void OnDisable()
     {
+        EventController.RemoveListener<TurnStartEvent>(OnTurnStart);
         EventController.RemoveListener<HabilityCastEvent>(OnHabilityCast);
+    }
+
+    void OnTurnStart(TurnStartEvent evt)
+    {
+        if (Global.actingCreature == this)
+        {
+            creature.TurnStart();
+        }
     }
 
     void OnHabilityCast(HabilityCastEvent evt)

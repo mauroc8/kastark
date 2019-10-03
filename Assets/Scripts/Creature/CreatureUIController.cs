@@ -1,35 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Events;
+using TMPro;
 
 public class CreatureUIController : MonoBehaviour
 {
-    [SerializeField] ColorFadeController _creatureColorFadeController = null;
+    [SerializeField] CreatureController _creatureController = null;
+    [SerializeField] TextMeshProUGUI _nameTMPro = null;
 
-    [Header("Colors")]
-    [SerializeField] Color _healColor = Color.green;
-    [SerializeField] Color _shieldColor = Color.gray;
-    [SerializeField] Color _damageColor = Color.red;
-    [SerializeField] Color _deadColor   = Color.black;
-
-    public void ReceiveDamage(float damage)
+    void Start()
     {
-        ChangeColorAndFadeBack(_damageColor);
-    }
-
-    public void ReceiveShield(float shield)
-    {
-        ChangeColorAndFadeBack(_shieldColor);
-    }
-
-    public void ReceiveHeal(float heal)
-    {
-        ChangeColorAndFadeBack(_healColor);
-    }
-    
-    void ChangeColorAndFadeBack(Color damageColor)
-    {
-        _creatureColorFadeController.FadeFrom(damageColor);
+        _nameTMPro.text = _creatureController.creature.creatureName;
     }
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   creatureName: Aira
   species: 0
   team: 0
-  _initialMaxHealth: 100
+  _initialMaxHealth: 72
   _initialPhysicalResistance: 1
   _initialMagicalResistance: 1
   _initialHabilities:

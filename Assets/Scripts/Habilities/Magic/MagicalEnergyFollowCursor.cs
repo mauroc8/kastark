@@ -1,21 +1,13 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MagicalEnergyFollowCursor : MonoBehaviour
 {
-    [SerializeField] float _accelerationVh = 0.3f;
-    [SerializeField] float _friction   = 0.01f;
+    public float Speed => _speed;
 
-    Vector2 _speed = Vector2.zero;
-    public Vector2 Speed => _speed;
-
-    float _accelerationPx;
-
-    void Start()
-    {
-        _accelerationPx = _accelerationVh * Screen.height;
-    }
+    float _speed = 0;
+    int _sampleCount = 0;
 
     void Update() {
         Vector2 pos = transform.position;
@@ -25,12 +17,11 @@ public class MagicalEnergyFollowCursor : MonoBehaviour
             Vector2 cursor = Input.mousePosition;
             var diff = cursor - pos;
             
-            _speed += (Vector2)Vector3.Normalize(diff) * _accelerationPx * Time.deltaTime;
+            var speedSample = diff.magnitude / Time.deltaTime;
+
+            _speed = (_speed * _sampleCount + speedSample) / ++_sampleCount;
+            
+            transform.position = cursor;
         }
-
-        _speed *= Mathf.Pow(1 - _friction, Time.deltaTime);
-        pos += _speed * Time.deltaTime;
-
-        transform.position = pos;
     }
 }
