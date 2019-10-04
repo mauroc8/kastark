@@ -1,37 +1,20 @@
-# Instrucciones
-# -------------
-#
-# Poner los textos entre comillas dobles (").
-#
-# Para escribir comillas dobles adentro de un texto, usar \".
-#
-#   ej: "Haz click en \"Cancelar\" para salir."
-#
-# Para escribir saltos de línea (enters) adentro de un texto, usar \n.
-#
-#   ej: "Contenido de la primer línea.\nContenido de la segunda línea."
-#
-
-# Key                 Inglés                                                Español
-"key",                "en",                                                 "es"
-
-"attack",             "Attack",                                             "Ataque"
-"magic",              "Magic",                                              "Magia"
-"shield",             "Shield",                                             "Escudo"
-"heal",               "Heal",                                               "Sanar"
-
-"attack_description",  "Cut an enemy to inflict up to {damage} damage.\nStraigther cuts makes more damage.",    "Corta a un enemigo para infligir hasta {damage} puntos de daño.\nLos cortes más rectos hacen más daño."
-"magic_description",   "Make up to {damage} damage points with magical energy.\nFaster impacts make more damage.", "Haz hasta {daño} puntos de daño con energía mágica.\nLos impactos más rápidos hacen más daño."
-"shield_description",  "Cast a protective shield around you.",              "Conjura un escudo protector alrededor tuyo."
-"heal_description",    "Heal {damage} life points.",                        "Cura {damage} puntos de vida."
-
-"attack_tooltip", "Draw a cut over an enemy.",   "Dibuja un corte sobre un enemigo."
-"magic_tooltip",  "Drag the magic energy towards an enemy.",      "Arrastra la energía mágica hasta impactar un enemigo."
-"shield_tooltip", "Click on yourself to cast.",      "Cliquéate a tí mism@ para activar."
-"heal_tooltip",   "Click on yourself to use.",       "Cliquéate a tí mism@ para usar."
-
-"cancel","Cancel","Cancelar"
-
-"battlewin","YOU WIN!","GANASTE!"
-"battlelose","YOU LOSE!","PERDISTE!"
-
+key,en,es
+attack,Attack,Ataque
+magic,Magic,Magia
+shield,Shield,Escudo
+heal,Heal,Sanar
+attack_description,"Cut an enemy to inflict up to {damage} damage.
+Straigther cuts makes more damage.","Corta a un enemigo para infligir hasta {damage} puntos de daño.
+Los cortes más rectos hacen más daño."
+magic_description,"Make up to {damage} damage points with magical energy.
+Faster impacts make more damage.","Haz hasta {daño} puntos de daño con energía mágica.
+Los impactos más rápidos hacen más daño."
+shield_description,Cast a protective shield around you.,Conjura un escudo protector alrededor tuyo.
+heal_description,Heal {damage} life points.,Cura {damage} puntos de vida.
+attack_tooltip,Draw a cut over an enemy.,Dibuja un corte sobre un enemigo.
+magic_tooltip,Drag the magic energy towards an enemy.,Arrastra la energía mágica hasta impactar un enemigo.
+shield_tooltip,Click on yourself to cast.,Cliquéate a tí mism@ para activar.
+heal_tooltip,Click on yourself to use.,Cliquéate a tí mism@ para usar.
+cancel,Cancel,Cancelar
+battlewin,YOU WIN!,GANASTE!
+battlelose,YOU LOSE!,PERDISTE!

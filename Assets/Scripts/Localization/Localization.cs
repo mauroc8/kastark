@@ -12,48 +12,33 @@ public enum Language {
 
 public static class Localization
 {
+    static Dictionary<string, string> _englishLanguage = null;
+    static Dictionary<string, string> _spanishLanguage = null;
+
     static void Init() {
         _englishLanguage = new Dictionary<string, string>();
         _spanishLanguage = new Dictionary<string, string>();
 
-        char lineSeparator = '\n';
-        char surround      = '"';
-        Regex fieldSeparator = new Regex("\", *\"");
-        
-        var csvTranslations = Resources.Load<TextAsset>("translations");
-        var text = csvTranslations.text;
+        var dictionaries = new Dictionary<string, string>[2]{
+            _englishLanguage,
+            _spanishLanguage
+        };
 
-        string[] lines = text.Split(lineSeparator);
+        var csvParser = new CSVParser("translations");
 
-        for (int i = 1; i < lines.Length; i++) {
-            string line = lines[i].TrimStart(' ', surround).TrimEnd(surround, '\r');
+        var numberOfRows = csvParser.Content.Count;
 
-            if (line.Length == 0 || line[0] == '#') continue; 
+        for (var i = 1; i < numberOfRows; i++)
+        {
+            var row = csvParser.Content[i];
+            var key = row[0];
 
-            string[] fields = fieldSeparator.Split(line);
-
-            if (fields.Length - 1 != (int) Language.Count) {
-                Debug.LogError($"Parse error in translations.csv in line {i}: {line}. Only {fields.Length} fields were found (required {(int) Language.Count + 1})");
+            for (var j = 0; j < dictionaries.Length; j++)
+            {
+                dictionaries[j].Add(key, row[j + 1]);
             }
-
-            string key = fields[0];
-
-            if (_englishLanguage.ContainsKey(key)) {
-                Debug.LogWarning($"Duplicated key \"{key}\" in translations.csv:{i}");
-            }
-
-            _englishLanguage.Add(key, ParseField(fields[1]));
-            _spanishLanguage.Add(key, ParseField(fields[2]));
         }
     }
-
-    static string ParseField(string field)
-    {
-        return field.Replace("\\\"", "\"").Replace("\\n", "\n");
-    }
-
-    static Dictionary<string, string> _englishLanguage = null;
-    static Dictionary<string, string> _spanishLanguage = null;
 
     static Language _language;
 
