@@ -12,16 +12,13 @@ public class MagicalEnergyFollowCursor : MonoBehaviour
     void Update() {
         Vector2 pos = transform.position;
 
-        if (Input.GetMouseButton(0))
-        {
-            Vector2 cursor = Input.mousePosition;
-            var diff = cursor - pos;
-            
-            var speedSample = diff.magnitude / Time.deltaTime;
+        Vector2 cursor = Input.mousePosition;
+        var diff = cursor - pos;
+        
+        var speedSample = diff.magnitude / Time.deltaTime;
 
-            _speed = (_speed * _sampleCount + speedSample) / ++_sampleCount;
-            
-            transform.position = cursor;
-        }
+        _speed = (_speed * _sampleCount + speedSample) / ++_sampleCount;
+        
+        transform.position = cursor;
     }
 }

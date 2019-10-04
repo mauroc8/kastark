@@ -64,7 +64,7 @@ public class MagicController : HabilityController
 
         var target = Util.GetGameObjectAtScreenPoint(_bigParticleTransform.position);
 
-        if (Global.IsFromEnemyTeam(target))
+        if (target != null && Global.IsFromEnemyTeam(target))
         {
             var speed = _bigParticleFollowCursor.Speed;
             var unadjustedEffectiveness = speed / Screen.height / _fullPowerSpeedVh;

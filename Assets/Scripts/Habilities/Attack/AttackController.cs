@@ -61,7 +61,6 @@ public class AttackController : HabilityController
         }
         else
         {
-            Debug.Log($"Attack trail has no enemy targets.");
             TryAgain();
         }
     }

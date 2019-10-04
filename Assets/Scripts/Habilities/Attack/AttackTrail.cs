@@ -93,6 +93,7 @@ public class AttackTrail : MonoBehaviour
         _trailRenderer.Clear();
         _screenPoints.Clear();
         _targetCreatures.Clear();
+        _open = false;
     }
 
     Vector2 _lastScreenPoint;
