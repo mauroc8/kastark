@@ -67,7 +67,6 @@ public class AttackTrail : MonoBehaviour
     {
         // Trail is too long or too slow.
         if (_length > _maxLengthPx) {
-            Debug.Log($"[AttackTrail] Length > maxLength\n{_length} > {_maxLengthPx}");
             return true;
         }
         return false;

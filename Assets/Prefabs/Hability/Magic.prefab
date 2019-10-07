@@ -5051,7 +5051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _creature: {fileID: 0}
   _bodyPart: 1
-  _xOffsetVH: 0.22
+  _xOffsetVH: 0.15
   _yOffsetVH: 0
   _negateXOffsetToFaceEnemy: 1
   updateEachFrame: 1
@@ -5263,7 +5263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bodyPart: 1
-  _offset: {x: 6, y: -1, z: -2}
+  _offset: {x: 8.27, y: -1, z: -2}
   _offsetRelativeToCamera: 1
   _useRandomEnemy: 0
   _useActingCreature: 1

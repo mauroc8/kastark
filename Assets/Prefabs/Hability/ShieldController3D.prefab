@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 949740091347993856}
   - component: {fileID: 949740091347993857}
   m_Layer: 0
-  m_Name: ShieldController
+  m_Name: ShieldController3D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,3 +201,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9011bd94e0121045ba66d2516de87de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _material: {fileID: 2100000, guid: 3f340e8f1b0c5964d90ddda3934ccc91, type: 2}

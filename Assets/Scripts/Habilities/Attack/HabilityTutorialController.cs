@@ -5,18 +5,15 @@ using Events;
 
 public class HabilityTutorialController : MonoBehaviour
 {
-    bool _isFirstTime = true;
-
     [SerializeField] GameObject _tutorial = null;
 
     WaitForSeconds _wait;
 
     void Start()
     {
-        if (_isFirstTime)
+        if (Global.selectedHability.TimesCast == 0)
         {
             _wait = new WaitForSeconds(0.3f);
-            _isFirstTime = false;
         }
         else
         {
