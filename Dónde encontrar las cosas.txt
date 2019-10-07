@@ -1,0 +1,36 @@
+
+Para cambiar los textos, las traducciones, etc.
+===
+
+Abrir en LibreOffice Calc: Assets/Resources/translations.csv
+
+
+Para cambiar la vida de los personajes.
+===
+
+Desde el Inspector de Unity: Archivos en Assets/Objects/Creature/
+
+
+Para cambiar el ícono de las habilidades. Para cambiar cuánto pegan las habilidades.
+===
+
+Desde el Inspector de Unity: Archivos en Assets/Objects/Hability/
+
+
+Para cambiar la imágen del cursor.
+===
+
+Hay que cambiar en dos lugares.
+
+Por un lado, en el menú Edit -> Proyect Settings -> Player -> Default Cursor.
+
+Por otro lado, desde el inspector, en Assets/Objects/Settings/CursorSkin.asset
+
+
+Los modelos .fbx
+===
+
+Por ahora están todos juntos (sin organizar) en Assets/Arte/Modelos
+
+> Nota: En la carpeta Arte puse todo en español para que lo puedas entender mejor.
+
