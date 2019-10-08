@@ -21,6 +21,5 @@ MonoBehaviour:
   _initialHabilities:
   - {fileID: 11400000, guid: ba7ff20540c40f84f837a8c52d9265ec, type: 2}
   - {fileID: 11400000, guid: 868c58631dca2fc42944d7ffe5797b18, type: 2}
-  - {fileID: 11400000, guid: fb45dffec50a8a448b1826f2085b6098, type: 2}
   _initialConsumables:
   - {fileID: 11400000, guid: e97551f3574ed6344bc309190a23ea60, type: 2}
