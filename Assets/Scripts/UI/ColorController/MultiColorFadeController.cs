@@ -4,42 +4,42 @@ using UnityEngine;
 
 public class MultiColorFadeController : ColorFadeController
 {
-    [SerializeField] List<ColorController> _colorControllers = null;
+    [SerializeField] MultiColorController _multiColorController = null;
 
     bool _fading = false;
 
-    List<Color> _fadeFrom;
-    List<Color> _fadeTo;
+    Color[] _fadeFrom;
+    Color[] _fadeTo;
+    Color[] _intermediateColors;
     float _fadeStartTime;
-
-    void SetupFade()
-    {
-        _fading = true;
-        _fadeStartTime = Time.time;
-        _fadeFrom = new List<Color>(_colorControllers.Count);
-        _fadeTo = new List<Color>(_colorControllers.Count);
-    }
 
     public override void FadeTo(Color color)
     {
-        SetupFade();
+        _fading = true;
+        _fadeStartTime = Time.time;
 
-        for (int i = 0; i < _colorControllers.Count; i++)
+        _fadeFrom = _multiColorController.GetColors();
+        _fadeTo = new Color[_fadeFrom.Length];
+        _intermediateColors = new Color[_fadeTo.Length];
+
+        for (int i = 0; i < _fadeFrom.Length; i++)
         {
-            _fadeTo.Add(color);
-            _fadeFrom.Add(_colorControllers[i].GetColor());
+            _fadeTo[i] = color;
         }
     }
 
     public override void FadeFrom(Color color)
     {
-        SetupFade();
+        _fading = true;
+        _fadeStartTime = Time.time;
 
+        _fadeTo = _multiColorController.GetColors();
+        _fadeFrom = new Color[_fadeTo.Length];
+        _intermediateColors = new Color[_fadeTo.Length];
 
-        for (int i = 0; i < _colorControllers.Count; i++)
+        for (int i = 0; i < _fadeTo.Length; i++)
         {
-            _fadeFrom.Add(color);
-            _fadeTo.Add(_colorControllers[i].GetColor());
+            _fadeFrom[i] = color;
         }
     }
 
@@ -51,20 +51,25 @@ public class MultiColorFadeController : ColorFadeController
 
         if (t >= 1)
         {
-            for (int i = 0; i < _colorControllers.Count; i++)
+            for (int i = 0; i < _fadeTo.Length; i++)
             {
-                _colorControllers[i].ChangeColor(_fadeTo[i]);
+                _multiColorController.ChangeColors(_fadeTo);
             }
             _fading = false;
+            // Cleanup
+            _fadeFrom = null;
+            _fadeTo = null;
+            _intermediateColors = null;
             return;
         }
 
         t = Mathf.Pow(t, _fadePower);
-        
-        for (int i = 0; i < _colorControllers.Count; i++)
+
+        for (int i = 0; i < _fadeTo.Length; i++)
         {
-            var color = Color.Lerp(_fadeFrom[i], _fadeTo[i], t);
-            _colorControllers[i].ChangeColor(color);
+            _intermediateColors[i] = Color.Lerp(_fadeFrom[i], _fadeTo[i], t);
         }
+
+        _multiColorController.ChangeColors(_intermediateColors);
     }
 }

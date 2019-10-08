@@ -15,6 +15,11 @@ public class CreatureController : MonoBehaviour
     [Header("UI")]
     [SerializeField] CreatureColorController _colorController = null;
 
+    void Awake()
+    {
+        creature.Init();
+    }
+
     public Transform GetBodyPart(BodyPart bodyPart)
     {
         return bodyPart == BodyPart.Head  ? head :

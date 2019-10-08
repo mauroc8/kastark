@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TrailColorController : ColorController
 {
-    [SerializeField] TrailRenderer _trailRenderer;
+    [SerializeField] TrailRenderer _trailRenderer = null;
 
     public override void ChangeColor(Color color)
     {

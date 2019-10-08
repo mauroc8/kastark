@@ -9,20 +9,20 @@ public class FadeOutController : MonoBehaviour
 {
     [SerializeField] AlphaController _alphaController = null;
 
-    [Header("Fade settings")]
+    [Header("Fade")]
     [SerializeField] float _fadeTime = 0.2f;
     [SerializeField] float _fadePower = 1.6f;
-
+    [Header("Settings")]
+    [SerializeField] bool _autoDisable = false;
     [SerializeField] bool _fadeOnEnable = false;
 
-    bool _fading;
+    bool _fading = false;
     float _time = 0;
 
     void OnEnable()
     {
         if (_fadeOnEnable)
         {
-            _alphaController.ChangeAlpha(1);
             FadeOut();
         }
     }
@@ -53,6 +53,8 @@ public class FadeOutController : MonoBehaviour
             _fading = false;
             if (_callback != null)
                 _callback.Invoke();
+            if (_autoDisable)
+                enabled = false;
         }
 
         var alpha = Mathf.Pow(_time / _fadeTime, _fadePower);

@@ -5,16 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(AlphaController))]
 public class FadeInController : MonoBehaviour
 {
+    [SerializeField] AlphaController _alphaController = null;
+    [Header("Fade")]
     [SerializeField] float _fadeInDuration = 1;
     [SerializeField] float _fadePower      = 2;
     [Header("Settings")]
     [SerializeField] bool  _autoDisable    = true;
     [SerializeField] bool  _fadeOnEnable  = true;
-    [Header("Alpha controller")]
-    [SerializeField] AlphaController _alphaController = null;
-
+    
     float _fadeInStart;
-    bool _animating;
+    bool _animating = false;
 
     void OnEnable()
     {

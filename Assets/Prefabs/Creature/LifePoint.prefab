@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6044747489635938819}
   - component: {fileID: 4344375831085954376}
   - component: {fileID: 4698505588522825444}
+  - component: {fileID: 4535581789171913496}
   m_Layer: 8
   m_Name: Trail
   m_TagString: Untagged
@@ -149,6 +150,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _trailRenderer: {fileID: 4344375831085954376}
+--- !u!114 &4535581789171913496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2176323604168741799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73a9402a921e7ad489a5268e7c54fe2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4327156895693351840
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,6 +174,8 @@ GameObject:
   - component: {fileID: 5593486100101079845}
   - component: {fileID: 2319693150957532013}
   - component: {fileID: 4780936031313245608}
+  - component: {fileID: 3475286126707219840}
+  - component: {fileID: 2787774058091168743}
   m_Layer: 8
   m_Name: LifePoint
   m_TagString: Untagged
@@ -209,7 +224,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b26106ef7ecb3147a69fed5ebf61a11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lifePointColorController: {fileID: 4780936031313245608}
+  _fadeInController: {fileID: 3475286126707219840}
+  _fadeOutController: {fileID: 2787774058091168743}
+  _spinSpeed: 3
+  _minSpinHeight: 0
+  _maxSpinHeight: 8
+  _spinRadius: 2
+  _movementSpeed: 6
 --- !u!114 &4780936031313245608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,6 +246,40 @@ MonoBehaviour:
   _colorControllers:
   - {fileID: 2604754925962718697}
   - {fileID: 4698505588522825444}
+--- !u!114 &3475286126707219840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4327156895693351840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a260cfa240063e42852cd6e8db2d565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alphaController: {fileID: 4780936031313245608}
+  _fadeInDuration: 0.2
+  _fadePower: 2
+  _autoDisable: 0
+  _fadeOnEnable: 0
+--- !u!114 &2787774058091168743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4327156895693351840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbfba993d99db3649bb72484cf6b09bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _alphaController: {fileID: 4780936031313245608}
+  _fadeTime: 0.2
+  _fadePower: 2
+  _autoDisable: 0
+  _fadeOnEnable: 0
 --- !u!1 &8012974254919770233
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,6 +291,7 @@ GameObject:
   - component: {fileID: 7907065192954634365}
   - component: {fileID: 4090730970459982189}
   - component: {fileID: 7796187857638662975}
+  - component: {fileID: 1912473755641457446}
   - component: {fileID: 2604754925962718697}
   m_Layer: 0
   m_Name: Circle
@@ -303,6 +359,18 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1912473755641457446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8012974254919770233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73a9402a921e7ad489a5268e7c54fe2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2604754925962718697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,4 +383,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9011bd94e0121045ba66d2516de87de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _material: {fileID: 2100000, guid: bb222675afd02ca4095af2d4d5276b62, type: 2}
+  _material: {fileID: 0}
+  _useSelfMaterial: 1

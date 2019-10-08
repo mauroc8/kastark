@@ -27,11 +27,6 @@ public class GameManager : MonoBehaviour
         Global.creaturesInBattle = new List<CreatureController>(allCreatures);
         _deadCreatures              = new List<CreatureController>();
 
-        foreach (var creatureController in allCreatures)
-        {
-            creatureController.creature.Init();
-        }
-
         StartCoroutine(StartBattle());
     }
 

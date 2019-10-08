@@ -781,11 +781,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a260cfa240063e42852cd6e8db2d565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _alphaController: {fileID: 266863028}
   _fadeInDuration: 1
   _fadePower: 2
   _autoDisable: 1
   _fadeOnEnable: 1
-  _alphaController: {fileID: 266863028}
 --- !u!225 &266863027
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2647,6 +2647,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3372427923234768516, guid: 9b36c70a9c0903d42a20ee6dde472cdd, type: 3}
+    - {fileID: 3309337659163446056, guid: 9b36c70a9c0903d42a20ee6dde472cdd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9b36c70a9c0903d42a20ee6dde472cdd, type: 3}
 --- !u!4 &1247666083 stripped
 Transform:
@@ -37160,11 +37161,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a260cfa240063e42852cd6e8db2d565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _alphaController: {fileID: 1898954129}
   _fadeInDuration: 0.4
   _fadePower: 1.6
   _autoDisable: 0
   _fadeOnEnable: 1
-  _alphaController: {fileID: 1898954129}
 --- !u!225 &1898954128
 CanvasGroup:
   m_ObjectHideFlags: 0

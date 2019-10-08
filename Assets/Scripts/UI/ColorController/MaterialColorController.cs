@@ -8,6 +8,15 @@ using UnityEngine.UI;
 public class MaterialColorController : ColorController
 {
     [SerializeField] Material _material = null;
+    [SerializeField] bool _useSelfMaterial = false;
+    
+    void Start()
+    {
+        if (_useSelfMaterial)
+        {
+            _material = GetComponent<Renderer>().material;
+        }
+    }
 
     public override void ChangeColor(Color color)
     {
