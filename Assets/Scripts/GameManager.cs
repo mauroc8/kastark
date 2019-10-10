@@ -45,13 +45,11 @@ public class GameManager : MonoBehaviour
     {
         _currentUnitIndex = (_currentUnitIndex + 1) % Global.creaturesInBattle.Count;
 
-        var unit = Global.creaturesInBattle[_currentUnitIndex];
+        var creatureController = Global.creaturesInBattle[_currentUnitIndex];
 
-        Global.actingCreature = unit;
-        Global.actingTeam = Global.GetTeamOf(unit);
+        Global.actingCreature = creatureController;
+        Global.actingTeam = Global.GetTeamOf(creatureController);
 
-        Debug.Log($"Starting {unit.name}'s turn.");
-        
         EventController.TriggerEvent(new TurnStartEvent());
     }
 

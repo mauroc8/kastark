@@ -4,32 +4,38 @@ using UnityEngine;
 
 public class MagicalEnergyFollowCursorAttraction : MonoBehaviour
 {
-    [SerializeField] float _accelerationVh = 0.3f;
-    [SerializeField] float _friction   = 0.01f;
+    [SerializeField] float _attraction = 0.4f;
+    [SerializeField] float _friction   = 0.1f;
+    [SerializeField] float _maxVhDistance = 0.2f;
 
     Vector2 _speed = Vector2.zero;
     public Vector2 Speed => _speed;
 
-    float _accelerationPx;
+    float _maxPxDistance;
 
     void Start()
     {
-        _accelerationPx = _accelerationVh * Screen.height;
+        _maxPxDistance = _maxVhDistance * Screen.height;
     }
 
     void Update() {
         Vector2 pos = transform.position;
+        Vector2 mousePos = Input.mousePosition;
+        var dt = Time.deltaTime;
 
-        if (Input.GetMouseButton(0))
+        var friction = Mathf.Pow(1 - _friction, dt);
+        var attraction = _attraction * dt;
+        var distance = mousePos - pos;
+
+        if (distance.magnitude > _maxPxDistance)
         {
-            Vector2 cursor = Input.mousePosition;
-            var diff = cursor - pos;
-            
-            _speed += (Vector2)Vector3.Normalize(diff) * _accelerationPx * Time.deltaTime;
+            distance = distance / distance.magnitude *  _maxPxDistance;
         }
 
-        _speed *= Mathf.Pow(1 - _friction, Time.deltaTime);
-        pos += _speed * Time.deltaTime;
+        _speed += distance * attraction;
+        _speed *= friction;
+
+        pos += _speed * dt;
 
         transform.position = pos;
     }

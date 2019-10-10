@@ -24,8 +24,9 @@ public class Creature : ScriptableObject
     [System.NonSerialized] public float magicalResistance;
     [System.NonSerialized] public List<Hability> habilities;
     [System.NonSerialized] public List<Consumable> consumables;
+    [System.NonSerialized] public CreatureController controller;
 
-    public void Init()
+    public void Init(CreatureController selfController)
     {
         health = maxHealth = _initialMaxHealth;
         shield = 0;
@@ -33,6 +34,7 @@ public class Creature : ScriptableObject
         magicalResistance = _initialMagicalResistance;
         habilities = new List<Hability>(_initialHabilities);
         consumables = new List<Consumable>(_initialConsumables);
+        controller = selfController;
 
         foreach (var hability in habilities)
         {

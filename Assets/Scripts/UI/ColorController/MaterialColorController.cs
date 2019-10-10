@@ -10,7 +10,7 @@ public class MaterialColorController : ColorController
     [SerializeField] Material _material = null;
     [SerializeField] bool _useSelfMaterial = false;
     
-    void Start()
+    void Awake()
     {
         if (_useSelfMaterial)
         {

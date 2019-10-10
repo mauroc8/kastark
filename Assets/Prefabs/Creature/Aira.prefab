@@ -29,6 +29,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _material: {fileID: 6903280469121296784, guid: 248a7ba8416ee4d4e8c2ed1ea9496bc1,
     type: 3}
+  _useSelfMaterial: 0
 --- !u!114 &1752694538560964494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43,6 +44,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _material: {fileID: -8755386011628256732, guid: 248a7ba8416ee4d4e8c2ed1ea9496bc1,
     type: 3}
+  _useSelfMaterial: 0
 --- !u!114 &3403448703294075466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,6 +59,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _material: {fileID: -8309823835648936406, guid: 248a7ba8416ee4d4e8c2ed1ea9496bc1,
     type: 3}
+  _useSelfMaterial: 0
 --- !u!114 &4926697702621625246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,6 +74,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _material: {fileID: -3471603670213630894, guid: 248a7ba8416ee4d4e8c2ed1ea9496bc1,
     type: 3}
+  _useSelfMaterial: 0
 --- !u!114 &8921216057846068895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,6 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _material: {fileID: -1671525216723565510, guid: 248a7ba8416ee4d4e8c2ed1ea9496bc1,
     type: 3}
+  _useSelfMaterial: 0
 --- !u!136 &5786447774800507026
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -336,11 +341,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4386123551867602528, guid: 87da043f95164dd409504ae4d9388d3c,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 7739504723316784705, guid: 87da043f95164dd409504ae4d9388d3c,
         type: 3}
       propertyPath: m_IsActive
@@ -367,6 +367,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 9.19
       objectReference: {fileID: 0}
+    - target: {fileID: 4386123551867602528, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7739504723316784716, guid: 87da043f95164dd409504ae4d9388d3c,
         type: 3}
       propertyPath: m_Mesh
@@ -383,6 +388,12 @@ PrefabInstance:
       propertyPath: _material
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4989046815891231472, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: _lifePointPrefab
+      value: 
+      objectReference: {fileID: 6035655977365303027, guid: 11acd3ecbab852146b5e0a5f1d97aade,
+        type: 3}
     - target: {fileID: 4141244459750112284, guid: 87da043f95164dd409504ae4d9388d3c,
         type: 3}
       propertyPath: _yOffsetVH
@@ -418,12 +429,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 13
       objectReference: {fileID: 0}
-    - target: {fileID: 4989046815891231472, guid: 87da043f95164dd409504ae4d9388d3c,
-        type: 3}
-      propertyPath: _lifePointPrefab
-      value: 
-      objectReference: {fileID: 6035655977365303027, guid: 11acd3ecbab852146b5e0a5f1d97aade,
-        type: 3}
     m_RemovedComponents:
     - {fileID: 7739504723204175224, guid: 87da043f95164dd409504ae4d9388d3c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 87da043f95164dd409504ae4d9388d3c, type: 3}

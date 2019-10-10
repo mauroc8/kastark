@@ -797,6 +797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _material: {fileID: 0}
+  _useSelfMaterial: 0
 --- !u!114 &5067321612604120065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -926,7 +927,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4386123551867602528}
   - component: {fileID: 4989046815891231472}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LifePoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}

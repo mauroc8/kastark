@@ -35,13 +35,13 @@ public static class Util
         return false;
     }
 
-    public static GameObject GetGameObjectAtScreenPoint(Vector2 screenPoint)
+    public static GameObject GetGameObjectAtScreenPoint(Vector2 screenPoint, int layerMask = 0)
     {
         Ray mRay = Camera.main.ScreenPointToRay(screenPoint);
 
         RaycastHit hit;
         
-        if (Physics.Raycast(mRay, out hit)){
+        if (Physics.Raycast(mRay, out hit, Mathf.Infinity, layerMask)){
             return hit.transform.gameObject;
         }
 

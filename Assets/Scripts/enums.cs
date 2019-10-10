@@ -18,3 +18,10 @@ public enum CreatureKind
 {
     Fairy, Gnome, Dwarf, None
 }
+
+public static class LayerMask
+{
+    public static int Default = 0;
+    public static int HabilityRaycast = 1 << 8;
+}
+

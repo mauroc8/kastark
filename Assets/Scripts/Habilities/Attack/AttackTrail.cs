@@ -21,12 +21,10 @@ public class AttackTrail : MonoBehaviour
     public float maxLifetime = 3.87f;
 
     private List<Vector2> _screenPoints = new List<Vector2>(30);
-    private List<CreatureController> _targetCreatures = new List<CreatureController>(30);
     private float _length;
     private float _trailLifetime;
 
     TrailRenderer _trailRenderer;
-    float _trailExtraLifetime;
     float _minVertexDistance;
 
     float _minLengthPx;
@@ -36,8 +34,6 @@ public class AttackTrail : MonoBehaviour
     {
         _trailRenderer = GetComponent<TrailRenderer>();
         _minVertexDistance = _trailRenderer.minVertexDistance;
-        _trailExtraLifetime = _trailRenderer.time;
-        _trailRenderer.time = float.PositiveInfinity;
         _trailRenderer.widthMultiplier *= 300.0f / Screen.height;
 
         _minLengthPx = minLengthVh * Screen.height;
@@ -76,9 +72,7 @@ public class AttackTrail : MonoBehaviour
         // Pre: IsAcceptable()
         _trailLifetime = Time.time - _openTime;
         _open = false;
-        _trailRenderer.time = _trailLifetime + _trailExtraLifetime;
-        TrailAnalysis trailAnalyzer = new TrailAnalysis(_screenPoints.ToArray());
-        InterpretAnalysisResult(trailAnalyzer);
+        _trailRenderer.autodestruct = true;
     }
 
     void InterpretAnalysisResult(TrailAnalysis trailAnalysis) {
@@ -88,10 +82,8 @@ public class AttackTrail : MonoBehaviour
     }
 
     public void Restart() {
-        _trailRenderer.time = float.PositiveInfinity;
         _trailRenderer.Clear();
         _screenPoints.Clear();
-        _targetCreatures.Clear();
         _open = false;
     }
 
@@ -116,10 +108,10 @@ public class AttackTrail : MonoBehaviour
         RaycastHit hit;
         GameObject target = null;
 
-        if (Physics.Raycast(mRay, out hit) &&
+        if (Physics.Raycast(mRay, out hit, Mathf.Infinity, LayerMask.HabilityRaycast) &&
             Global.IsFromEnemyTeam(target = hit.transform.gameObject))
         {
-            AddTarget(target);
+            HitLifePoint(target);
         }
         else
         {
@@ -131,9 +123,9 @@ public class AttackTrail : MonoBehaviour
                 while (t < 1)
                 {
                     var intermediatePoint = Vector2.Lerp(screenPoint, _lastScreenPoint, t);
-                    target = Util.GetGameObjectAtScreenPoint(intermediatePoint);
+                    target = Util.GetGameObjectAtScreenPoint(intermediatePoint, LayerMask.HabilityRaycast);
                     if (target != null && Global.IsFromEnemyTeam(target))
-                        AddTarget(target);
+                        HitLifePoint(target);
                     t += vertexUnit;
                 }
             }
@@ -147,19 +139,13 @@ public class AttackTrail : MonoBehaviour
         transform.position = worldPoint;
     }
 
-    void AddTarget(GameObject target)
+    void HitLifePoint(GameObject target)
     {
-        var creature = target.GetComponent<CreatureController>();
-
-        if (creature && !_targetCreatures.Contains(creature))
-            _targetCreatures.Add(creature);
+        var lifePointController = target.GetComponent<LifePointController>();
+        lifePointController?.GetsHit();
     }
 
     public bool IsAcceptable() {
         return _length >= _minLengthPx && _screenPoints.Count >= 3;
-    }
-
-    public CreatureController GetTarget() {
-        return _targetCreatures.Count > 0 ? _targetCreatures[0] : null;
     }
 }

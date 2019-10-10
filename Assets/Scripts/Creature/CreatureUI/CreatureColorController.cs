@@ -15,21 +15,16 @@ public class CreatureColorController : MonoBehaviour
 
     public void ReceiveDamage(float damage)
     {
-        ChangeColorAndFadeBack(_damageColor);
+        _creatureColorFadeController.FadeFrom(_damageColor);
     }
 
     public void ReceiveShield(float shield)
     {
-        ChangeColorAndFadeBack(_shieldColor);
+        _creatureColorFadeController.FadeFrom(_shieldColor);
     }
 
     public void ReceiveHeal(float heal)
     {
-        ChangeColorAndFadeBack(_healColor);
-    }
-    
-    void ChangeColorAndFadeBack(Color damageColor)
-    {
-        _creatureColorFadeController.FadeFrom(damageColor);
+        _creatureColorFadeController.FadeFrom(_healColor);
     }
 }

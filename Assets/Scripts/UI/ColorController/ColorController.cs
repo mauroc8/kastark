@@ -2,15 +2,9 @@ using UnityEngine;
 
 public abstract class ColorController : AlphaController
 {
-    public virtual void ChangeColor(Color color)
-    {
-        Debug.Log("Not Implemented.");
-    }
-    public virtual Color GetColor()
-    {
-        Debug.Log("Not Implemented.");
-        return Color.white;
-    }
+    public abstract void ChangeColor(Color color);
+
+    public abstract Color GetColor();
 
     public override void ChangeAlpha(float alpha)
     {

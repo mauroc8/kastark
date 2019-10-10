@@ -8,9 +8,9 @@ public class MultiColorFadeController : ColorFadeController
 
     bool _fading = false;
 
-    Color[] _fadeFrom;
-    Color[] _fadeTo;
-    Color[] _intermediateColors;
+    Color[] _fadeFrom = null;
+    Color[] _fadeTo = null;
+    Color[] _intermediateColors = null;
     float _fadeStartTime;
 
     public override void FadeTo(Color color)
@@ -18,7 +18,7 @@ public class MultiColorFadeController : ColorFadeController
         _fading = true;
         _fadeStartTime = Time.time;
 
-        _fadeFrom = _multiColorController.GetColors();
+        _fadeFrom = _fadeFrom == null ? _multiColorController.GetColors() : _fadeFrom;
         _fadeTo = new Color[_fadeFrom.Length];
         _intermediateColors = new Color[_fadeTo.Length];
 
@@ -33,7 +33,7 @@ public class MultiColorFadeController : ColorFadeController
         _fading = true;
         _fadeStartTime = Time.time;
 
-        _fadeTo = _multiColorController.GetColors();
+        _fadeTo = _fadeTo == null ? _multiColorController.GetColors() : _fadeTo;
         _fadeFrom = new Color[_fadeTo.Length];
         _intermediateColors = new Color[_fadeTo.Length];
 

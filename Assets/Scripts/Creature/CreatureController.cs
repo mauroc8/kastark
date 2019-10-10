@@ -17,7 +17,7 @@ public class CreatureController : MonoBehaviour
 
     void Awake()
     {
-        creature.Init();
+        creature.Init(this);
     }
 
     public Transform GetBodyPart(BodyPart bodyPart)

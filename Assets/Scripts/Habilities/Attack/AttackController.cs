@@ -6,63 +6,66 @@ using Events;
 
 public class AttackController : HabilityController
 {
-    [SerializeField] AttackTrail _attackTrail = null;
-    [SerializeField] UIRectCountdown _uiRectCountdown = null;
+    [SerializeField] GameObject _attackTrailPrefab = null;
+    [SerializeField] CountdownController _uiRectCountdown = null;
+
+    [Header("Countdown time")]
+    [SerializeField] float _countdownTime = 2;
+
+    AttackTrail _attackTrail = null;
+
+    void Start()
+    {
+        CloseAndCreateTrail();
+        _uiRectCountdown.StartCountdown(_countdownTime);
+    }
 
     void Update()
     {
         if (_cast) return;
 
-        if (Input.GetMouseButton(0))
+        if (!_uiRectCountdown.Running)
         {
-            
-            if (!_attackTrail.IsOpen)
-            {
-                if (!Util.MouseIsOnUI())
-                {
-                    _attackTrail.Open(Input.mousePosition);
-                    _uiRectCountdown.StartCountdown(_attackTrail.maxLifetime);
-                }
-            } else {
-                _attackTrail.Move(Input.mousePosition);
-            }
-
-            if (_attackTrail.IsOutOfBounds() || !_uiRectCountdown.Running)
-            {
-                CloseTrail();
-            }
-        } else if (_attackTrail.IsOpen)
-        {
-            CloseTrail();
-        }
-    }
-
-    void CloseTrail()
-    {
-        _cast = true;
-
-        _uiRectCountdown.StopCountdown();
-
-        if (!_attackTrail.IsAcceptable())
-        {
-            TryAgain();
+            FinishCasting();
             return;
         }
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (!Util.MouseIsOnUI())
+            {
+                _attackTrail.Open(Input.mousePosition);
+            }
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            _attackTrail.Move(Input.mousePosition);
+
+            /*
+            if (_attackTrail.IsOutOfBounds())
+            {
+                CloseAndCreateTrail();
+            }
+             */
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            CloseAndCreateTrail();
+        }
+    }
+
+    void CloseAndCreateTrail()
+    {
+        _attackTrail?.Close();
+        var newAttackTrailGo = Instantiate(_attackTrailPrefab);
+        _attackTrail = newAttackTrailGo.GetComponent<AttackTrail>();
+    }
+
+    void FinishCasting()
+    {
         _attackTrail.Close();
-
-        var target = _attackTrail.GetTarget();
-
-        if (target != null)
-        {
-            var effectiveness = _attackTrail.Effectiveness;
-            Global.selectedHability.Cast(target, effectiveness);
-            EventController.TriggerEvent(new HabilityCastEvent{});
-        }
-        else
-        {
-            TryAgain();
-        }
+        _cast = true;
+        EventController.TriggerEvent(new HabilityCastEvent{});
     }
 
     void TryAgain()

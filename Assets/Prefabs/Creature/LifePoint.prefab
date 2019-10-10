@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6044747489635938819}
   - component: {fileID: 4344375831085954376}
   - component: {fileID: 4698505588522825444}
-  - component: {fileID: 4535581789171913496}
   m_Layer: 8
   m_Name: Trail
   m_TagString: Untagged
@@ -150,18 +149,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _trailRenderer: {fileID: 4344375831085954376}
---- !u!114 &4535581789171913496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2176323604168741799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73a9402a921e7ad489a5268e7c54fe2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4327156895693351840
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,6 +163,7 @@ GameObject:
   - component: {fileID: 4780936031313245608}
   - component: {fileID: 3475286126707219840}
   - component: {fileID: 2787774058091168743}
+  - component: {fileID: 3190189412586289784}
   m_Layer: 8
   m_Name: LifePoint
   m_TagString: Untagged
@@ -280,6 +268,19 @@ MonoBehaviour:
   _fadePower: 2
   _autoDisable: 0
   _fadeOnEnable: 0
+--- !u!114 &3190189412586289784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4327156895693351840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd7b848233bbab141a71d8ab0f3e856f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _creature: {fileID: 0}
 --- !u!1 &8012974254919770233
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +292,7 @@ GameObject:
   - component: {fileID: 7907065192954634365}
   - component: {fileID: 4090730970459982189}
   - component: {fileID: 7796187857638662975}
-  - component: {fileID: 1912473755641457446}
+  - component: {fileID: 6120529922277795845}
   - component: {fileID: 2604754925962718697}
   m_Layer: 0
   m_Name: Circle
@@ -359,7 +360,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &1912473755641457446
+--- !u!114 &6120529922277795845
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -18,7 +18,6 @@ public class FadeInController : MonoBehaviour
 
     void OnEnable()
     {
-        _alphaController.ChangeAlpha(0);
         if (_fadeOnEnable)
         {
             FadeIn();
