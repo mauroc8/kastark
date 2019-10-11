@@ -1,15 +1,14 @@
 using UnityEngine;
 
-public class LifePointSpinningState : State
+public class LifePointShieldState : State
 {
-    public Transform transform;
-    public float lifePointPercentage;
+    public LifePointMovementController lifePointMovementController;
 
+    public float lifePointPercentage;
     public float spinSpeed;
+    public float spinRadius;
     public float minHeight;
     public float maxHeight;
-    public float spinRadius;
-    public float movementSpeed;
 
     float _height;
     float _offset;
@@ -20,14 +19,14 @@ public class LifePointSpinningState : State
     }
 
     public override void UpdateState(float dt) {
-        var pos = transform.localPosition;
         var t = Time.time;
         var target = new Vector3(
             Mathf.Sin(_offset + t * spinSpeed) * spinRadius,
             _height,
             Mathf.Cos(_offset + t * spinSpeed) * spinRadius
         );
-        transform.localPosition = Vector3.MoveTowards(pos, target, movementSpeed * dt);
+
+        lifePointMovementController.MoveTowards(target);
     }
 
     public override void ExitState() {}
