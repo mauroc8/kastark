@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6044747489635938819}
   - component: {fileID: 4344375831085954376}
   - component: {fileID: 4698505588522825444}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,14 +262,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b26106ef7ecb3147a69fed5ebf61a11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lifePointMovementController: {fileID: 2475962478784341912}
   _fadeInController: {fileID: 3475286126707219840}
   _fadeOutController: {fileID: 2787774058091168743}
-  _lifePointMovementController: {fileID: 2475962478784341912}
-  _spinSpeed: 3
-  _minSpinHeight: 0
-  _maxSpinHeight: 8
-  _spinRadius: 2
-  _movementSpeed: 6
+  _shieldSpinSpeed: 5
+  _shieldMinSpinHeight: 0
+  _shieldMaxSpinHeight: 8
+  _shieldSpinRadius: 3
+  _shieldAmountOfTurns: 1.234212e+25
+  _beltSpinSpeed: 4
+  _beltMinSpinHeight: 4
+  _beltMaxSpinHeight: 4
+  _beltSpinRadius: 10
+  _beltAmountOfTurns: 1
 --- !u!114 &2475962478784341912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7232e9c5bf6f3ad4db711e74955438d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementSpeed: 6
+  _movementSpeed: 10
 --- !u!114 &3190189412586289784
 MonoBehaviour:
   m_ObjectHideFlags: 0

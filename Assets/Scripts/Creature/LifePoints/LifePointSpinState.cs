@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LifePointShieldState : State
+public class LifePointSpinState : State
 {
     public LifePointMovementController lifePointMovementController;
 
@@ -9,13 +9,14 @@ public class LifePointShieldState : State
     public float spinRadius;
     public float minHeight;
     public float maxHeight;
+    public float amountOfTurns;
 
     float _height;
     float _offset;
 
     public override void InitState() {
         _height = Mathf.Lerp(minHeight, maxHeight, lifePointPercentage);
-        _offset = lifePointPercentage * Mathf.PI * 1234567;
+        _offset = lifePointPercentage * Mathf.PI * 2 * amountOfTurns;
     }
 
     public override void UpdateState(float dt) {

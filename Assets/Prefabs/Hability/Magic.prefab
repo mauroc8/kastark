@@ -5115,8 +5115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3477da25dfd14954a99097f9e44215b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attraction: 18
-  _friction: 0.4
+  _attraction: 30
+  _friction: 0.98
   _maxVhDistance: 0.2
 --- !u!1 &1259224199978336840
 GameObject:
