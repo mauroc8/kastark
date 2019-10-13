@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class State
+public interface State
 {
-    public abstract void InitState();
-    public abstract void UpdateState(float dt);
-    public abstract void ExitState();
+    void InitState();
+    void UpdateState(float dt);
+    void ExitState();
 }

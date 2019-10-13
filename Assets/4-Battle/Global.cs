@@ -22,6 +22,11 @@ public static class Global
         return IsFromActingTeam(creature.gameObject);
     }
 
+    public static bool IsFromActingTeam(Team team)
+    {
+        return team == actingTeam;
+    }
+
     public static bool IsFromEnemyTeam(GameObject go)
     {
         return go.CompareTag(actingTeam == Team.Left ? "RightTeam" : "LeftTeam");

@@ -19,8 +19,11 @@ public class StateMachine : MonoBehaviour {
         
         _currentState?.ExitState();
         _currentState = newState;
-        _currentState?.InitState();
-        _updateState = _currentState.UpdateState;
+        if (_currentState != null)
+        {
+            _currentState.InitState();
+            _updateState = _currentState.UpdateState;
+        }
     }
 
     protected virtual void Update()
