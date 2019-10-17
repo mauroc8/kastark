@@ -292,7 +292,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _creature: {fileID: 0}
-  _movementSpeed: 15
   _fadeInController: {fileID: 1620062657066506927}
   _fadeOutController: {fileID: 4081691102154234406}
 --- !u!1 &8012974254919770233
@@ -308,7 +307,7 @@ GameObject:
   - component: {fileID: 7796187857638662975}
   - component: {fileID: 6120529922277795845}
   - component: {fileID: 2604754925962718697}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

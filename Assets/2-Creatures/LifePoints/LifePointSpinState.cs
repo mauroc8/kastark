@@ -14,6 +14,8 @@ public class LifePointSpinState : MonoBehaviour
         var spinSpeed = _spinSpeed / _spinRadius;
         foreach (var lifePointBehaviour in _lifePointsController.LifePoints)
         {
+            if (lifePointBehaviour == null) continue; // Destroyed instances
+            
             var t = Time.time;
             var offset = lifePointBehaviour.percentage * _amountOfTurns * Mathf.PI * 2;
             var height = Mathf.Lerp(_minHeight, _maxHeight, lifePointBehaviour.percentage);

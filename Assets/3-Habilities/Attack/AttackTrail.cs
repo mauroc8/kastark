@@ -106,11 +106,9 @@ public class AttackTrail : MonoBehaviour
         if (distance < _minVertexDistance)
             return;
 
-        RaycastHit hit;
-        GameObject target = null;
+        var target = RaycastHelper.SphereCastAtScreenPoint(Input.mousePosition, LayerMask.HabilityRaycast);
 
-        if (Physics.Raycast(mRay, out hit, Mathf.Infinity, LayerMask.HabilityRaycast) &&
-            Global.IsFromEnemyTeam(target = hit.transform.gameObject))
+        if (target != null && Global.IsFromEnemyTeam(target))
         {
             HitLifePoint(target);
         }
@@ -118,17 +116,14 @@ public class AttackTrail : MonoBehaviour
         {
             // Search Intermediate Targets.
             var vertexUnit = _minVertexDistance / distance; // 0 < vertexUnit <= 1
-            if (vertexUnit <= 0.6)
+            float t = vertexUnit;
+            while (t < 1)
             {
-                float t = vertexUnit;
-                while (t < 1)
-                {
-                    var intermediatePoint = Vector2.Lerp(screenPoint, _lastScreenPoint, t);
-                    target = RaycastHelper.GetGameObjectAtScreenPoint(intermediatePoint, LayerMask.HabilityRaycast);
-                    if (target != null && Global.IsFromEnemyTeam(target))
-                        HitLifePoint(target);
-                    t += vertexUnit;
-                }
+                var intermediatePoint = Vector2.Lerp(screenPoint, _lastScreenPoint, t);
+                target = RaycastHelper.SphereCastAtScreenPoint(intermediatePoint, LayerMask.HabilityRaycast);
+                if (target != null && Global.IsFromEnemyTeam(target))
+                    HitLifePoint(target);
+                t += vertexUnit;
             }
         }
 

@@ -12,8 +12,10 @@ magic_tooltip, ,
 shield_tooltip, , 
 heal_tooltip, , 
 cancel,Cancel,Cancelar
-battlewin,YOU WIN!,GANASTE!
-battlelose,YOU LOSE!,PERDISTE!
+battlewin,You win,Ganaste
+battlelose,You lose,Perdiste
 new_game,New Game,Juego Nuevo
 change_language,Change Language,Cambiar Lenguaje
 quit,Quit,Salir
+return_to_main_menu,Return to main menu,Volver al menú principal
+attack_tutorial,Destroy enemy’s energy points,Destruye los puntos de energía del enemigo

@@ -37,12 +37,12 @@ public static class RaycastHelper
         return null;
     }
 
-    public static GameObject GetGameObjectAtScreenSphere(Vector2 screenPoint, float radius, int layerMask = 0)
+    public static GameObject SphereCastAtScreenPoint(Vector2 screenPoint, int layerMask = 0)
     {
-        var origin = Camera.main.ScreenToWorldPoint(screenPoint);
-
+        Ray ray = Camera.main.ScreenPointToRay(screenPoint);
         RaycastHit hit;
-        if (Physics.SphereCast(origin, radius, Camera.main.transform.forward, out hit, Mathf.Infinity, layerMask))
+
+        if (Physics.SphereCast(ray, 0.3f, out hit, Mathf.Infinity, layerMask))
         {
             return hit.transform.gameObject;
         }

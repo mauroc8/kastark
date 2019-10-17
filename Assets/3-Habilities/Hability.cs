@@ -30,9 +30,7 @@ public class Hability : ScriptableObject
     public string LocalizedDescription => _localizedDescription;
     public string LocalizedTooltip => _localizedTooltip;
 
-    int _timesCast = 0;
-
-    public int TimesCast => _timesCast;
+    [System.NonSerialized] public int timesCast = 0;
 
     public void Init()
     {
@@ -49,7 +47,7 @@ public class Hability : ScriptableObject
 
     public void Cast(CreatureController target, float unadjustedEffectiveness)
     {
-        _timesCast++;
+        timesCast++;
         
         var effectiveness = Mathf.Pow(unadjustedEffectiveness, _difficulty);
 

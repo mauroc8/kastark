@@ -15,20 +15,9 @@ public class LifePointBehaviour : MonoBehaviour
         Destroy(gameObject);
     }
 
-    [Header("Movement")]
-    [SerializeField] float _maxMovementSpeed = 30;
-
-    Vector3 _target;
-
     public void SetTarget(Vector3 target)
     {
-        _target = target;
-    }
-
-    void Update()
-    {
-        var pos = transform.localPosition;
-        transform.localPosition = Vector3.MoveTowards(pos, _target, _maxMovementSpeed * Time.deltaTime);
+        transform.localPosition = target;
     }
 
     [Header("Color")]

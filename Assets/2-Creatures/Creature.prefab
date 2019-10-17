@@ -308,11 +308,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifePointsController: {fileID: 4989046815891231472}
-  _spinSpeed: 8
-  _spinRadius: 3
+  _spinSpeed: 4
+  _spinRadius: 4
   _minHeight: 0
   _maxHeight: 6
-  _amountOfTurns: 12421.417
+  _amountOfTurns: 5
 --- !u!1 &6823520076729085836
 GameObject:
   m_ObjectHideFlags: 0
