@@ -6,12 +6,15 @@ using TMPro;
 
 public class HabilityButtonContent : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI _text = null;
+    [SerializeField] TextMeshProUGUI _name = null;
     [SerializeField] Image _image = null;
+    [SerializeField] TextMeshProUGUI _hotkey = null;
 
     public virtual void FillContent(Hability hability)
     {
-        _text.text = hability.LocalizedName;
+        _name.text = hability.LocalizedName;
         _image.sprite = hability.imageSprite;
+        if (hability.hotkey != KeyCode.None)
+            _hotkey.text = hability.hotkey.ToString();
     }
 }

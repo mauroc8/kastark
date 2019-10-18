@@ -16,6 +16,7 @@ MonoBehaviour:
   _initialDifficulty: 1.4
   _damageType: 1
   localizationKey: magic
-  imageSprite: {fileID: 21300000, guid: c03c72978d15ecb4d91060d3a10d14f0, type: 3}
+  imageSprite: {fileID: 21300000, guid: 39f5b9ba42b6e154fa221075ffef23d8, type: 3}
+  hotkey: 115
   controller: {fileID: 1259224199978336840, guid: 5b2fab65b14497341a53921d6b9bfa88,
     type: 3}

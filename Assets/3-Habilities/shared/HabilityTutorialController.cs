@@ -10,21 +10,19 @@ public class HabilityTutorialController : MonoBehaviour
     [SerializeField] GameObject[] _disabledGameObjects = null;
     [SerializeField] MonoBehaviour[] _disabledBehaviours = null;
 
-    WaitForSeconds _wait;
+    WaitForSeconds _wait = new WaitForSeconds(0.1f);
 
     void Start()
     {
         if (Global.selectedHability.timesCast == 0)
         {
             Global.selectedHability.timesCast++;
-            _wait = new WaitForSeconds(0.1f);
+            StartCoroutine(Tutorial());
         }
-        else
-        {
-            _wait = new WaitForSeconds(10);
-        }
-        StartCoroutine(Tutorial());
+    }
 
+    IEnumerator Tutorial()
+    {
         foreach (var go in _disabledGameObjects)
         {
             go.SetActive(false);
@@ -34,10 +32,6 @@ public class HabilityTutorialController : MonoBehaviour
         {
             mb.enabled = false;
         }
-    }
-
-    IEnumerator Tutorial()
-    {
         yield return _wait;
         _tutorial.SetActive(true);
     }

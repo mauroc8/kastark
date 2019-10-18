@@ -18,6 +18,7 @@ public class Hability : ScriptableObject
     [Header("UI")]
     public string localizationKey;
     public Sprite imageSprite;
+    public KeyCode hotkey;
 
     [Header("Controller")]
     public GameObject controller;

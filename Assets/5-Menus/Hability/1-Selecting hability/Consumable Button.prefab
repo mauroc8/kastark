@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 597e0155581780f4f9de4ae0696b1c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 4142928323003214406}
+  _name: {fileID: 4142928323003214406}
   _image: {fileID: 4851378782170884780}
+  _hotkey: {fileID: 7145103047684467014}
   _amount: {fileID: 2856983670203316871}
 --- !u!114 &9117854968580358409
 MonoBehaviour:
@@ -61,8 +62,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -10, y: 0}
+  m_AnchoredPosition: {x: 54.785, y: 57.655}
+  m_SizeDelta: {x: -110.43, y: -115.32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3716915498946322442
 CanvasRenderer:
@@ -94,16 +95,15 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: x1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9917367b538eb064d848221fde25ffed, type: 2}
-  m_sharedMaterial: {fileID: -6580228756896398948, guid: 9917367b538eb064d848221fde25ffed,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4284177243
+  m_fontColor: {r: 0.35686275, g: 0.35686275, b: 0.35686275, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -121,14 +121,14 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 47.38
-  m_fontSizeBase: 47.38
+  m_fontSize: 23.3
+  m_fontSizeBase: 23.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_textAlignment: 260
+  m_fontStyle: 1
+  m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -312,37 +312,30 @@ PrefabInstance:
       propertyPath: m_Type
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1207603084050252461, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1207603084050252460, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
         type: 3}
       propertyPath: m_text
-      value: 'Health
-
-        potion'
+      value: Heal
       objectReference: {fileID: 0}
     - target: {fileID: 1207603084050252460, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 13
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1207603084050252460, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1207603084050252460, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1207603084050252460, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1207603084050252460, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
         type: 3}
@@ -354,6 +347,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSizeBase
       value: 31.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1207603084050252461, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1207603084050252462, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
         type: 3}
@@ -386,6 +384,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7145103047684467014 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5374033070329594284, guid: ba5e0567c23ac1146a0e2b979ceb5be0,
+    type: 3}
+  m_PrefabInstance: {fileID: 3007533494553913578}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &4142928323003214406 stripped
