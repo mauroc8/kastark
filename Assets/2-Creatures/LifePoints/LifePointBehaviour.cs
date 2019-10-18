@@ -9,8 +9,14 @@ public class LifePointBehaviour : MonoBehaviour
     [Header("Creature")]
     [SerializeField] Creature _creature = null;
 
+    bool _isHit = false;
+
     public void GetsHit()
     {
+        if (_isHit) return;
+        
+        _isHit = true;
+        
         _creature.controller.ReceiveAttack(1);
         Destroy(gameObject);
     }
