@@ -68,22 +68,18 @@ public class CreatureController : MonoBehaviour
 
     void OnEnable()
     {
-        EventController.AddListener<TurnStartEvent>(OnTurnStart);
         EventController.AddListener<HabilityCastEvent>(OnHabilityCast);
     }
 
     void OnDisable()
     {
-        EventController.RemoveListener<TurnStartEvent>(OnTurnStart);
         EventController.RemoveListener<HabilityCastEvent>(OnHabilityCast);
     }
 
-    void OnTurnStart(TurnStartEvent evt)
+    public void StartTurn()
     {
-        if (Global.actingCreature == this)
-        {
-            creature.TurnStart();
-        }
+        creature.shield = 0;
+        // ?
     }
 
     void OnHabilityCast(HabilityCastEvent evt)

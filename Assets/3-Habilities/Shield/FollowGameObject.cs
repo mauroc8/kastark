@@ -11,7 +11,7 @@ public class FollowGameObject : MonoBehaviour
     void Start()
     {
         if (_followMe == null)
-            _followMe = Global.actingCreature.chest;
+            Debug.Log($"No creature set in FollowGameObject");
     }
 
     void Update()

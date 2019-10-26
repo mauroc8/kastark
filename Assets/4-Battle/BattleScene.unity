@@ -649,6 +649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _creatureController: {fileID: 802956035}
+  _enemies: []
 --- !u!1 &832031515
 GameObject:
   m_ObjectHideFlags: 0

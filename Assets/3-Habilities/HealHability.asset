@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: HealHability
   m_EditorClassIdentifier: 
   _initialDamage: 60
-  _initialDifficulty: 1
   _damageType: 2
-  localizationKey: heal
+  localizationKey: health_potion
   imageSprite: {fileID: 21300000, guid: 09aa278ef9ff1ac45b935483a67633d8, type: 3}
+  hotkey: 0
   controller: {fileID: 4861203174460205112, guid: b920207b7dc070e46b91342deaf9f322,
     type: 3}

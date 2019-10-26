@@ -6,14 +6,14 @@ using Events;
 public class GameManager : MonoBehaviour
 {
     [Header("Model")]
-    [SerializeField] LanguageSettings _gameSettings = null;
-    [SerializeField] GameObject _battleNode = null;
+    [SerializeField] LanguageSettings _gameSettings;
+    [SerializeField] GameObject _battleNode;
+
+    List<CreatureController> _creaturesInBattle;
 
     [Header("References")]
-    [SerializeField] GameObject _battleWinNode = null;
-    [SerializeField] GameObject _battleLoseNode = null;
-
-    List<CreatureController> _deadCreatures;
+    [SerializeField] GameObject _battleWinNode;
+    [SerializeField] GameObject _battleLoseNode;
 
     void Awake()
     {
@@ -23,9 +23,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        var allCreatures = _battleNode.GetComponentsInChildren<CreatureController>();
-        Global.creaturesInBattle = new List<CreatureController>(allCreatures);
-        _deadCreatures              = new List<CreatureController>();
+        _creaturesInBattle = new List<CreatureController>(
+            _battleNode.GetComponentsInChildren<CreatureController>()
+        );
+        //_creaturesInBattle = _creaturesInBattle;
 
         StartCoroutine(StartBattle());
     }
@@ -43,14 +44,18 @@ public class GameManager : MonoBehaviour
 
     void StartNewTurn()
     {
-        _currentUnitIndex = (_currentUnitIndex + 1) % Global.creaturesInBattle.Count;
+        _currentUnitIndex = (_currentUnitIndex + 1) % _creaturesInBattle.Count;
 
-        var creatureController = Global.creaturesInBattle[_currentUnitIndex];
+        var creatureController = _creaturesInBattle[_currentUnitIndex];
+
+        creatureController.StartTurn();
 
         Global.actingCreature = creatureController;
         Global.actingTeam = Global.GetTeamOf(creatureController);
 
-        EventController.TriggerEvent(new TurnStartEvent());
+        EventController.TriggerEvent(new TurnStartEvent{
+            actingCreature = creatureController
+        });
     }
 
     void OnEnable()
@@ -68,7 +73,7 @@ public class GameManager : MonoBehaviour
         EventController.RemoveListener<TurnEndEvent>(OnTurnEnd);
     }
 
-    GameObject _selectedHabilityInstance = null;
+    GameObject _selectedHabilityInstance;
 
     void OnHabilitySelect(HabilitySelectEvent evt)
     {
@@ -123,12 +128,11 @@ public class GameManager : MonoBehaviour
 
         var removeList = new List<CreatureController>();
 
-        foreach (var creature in Global.creaturesInBattle)
+        foreach (var creature in _creaturesInBattle)
         {
             if (!creature.IsAlive())
             {
                 removeList.Add(creature);
-                _deadCreatures.Add(creature);
             } else
             {
                 if (Global.GetTeamOf(creature) == Team.Left)
@@ -141,10 +145,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        foreach (var creature in removeList)
-        {
-            Global.creaturesInBattle.Remove(creature);
-        }
+        removeList.ForEach(creature => _creaturesInBattle.Remove(creature));
 
         if (leftTeamHasLivingUnit && rightTeamHasLivingUnit)
         {

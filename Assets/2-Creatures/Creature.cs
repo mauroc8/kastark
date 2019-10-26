@@ -45,9 +45,4 @@ public class Creature : ScriptableObject
             consumable.Init();
         }
     }
-
-    public void TurnStart()
-    {
-        shield = 0; // shields only last one turn
-    }
 }

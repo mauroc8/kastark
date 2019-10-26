@@ -27,7 +27,6 @@ public class ShieldController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && RaycastHelper.GetHoveredGameObject() == _shield && !RaycastHelper.MouseIsOnUI())
         {
             _cast = true;
-            // TODO
             //Global.selectedHability.Cast(Global.actingCreature, effectiveness);
             EventController.TriggerEvent(new HabilityCastEvent{});
         }

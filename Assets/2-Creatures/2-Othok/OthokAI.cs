@@ -5,7 +5,9 @@ using Events;
 
 public class OthokAI : MonoBehaviour
 {
-    [SerializeField] CreatureController _creatureController = null;
+    [SerializeField] CreatureController _creatureController;
+
+    [SerializeField] List<CreatureController> _enemies;
 
     void OnEnable()
     {
@@ -17,7 +19,7 @@ public class OthokAI : MonoBehaviour
     }
     void OnTurnStart(TurnStartEvent evt)
     {
-        if (Global.actingCreature == _creatureController)
+        if (evt.actingCreature == _creatureController)
         {
             StartCoroutine(ItsMyTurnCoroutine());
         }
@@ -30,7 +32,7 @@ public class OthokAI : MonoBehaviour
         yield return _briefWait;
 
         var hability = _creatureController.creature.habilities[0];
-        var target = Global.creaturesInBattle.Find(creature => !Global.IsFromActingTeam(creature));
+        var target = _enemies.Find(creature => !Global.IsFromActingTeam(creature));
         var effectiveness = 0.5f + Random.Range(0, 0.5f);
 
         EventController.TriggerEvent(new HabilitySelectEvent{ hability = hability });

@@ -6,7 +6,9 @@ namespace Events{
 
     public class BattleStartEvent : GameEvent {}
 
-    public class TurnStartEvent  : GameEvent {}
+    public class TurnStartEvent  : GameEvent {
+        public CreatureController actingCreature;
+    }
     public class TurnEndEvent    : GameEvent {}
 
     public class HabilitySelectEvent : GameEvent { public Hability hability; }

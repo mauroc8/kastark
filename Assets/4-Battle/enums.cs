@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BodyPart
+{
+    Head, Chest, Feet, None
+}
+
 public enum Team
 {
     Left,

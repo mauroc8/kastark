@@ -6,7 +6,6 @@ public class Hability : ScriptableObject
 {
     [Header("Stats")]
     [SerializeField] float _initialDamage = 5;
-    [SerializeField] float _initialDifficulty = 1;
     [SerializeField] DamageType _damageType = DamageType.None;
 
     float _damage;

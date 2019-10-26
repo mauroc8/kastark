@@ -2,16 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BodyPart
-{
-    Head, Chest, Feet, None
-};
-
 public class PositionNextToCreature : MonoBehaviour
 {
     [Header("Creature")]
-    [Tooltip("If null, the current active creature will be used.")]
-    [SerializeField] CreatureController _creature = null;
+    [SerializeField] CreatureController _creature;
     [SerializeField] BodyPart           _bodyPart = BodyPart.Chest;
 
     [Header("Offset")]
@@ -20,7 +14,6 @@ public class PositionNextToCreature : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] bool _negateXOffsetToFaceEnemy = false;
-    public bool updateEachFrame = false;
     [Tooltip("Use true only if the component is in a 2D object.")]
     [SerializeField] bool _useScreenSpace = true;
 
@@ -32,16 +25,20 @@ public class PositionNextToCreature : MonoBehaviour
     {
         if (_bodyPart == BodyPart.None) return;
 
-        var creatureController = _creature == null ? Global.actingCreature : _creature;
+        if (_creature == null)
+        {
+            Debug.Log("Position next to creature has no creature attached.");
+            return;
+        }
 
-        _reference = _bodyPart == BodyPart.Head  ? creatureController.head  :
-                        _bodyPart == BodyPart.Chest ? creatureController.chest :
-                                                      creatureController.feet  ;
+        _reference = _bodyPart == BodyPart.Head  ? _creature.head  :
+                        _bodyPart == BodyPart.Chest ? _creature.chest :
+                                                      _creature.feet  ;
 
         _xOffsetPx = Screen.height * _xOffsetVH;
         _yOffsetPx = Screen.height * _yOffsetVH;
 
-        if (_negateXOffsetToFaceEnemy && Global.GetTeamOf(creatureController) == Team.Right)
+        if (_negateXOffsetToFaceEnemy && Global.GetTeamOf(_creature) == Team.Right)
         {
             _xOffsetPx *= -1;
         }
@@ -57,10 +54,5 @@ public class PositionNextToCreature : MonoBehaviour
         position.y += _yOffsetPx;
 
         transform.position = position;
-    }
-
-    void Update()
-    {
-        if (updateEachFrame) UpdatePosition();
     }
 }
