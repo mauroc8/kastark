@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class AttackTrail : MonoBehaviour
 {
+    [SerializeField] TeamId _team;
+
     private bool _open;
     float _effectiveness;
 
@@ -75,18 +77,6 @@ public class AttackTrail : MonoBehaviour
         _trailRenderer.autodestruct = true;
     }
 
-    void InterpretAnalysisResult(TrailAnalysis trailAnalysis) {
-        var stdDev = trailAnalysis.DirectionStdDev;
-        _effectiveness = 1 - stdDev / worstScenarioDirectionStdDev;
-        if (_effectiveness < 0) _effectiveness = 0;
-    }
-
-    public void Restart() {
-        _trailRenderer.Clear();
-        _screenPoints.Clear();
-        _open = false;
-    }
-
     Vector2 _lastScreenPoint;
 
     public void Move(Vector2 screenPoint) {
@@ -108,7 +98,7 @@ public class AttackTrail : MonoBehaviour
 
         var target = RaycastHelper.SphereCastAtScreenPoint(Input.mousePosition, LayerMask.HabilityRaycast);
 
-        if (target != null && Global.IsFromEnemyTeam(target))
+        if (target != null && target.CompareTag(_team.ToString()))
         {
             HitLifePoint(target);
         }
@@ -121,7 +111,7 @@ public class AttackTrail : MonoBehaviour
             {
                 var intermediatePoint = Vector2.Lerp(screenPoint, _lastScreenPoint, t);
                 target = RaycastHelper.SphereCastAtScreenPoint(intermediatePoint, LayerMask.HabilityRaycast);
-                if (target != null && Global.IsFromEnemyTeam(target))
+                if (target != null && target.CompareTag(_team.ToString()))
                     HitLifePoint(target);
                 t += vertexUnit;
             }
@@ -139,9 +129,5 @@ public class AttackTrail : MonoBehaviour
     {
         var lifePointController = target.GetComponent<LifePointController>();
         lifePointController?.GetsHit();
-    }
-
-    public bool IsAcceptable() {
-        return _length >= _minLengthPx && _screenPoints.Count >= 3;
     }
 }

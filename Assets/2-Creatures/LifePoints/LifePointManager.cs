@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class LifePointManager : MonoBehaviour
 {
-    [SerializeField] CreatureController _creatureController = null;
-    [SerializeField] GameObject _lifePointPrefab = null;
+    [SerializeField] Creature _creature;
+    [SerializeField] GameObject _lifePointPrefab;
 
     List<LifePointController> _lifePoints;
 
@@ -13,8 +13,7 @@ public class LifePointManager : MonoBehaviour
 
     void Start()
     {
-        var creature = _creatureController.creature;
-        var lifePointsAmount = (int) creature.maxHealth;
+        var lifePointsAmount = (int) _creature.maxHealth;
 
         _lifePoints = new List<LifePointController>(lifePointsAmount);
 

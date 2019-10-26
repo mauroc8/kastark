@@ -5,14 +5,11 @@ using TMPro;
 
 public class CreatureNameView : MonoBehaviour
 {
-    [SerializeField] CreatureController _creatureController = null;
-
-    [Header("View Name")]
-    [SerializeField] TextMeshProUGUI _nameTMPro = null;
+    [SerializeField] Creature _creature;
+    [SerializeField] TextMeshProUGUI _nameText;
 
     void Start()
     {
-        if (_nameTMPro)
-            _nameTMPro.text = _creatureController.creature.creatureName;
+        _nameText.text = _creature.creatureName;
     }
 }

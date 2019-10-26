@@ -8,7 +8,7 @@ public class AttackController : MonoBehaviour
 {
     bool _cast;
 
-    [SerializeField] GameObject _attackTrailPrefab = null;
+    [SerializeField] GameObject _attackTrailGameObject = null;
     [SerializeField] CountdownController _uiRectCountdown = null;
 
     [Header("Countdown time")]
@@ -57,7 +57,7 @@ public class AttackController : MonoBehaviour
     void CloseAndCreateTrail()
     {
         _attackTrail?.Close();
-        var newAttackTrailGo = Instantiate(_attackTrailPrefab);
+        var newAttackTrailGo = Instantiate(_attackTrailGameObject);
         _attackTrail = newAttackTrailGo.GetComponent<AttackTrail>();
     }
 
@@ -68,18 +68,5 @@ public class AttackController : MonoBehaviour
         EventController.TriggerEvent(new HabilityCastEvent{});
     }
 
-    void TryAgain()
-    {
-        StartCoroutine(RestartTrail());
-    }
-
     WaitForSeconds _briefWait = new WaitForSeconds(0.35f);
-
-    IEnumerator RestartTrail()
-    {
-        yield return _briefWait;
-        Debug.Log("Try Again!");
-        _attackTrail.Restart();
-        _cast = false;
-    }
 }

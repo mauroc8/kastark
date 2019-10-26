@@ -5,13 +5,11 @@ using Events;
 
 public class ChangeLifePointsState : MonoBehaviourStateMachine
 {
-    [SerializeField] CreatureController _creatureController = null;
+    [SerializeField] Creature _creature = null;
 
     [SerializeField] LifePointIdleState _idleState = null;
     [SerializeField] LifePointSpinState _capsuleSpinState = null;
     [SerializeField] LifePointSpinState _beltSpinState = null;
-
-    // Change STATES
 
     void OnEnable()
     {
@@ -32,8 +30,6 @@ public class ChangeLifePointsState : MonoBehaviourStateMachine
 
     void OnHabilitySelect(HabilitySelectEvent evt)
     {
-        if (Global.IsFromActingTeam(_creatureController)) return;
-
         if (Random.Range(0, 100) < 50)
         {
             SwitchState(_capsuleSpinState);

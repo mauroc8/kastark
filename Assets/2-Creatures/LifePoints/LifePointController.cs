@@ -7,7 +7,8 @@ public class LifePointController : MonoBehaviour
 {
     [NonSerialized]
     public float percentage;
-    [NonSerialized]
+    
+    [SerializeField]
     public LifePointManager lifePointManager;
 
     [Header("Creature")]
@@ -25,7 +26,7 @@ public class LifePointController : MonoBehaviour
         
         _isHit = true;
         
-        _creature.controller.ReceiveAttack(1);
+        _creature.health--;
 
         lifePointManager.LifePointGotHit(this);
     }

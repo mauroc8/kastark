@@ -47,7 +47,7 @@ public class MagicController : MonoBehaviour
             
             var intermediatePoint = Vector2.Lerp(_bigParticleTransform.position, _lastPosition, t);
             var target = RaycastHelper.SphereCastAtScreenPoint(intermediatePoint, LayerMask.HabilityRaycast);
-            if (target != null && Global.IsFromEnemyTeam(target))
+            if (target != null)
             {
                 target.GetComponent<LifePointController>()?.GetsHit();
             }
@@ -58,7 +58,7 @@ public class MagicController : MonoBehaviour
         {
             var target = RaycastHelper.SphereCastAtScreenPoint(_bigParticleTransform.position, LayerMask.HabilityRaycast);
 
-            if (target != null && Global.IsFromEnemyTeam(target))
+            if (target != null)
             {
                 target.GetComponent<LifePointController>()?.GetsHit();
             }

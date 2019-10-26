@@ -1,12 +1,12 @@
+using System.Collections;
 using Events;
 using UnityEngine;
 
 public class LightFollowsActingCreature : MonoBehaviour
 {
-    [SerializeField] float _speed = 1;
-
-    CreatureController _actingCreature;
-
+    [SerializeField] float _duration = 0.4f;
+    [SerializeField] float _power    = 0.5f;
+    
     void OnEnable()
     {
         EventController.AddListener<TurnStartEvent>(OnTurnStart);
@@ -19,16 +19,27 @@ public class LightFollowsActingCreature : MonoBehaviour
 
     void OnTurnStart(TurnStartEvent evt)
     {
-        _actingCreature = evt.actingCreature;
+        StartCoroutine(TurnStartCoroutine(evt.actingCreature));
     }
 
-    void Update()
+    public IEnumerator TurnStartCoroutine(Creature creature)
     {
-        if (_actingCreature == null) return;
+        var time = Time.time;
+        
+        var initialPosition = transform.position;
+        var creaturePosition = creature.transform.position;
 
-        var pos = transform.position;
-        var creaturePos = _actingCreature.head.position;
-        creaturePos.y = pos.y;
-        transform.position = Vector3.Lerp(pos, creaturePos, _speed * Time.deltaTime);
+        creaturePosition.y = initialPosition.y;
+        
+        yield return null;
+        
+        while (Time.time < time + _duration)
+        {
+            var t = Mathf.Pow((Time.time - time) / _duration, _power);
+            transform.position = Vector3.Lerp(initialPosition, creaturePosition, t);
+            yield return null;
+        }
+
+        transform.position = creaturePosition;
     }
 }

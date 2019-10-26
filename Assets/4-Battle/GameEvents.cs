@@ -7,7 +7,7 @@ namespace Events{
     public class BattleStartEvent : GameEvent {}
 
     public class TurnStartEvent  : GameEvent {
-        public CreatureController actingCreature;
+        public Creature actingCreature;
     }
     public class TurnEndEvent    : GameEvent {}
 

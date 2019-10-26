@@ -1,48 +1,38 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
-[CreateAssetMenu(menuName="Kastark/Creature")]
-public class Creature : ScriptableObject
+public class Creature : MonoBehaviour
 {
-    [Header("Show")]
+    [Header("Information and stats")]
     public string creatureName;
     public CreatureKind species;
-    public Team team;
+    public TeamId team;
+    public float maxHealth = 10;
 
-    [Header("Stats")]
-    [SerializeField] float _initialMaxHealth = 10;
-    [SerializeField] float _initialPhysicalResistance = 1;
-    [SerializeField] float _initialMagicalResistance = 1;
-    [SerializeField] Hability[] _initialHabilities = null;
-    [SerializeField] Consumable[] _initialConsumables = null;
+    public Transform head;
+    public Transform feet;
 
-    [System.NonSerialized] public float health;
-    [System.NonSerialized] public float maxHealth;
-    [System.NonSerialized] public float shield;
-    [System.NonSerialized] public float physicalResistance;
-    [System.NonSerialized] public float magicalResistance;
-    [System.NonSerialized] public List<Hability> habilities;
-    [System.NonSerialized] public List<Consumable> consumables;
-    [System.NonSerialized] public CreatureController controller;
+    [NonSerialized] public float health;
+    [NonSerialized] public float shield;
 
-    public void Init(CreatureController selfController)
+    public bool IsAlive => health > 0;
+
+    [Header("Behaviour related")]
+    [SerializeField] HabilitySelection _habilitySelection;
+
+    void Awake()
     {
-        health = maxHealth = _initialMaxHealth;
-        shield = 0;
-        physicalResistance = _initialPhysicalResistance;
-        magicalResistance = _initialMagicalResistance;
-        habilities = new List<Hability>(_initialHabilities);
-        consumables = new List<Consumable>(_initialConsumables);
-        controller = selfController;
+        health = maxHealth;
+    }
 
-        foreach (var hability in habilities)
-        {
-            hability.Init();
-        }
-        foreach (var consumable in consumables)
-        {
-            consumable.Init();
-        }
+    public async Task TurnAsync(CancellationToken token)
+    {
+        Debug.Log($"{creatureName}'s turn");
+        
+        var selectedHability = await _habilitySelection.SelectHabilityAsync(token);
+        await selectedHability.CastAsync(this, token);
     }
 }

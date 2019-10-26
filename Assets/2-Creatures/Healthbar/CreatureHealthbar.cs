@@ -12,26 +12,21 @@ public class CreatureHealthbar : MonoBehaviour
     float _distanceToHeadVH = 0.08f;
 
     [Header("Refs")]
-    [SerializeField] CanvasGroup _healthbarGroup = null;
-    [SerializeField] Image _healthImage = null;
-    [SerializeField] Image _shieldImage = null;
+    [SerializeField] Creature _creature;
+    [SerializeField] CanvasGroup _healthbarGroup;
+    [SerializeField] Image _healthImage;
+    [SerializeField] Image _shieldImage;
 
     [Header("Settings")]
     [SerializeField] bool _show = true;
 
-    Creature _creature;
     Transform _healthbarTransform;
     Transform _headTransform;
     float _distanceToHeadPx;
 
     void Start() {
         _healthbarTransform = _healthbarGroup.transform;
-        
-        var creatureController = GetComponent<CreatureController>();
-        _creature = creatureController.creature;
-        
-        _headTransform = creatureController.head;
-
+        _headTransform = _creature.head;
         _distanceToHeadPx = Screen.height * _distanceToHeadVH;
     }
 

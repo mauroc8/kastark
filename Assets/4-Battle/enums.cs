@@ -4,14 +4,13 @@ using UnityEngine;
 
 public enum BodyPart
 {
-    Head, Chest, Feet, None
+    Head, Feet, None
 }
 
-public enum Team
+public enum TeamId
 {
-    Left,
-    Right,
-    None
+    Player,
+    Enemy
 }
 
 public enum DamageType
