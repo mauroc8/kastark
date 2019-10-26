@@ -63,6 +63,7 @@ GameObject:
   - component: {fileID: 949740092096044476}
   - component: {fileID: 7491850915484322358}
   - component: {fileID: 3729624205557990008}
+  - component: {fileID: 270314660402293165}
   - component: {fileID: 1486235068765180191}
   m_Layer: 0
   m_Name: Shield
@@ -189,6 +190,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cursorSkin: {fileID: 11400000, guid: 187f42974cf7d404ab1a7f382341d125, type: 2}
+--- !u!114 &270314660402293165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949740092096044478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73a9402a921e7ad489a5268e7c54fe2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1486235068765180191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,4 +214,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9011bd94e0121045ba66d2516de87de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _material: {fileID: 2100000, guid: 3f340e8f1b0c5964d90ddda3934ccc91, type: 2}

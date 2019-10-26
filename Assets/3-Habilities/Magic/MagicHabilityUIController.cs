@@ -11,7 +11,7 @@ public class MagicHabilityUIController : MonoBehaviour
 
     [Header("Fade Out controllers")]
     [SerializeField] ParticleSystem  _particleSystem = null;
-    [SerializeField] FadeOutController _bigParticleFadeOutController = null;
+    [SerializeField] AlphaController _bigParticleAlphaController = null;
 
     void Start()
     {
@@ -25,7 +25,7 @@ public class MagicHabilityUIController : MonoBehaviour
             var emission = _particleSystem.emission;
             emission.enabled = false;
 
-            _bigParticleFadeOutController.FadeOut();
+            _bigParticleAlphaController.FadeOut(0.3f);
             _cursorSkin.ChangeCursorTexture(CursorTexture.None);
 
             this.enabled = false;

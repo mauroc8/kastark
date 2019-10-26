@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LifePointIdleState : MonoBehaviour
 {
-    [SerializeField] LifePointsController _lifePointsController = null;
+    [SerializeField] LifePointManager _lifePointsController = null;
     
     void OnEnable()
     {

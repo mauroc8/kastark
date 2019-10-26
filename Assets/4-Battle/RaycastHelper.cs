@@ -62,11 +62,4 @@ public static class RaycastHelper
     public static Vector2 ScreenPointToHDCoords(Vector2 screenPoint) {
         return screenPoint * 1080f / Screen.height;
     }
-
-    public static string GetParsedHabilityDescription(Hability hability)
-    {
-        var description = hability.LocalizedDescription;
-        description = description.Replace("{damage}", hability.Damage.ToString());
-        return description;
-    }
 }

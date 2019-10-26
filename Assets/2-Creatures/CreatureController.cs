@@ -90,6 +90,8 @@ public class CreatureController : MonoBehaviour
     {
         if (Global.actingCreature == this)
         {
+            if (GetComponent<Animator>())
+                GetComponent<Animator>().SetTrigger("AttackStart");
             StartCoroutine(CastHabilityCoroutine());
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Events;
 
-public class MagicController : HabilityController
+public class MagicController : MonoBehaviour
 {
     [Header("Config")]
     [SerializeField] float _countdownTime = 0.8f;
@@ -12,6 +12,7 @@ public class MagicController : HabilityController
     [SerializeField] Transform _bigParticleTransform = null;
     [SerializeField] CountdownController _countdownController = null;
 
+    bool _cast;
     public bool Cast => _cast;
 
     float _castStartTime;
@@ -48,7 +49,7 @@ public class MagicController : HabilityController
             var target = RaycastHelper.SphereCastAtScreenPoint(intermediatePoint, LayerMask.HabilityRaycast);
             if (target != null && Global.IsFromEnemyTeam(target))
             {
-                target.GetComponent<LifePointBehaviour>()?.GetsHit();
+                target.GetComponent<LifePointController>()?.GetsHit();
             }
 
             t += diffUnit;
@@ -59,7 +60,7 @@ public class MagicController : HabilityController
 
             if (target != null && Global.IsFromEnemyTeam(target))
             {
-                target.GetComponent<LifePointBehaviour>()?.GetsHit();
+                target.GetComponent<LifePointController>()?.GetsHit();
             }
         }
         

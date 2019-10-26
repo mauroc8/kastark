@@ -137,7 +137,7 @@ public class AttackTrail : MonoBehaviour
 
     void HitLifePoint(GameObject target)
     {
-        var lifePointController = target.GetComponent<LifePointBehaviour>();
+        var lifePointController = target.GetComponent<LifePointController>();
         lifePointController?.GetsHit();
     }
 

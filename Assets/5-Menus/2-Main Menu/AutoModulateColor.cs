@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AutoModulateColor : MonoBehaviour
 {
-    [SerializeField] ColorFadeController _colorFadeController = null;
+    [SerializeField] ColorController _colorController = null;
+    [SerializeField] float _fadeDuration = 4;
 
     [Header("Color list")]
     [SerializeField] List<Color> _colorList = null;
@@ -13,7 +14,7 @@ public class AutoModulateColor : MonoBehaviour
 
     void Start()
     {
-        _waitForSeconds = new WaitForSeconds(_colorFadeController.FadeDuration);
+        _waitForSeconds = new WaitForSeconds(_fadeDuration);
         StartCoroutine(CycleColors());
     }
 
@@ -24,7 +25,7 @@ public class AutoModulateColor : MonoBehaviour
 
         while (true)
         {
-            _colorFadeController.FadeTo(_colorList[i++ % N]);
+            _colorController.FadeTo(_colorList[i++ % N], _fadeDuration);
             yield return _waitForSeconds;
         }
     }

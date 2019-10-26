@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 5386840066179630272}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &8846953319473633230
 ParticleSystem:
@@ -4982,8 +4982,6 @@ GameObject:
   - component: {fileID: 1259224198754002644}
   - component: {fileID: 4299384368727139268}
   - component: {fileID: 1918959170277340810}
-  - component: {fileID: 5688449668220871055}
-  - component: {fileID: 4217013836552261014}
   - component: {fileID: 5722257104445253859}
   m_Layer: 5
   m_Name: Cursor 1
@@ -5083,36 +5081,6 @@ MonoBehaviour:
   _displacement: {x: 0.01, y: 0.02, z: 0}
   _isStaticPositionedElement: 0
   _useViewportHeight: 1
---- !u!114 &5688449668220871055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259224198754002601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57133cd58e2b70c41b22d290b6f2fa93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _image: {fileID: 1259224198754002644}
---- !u!114 &4217013836552261014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259224198754002601}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbfba993d99db3649bb72484cf6b09bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _alphaController: {fileID: 5688449668220871055}
-  _fadeTime: 0.3
-  _fadePower: 1.6
-  _autoDisable: 0
-  _fadeOnEnable: 0
 --- !u!114 &5722257104445253859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5192,7 +5160,7 @@ MonoBehaviour:
   _magicController: {fileID: 1259224199978336841}
   _cursorSkin: {fileID: 11400000, guid: 187f42974cf7d404ab1a7f382341d125, type: 2}
   _particleSystem: {fileID: 8846953319473633230}
-  _bigParticleFadeOutController: {fileID: 6153308104183549986}
+  _bigParticleAlphaController: {fileID: 4167199199811992103}
 --- !u!1 &5201556849144258842
 GameObject:
   m_ObjectHideFlags: 0
@@ -5206,7 +5174,6 @@ GameObject:
   - component: {fileID: 1216921680407564629}
   - component: {fileID: 7580398072227610643}
   - component: {fileID: 4167199199811992103}
-  - component: {fileID: 6153308104183549986}
   m_Layer: 0
   m_Name: Luz
   m_TagString: Untagged
@@ -5226,7 +5193,7 @@ Transform:
   m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
   m_Children: []
   m_Father: {fileID: 5386840066179630272}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2552792828511568971
 MeshFilter:
@@ -5298,25 +5265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9011bd94e0121045ba66d2516de87de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _material: {fileID: 2100000, guid: 45d2636ca4dfd654cb196875ed48898f, type: 2}
-  _useSelfMaterial: 0
---- !u!114 &6153308104183549986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5201556849144258842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbfba993d99db3649bb72484cf6b09bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _alphaController: {fileID: 4167199199811992103}
-  _fadeTime: 0.4
-  _fadePower: 0.7
-  _autoDisable: 0
-  _fadeOnEnable: 0
 --- !u!1 &8210305502862477413
 GameObject:
   m_ObjectHideFlags: 0
@@ -5345,8 +5293,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1004211002555028926}
   - {fileID: 7111545362343298090}
+  - {fileID: 1004211002555028926}
   m_Father: {fileID: 1259224199978336886}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

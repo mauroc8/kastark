@@ -13,7 +13,8 @@ public class ConsumableButtonHandler : HabilityButtonHandler
         if (consumable.amount > 0)
         {
             button.onClick.AddListener(() => {
-                consumable.hability.Cast(Global.actingCreature, 1);
+                // TODO
+                //consumable.hability.Cast(Global.actingCreature, 1);
                 consumable.amount--;
                 EventController.TriggerEvent(new HabilityCastEvent{});
             });

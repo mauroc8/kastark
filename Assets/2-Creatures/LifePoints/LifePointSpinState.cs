@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LifePointSpinState : MonoBehaviour
 {
-    [SerializeField] LifePointsController _lifePointsController = null;
+    [SerializeField] LifePointManager _lifePointsController = null;
 
     [SerializeField] float _spinSpeed = 1;
     [SerializeField] float _spinRadius = 1;

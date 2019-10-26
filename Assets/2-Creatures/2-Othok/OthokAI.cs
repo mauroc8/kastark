@@ -34,9 +34,9 @@ public class OthokAI : MonoBehaviour
         var effectiveness = 0.5f + Random.Range(0, 0.5f);
 
         EventController.TriggerEvent(new HabilitySelectEvent{ hability = hability });
-        
-        hability.Cast(target, effectiveness);
 
+        // TODO: AI.
+        
         EventController.TriggerEvent(new HabilityCastEvent{});
     }
 }

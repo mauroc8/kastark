@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Events;
 
-public class ShieldController : HabilityController
+public class ShieldController : MonoBehaviour
 {
+    bool _cast;
+    
     [Header("Refs")]
     [SerializeField] GameObject _shield = null;
     [SerializeField] AlphaController _shieldAlphaController = null;
@@ -20,12 +22,13 @@ public class ShieldController : HabilityController
         var t = Time.time;
         var effectiveness = GetEffectiveness(t);
 
-        _shieldAlphaController.ChangeAlpha(effectiveness * _maxOpacity);
+        _shieldAlphaController.Alpha = effectiveness * _maxOpacity;
 
         if (Input.GetMouseButtonDown(0) && RaycastHelper.GetHoveredGameObject() == _shield && !RaycastHelper.MouseIsOnUI())
         {
             _cast = true;
-            Global.selectedHability.Cast(Global.actingCreature, effectiveness);
+            // TODO
+            //Global.selectedHability.Cast(Global.actingCreature, effectiveness);
             EventController.TriggerEvent(new HabilityCastEvent{});
         }
     }

@@ -5,7 +5,7 @@ using Events;
 
 public class CreatureColorEffects : MonoBehaviour
 {
-    [SerializeField] ColorFadeController _creatureColorFadeController = null;
+    [SerializeField] MultiColorController _creatureColorController = null;
 
     [Header("Colors")]
     [SerializeField] Color _healColor = Color.green;
@@ -15,16 +15,16 @@ public class CreatureColorEffects : MonoBehaviour
 
     public void ReceiveDamage(float damage)
     {
-        _creatureColorFadeController.FadeFrom(_damageColor);
+        _creatureColorController.FadeAndReturn(_damageColor, 0.1f, 0.3f);
     }
 
     public void ReceiveShield(float shield)
     {
-        _creatureColorFadeController.FadeFrom(_shieldColor);
+        _creatureColorController.FadeAndReturn(_shieldColor, 0.1f, 0.3f);
     }
 
     public void ReceiveHeal(float heal)
     {
-        _creatureColorFadeController.FadeFrom(_healColor);
+        _creatureColorController.FadeAndReturn(_healColor, 0.1f, 0.3f);
     }
 }

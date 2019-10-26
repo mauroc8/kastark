@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Events;
 
-public class AttackController : HabilityController
+public class AttackController : MonoBehaviour
 {
+    bool _cast;
+
     [SerializeField] GameObject _attackTrailPrefab = null;
     [SerializeField] CountdownController _uiRectCountdown = null;
 

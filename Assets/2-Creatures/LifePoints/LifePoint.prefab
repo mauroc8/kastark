@@ -1,87 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2064101033784546065
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4239240484617755508}
-  - component: {fileID: 5981838166836683218}
-  - component: {fileID: 4081691102154234406}
-  - component: {fileID: 1620062657066506927}
-  m_Layer: 0
-  m_Name: Color
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4239240484617755508
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2064101033784546065}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 215894260187700879}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5981838166836683218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2064101033784546065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fc3a201994bc0d49936218eb464fdad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _colorControllers:
-  - {fileID: 2604754925962718697}
-  - {fileID: 4698505588522825444}
---- !u!114 &4081691102154234406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2064101033784546065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbfba993d99db3649bb72484cf6b09bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _alphaController: {fileID: 5981838166836683218}
-  _fadeTime: 0.2
-  _fadePower: 1.6
-  _autoDisable: 0
-  _fadeOnEnable: 0
---- !u!114 &1620062657066506927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2064101033784546065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a260cfa240063e42852cd6e8db2d565, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _alphaController: {fileID: 5981838166836683218}
-  _fadeInDuration: 0.2
-  _fadePower: 1.6
-  _autoDisable: 0
-  _fadeOnEnable: 0
 --- !u!1 &2176323604168741799
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6044747489635938819}
   - component: {fileID: 4344375831085954376}
-  - component: {fileID: 4698505588522825444}
+  - component: {fileID: 77020807155447554}
   m_Layer: 0
   m_Name: Trail
   m_TagString: Untagged
@@ -218,7 +136,7 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &4698505588522825444
+--- !u!114 &77020807155447554
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -227,10 +145,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2176323604168741799}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acc4d964c303a4f4d877c9ab46bfb7ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d26f78344c103f4993d9879c99ea5b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _trailRenderer: {fileID: 4344375831085954376}
 --- !u!1 &4327156895693351840
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,6 +159,7 @@ GameObject:
   - component: {fileID: 215894260187700879}
   - component: {fileID: 5593486100101079845}
   - component: {fileID: 2766989713558934790}
+  - component: {fileID: 5778293728459093298}
   m_Layer: 8
   m_Name: LifePoint
   m_TagString: Untagged
@@ -262,7 +180,6 @@ Transform:
   m_Children:
   - {fileID: 7907065192954634365}
   - {fileID: 6044747489635938819}
-  - {fileID: 4239240484617755508}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -292,8 +209,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _creature: {fileID: 0}
-  _fadeInController: {fileID: 1620062657066506927}
-  _fadeOutController: {fileID: 4081691102154234406}
+  _alphaController: {fileID: 5778293728459093298}
+--- !u!114 &5778293728459093298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4327156895693351840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e8214ef66e76fc4da0c9146c7ffa5c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8012974254919770233
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,5 +325,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9011bd94e0121045ba66d2516de87de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _material: {fileID: 0}
-  _useSelfMaterial: 1

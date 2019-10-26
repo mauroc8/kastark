@@ -6,8 +6,6 @@ using Events;
 public class CastHabilityPanels : MonoBehaviour
 {
     [SerializeField] GameObject _selectHabilityScreen = null;
-    [SerializeField] GameObject _castHabilityScreen = null;
-    [SerializeField] HabilityDescriptionFiller _habilityDescriptionFiller = null;
 
     GameObject _currentScreen;
 
@@ -26,13 +24,11 @@ public class CastHabilityPanels : MonoBehaviour
     void OnTurnStart(TurnStartEvent evt)
     {
         _selectHabilityScreen.SetActive(Global.IsPlayersTurn());
-        _castHabilityScreen.SetActive(false);
     }
 
     void OnHabilityCancel(HabilityCancelEvent evt)
     {
         _selectHabilityScreen.SetActive(Global.IsPlayersTurn());
-        _castHabilityScreen.SetActive(false);
     }
 
     GameObject _instance;
@@ -42,7 +38,5 @@ public class CastHabilityPanels : MonoBehaviour
         if (!Global.IsPlayersTurn()) return;
 
         _selectHabilityScreen.SetActive(false);
-        _habilityDescriptionFiller.FillWithHability(evt.hability);
-        _castHabilityScreen.SetActive(true);
     }
 }

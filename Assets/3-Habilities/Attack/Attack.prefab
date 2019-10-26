@@ -666,7 +666,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: attack_tutorial
+  m_text: attack_tooltip
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9917367b538eb064d848221fde25ffed, type: 2}
   m_sharedMaterial: {fileID: -6580228756896398948, guid: 9917367b538eb064d848221fde25ffed,
@@ -889,7 +889,7 @@ GameObject:
   - component: {fileID: 1506893877411345871}
   - component: {fileID: 6840232807490415923}
   - component: {fileID: 5188765115438481261}
-  - component: {fileID: 2977592797470764940}
+  - component: {fileID: 4984993127871454807}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -980,8 +980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0de3492af9aa044d931e753f911adcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvasGroup: {fileID: 6840232807490415923}
---- !u!114 &2977592797470764940
+--- !u!114 &4984993127871454807
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -990,14 +989,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8636425923869258848}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a260cfa240063e42852cd6e8db2d565, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cd6c267bc749324991821eb0a174081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _alphaController: {fileID: 5188765115438481261}
-  _fadeInDuration: 0.6
-  _fadePower: 0.5
-  _autoDisable: 1
-  _fadeOnEnable: 1
+  _fadeInOnStart: 1
+  _fadeOutOnStart: 0
+  _duration: 1
+  _power: 0.5
 --- !u!1001 &1472073797441185113
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1045,7 +1043,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6957941413569746868, guid: cfbc97ed7269f8b4abd64a444ae44551, type: 3}
+    - {fileID: 1828920228636588900, guid: cfbc97ed7269f8b4abd64a444ae44551, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cfbc97ed7269f8b4abd64a444ae44551, type: 3}
 --- !u!114 &4640293909642785611 stripped
 MonoBehaviour:

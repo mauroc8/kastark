@@ -447,8 +447,8 @@ GameObject:
   - component: {fileID: 7739504722496376532}
   - component: {fileID: 7739504722496376533}
   - component: {fileID: 8404001752685471081}
+  - component: {fileID: 301089939335520419}
   - component: {fileID: 4141244459750112284}
-  - component: {fileID: 166352706797274817}
   - component: {fileID: 1011501852818858575}
   m_Layer: 0
   m_Name: Group
@@ -504,7 +504,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0de3492af9aa044d931e753f911adcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvasGroup: {fileID: 7739504722496376533}
+--- !u!114 &301089939335520419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7739504722496376535}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd6c267bc749324991821eb0a174081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fadeInOnEnable: 1
+  _fadeOutOnEnable: 0
+  _duration: 2
+  _power: 2
 --- !u!114 &4141244459750112284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -524,23 +539,6 @@ MonoBehaviour:
   _negateXOffsetToFaceEnemy: 0
   updateEachFrame: 0
   _useScreenSpace: 1
---- !u!114 &166352706797274817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7739504722496376535}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a260cfa240063e42852cd6e8db2d565, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _alphaController: {fileID: 8404001752685471081}
-  _fadeInDuration: 1
-  _fadePower: 2
-  _autoDisable: 1
-  _fadeOnEnable: 1
 --- !u!114 &1011501852818858575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,7 +554,7 @@ MonoBehaviour:
   _waitSeconds: 1.2
   _components:
   - {fileID: 4141244459750112284}
-  - {fileID: 166352706797274817}
+  - {fileID: 301089939335520419}
   _autoDisable: 1
 --- !u!1 &7739504722559951909
 GameObject:
@@ -828,7 +826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a98c4e8d113bd242a22d422be729172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _creatureColorFadeController: {fileID: 5067321612604120065}
+  _creatureColorController: {fileID: 0}
   _healColor: {r: 0, g: 1, b: 0, a: 1}
   _shieldColor: {r: 0.5235849, g: 0.92607653, b: 1, a: 1}
   _damageColor: {r: 0.5, g: 0, b: 0, a: 1}
@@ -858,8 +856,6 @@ GameObject:
   - component: {fileID: 7739504723316784717}
   - component: {fileID: 7739504723316784716}
   - component: {fileID: 7739504723316784719}
-  - component: {fileID: 3086977617435005773}
-  - component: {fileID: 5067321612604120065}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -926,35 +922,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &3086977617435005773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7739504723316784705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9011bd94e0121045ba66d2516de87de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _material: {fileID: 0}
-  _useSelfMaterial: 0
---- !u!114 &5067321612604120065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7739504723316784705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 216caafc85a796b409b9d8c1ce7b16ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fadeDuration: 0.3
-  _fadePower: 2
-  _colorController: {fileID: 3086977617435005773}
 --- !u!1 &7739504723813171490
 GameObject:
   m_ObjectHideFlags: 0

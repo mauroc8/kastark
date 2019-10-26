@@ -1,21 +1,33 @@
-key,en,es
-attack,Attack,Ataque
-magic,Magic,Magia
-shield,Shield,Escudo
-heal,Heal,Sanar
-attack_description,Destroy enemy’s energy points by making cuts with the mouse.,Destruye los puntos de energía del enemigo haciendo cortes con el mouse.
-magic_description,Control the magical energy towards the enemy’s energy points to destroy them.,Controla la energía mágica para destruir los puntos de energía del enemigo.
-shield_description,Cast a protective shield around you.,Conjura un escudo protector alrededor tuyo.
-heal_description,Restore {damage} energy points.,Restaura {damage} puntos de energía.
-attack_tooltip, , 
-magic_tooltip, , 
-shield_tooltip, , 
-heal_tooltip, , 
-cancel,Cancel,Cancelar
-battlewin,You win,Ganaste
-battlelose,You lose,Perdiste
-new_game,New Game,Juego Nuevo
-change_language,Change Language,Cambiar Lenguaje
-quit,Quit,Salir
-return_to_main_menu,Return to main menu,Volver al menú principal
-attack_tutorial,Destroy enemy’s energy points,Destruye los puntos de energía del enemigo
+,"Guardar este archivo en Assets/Resources/textos-localizados.csv
+Usar Guardar una copia… para seguir editando en este archivo.
+Asegurarse que esté UTF-8 como Conjunto de caracteres (en las opciones al guardar).
+El resto de las opciones dejarlas como están.","Las filas que empiezan con una columna vacía son ignoradas.
+Los estilos (negrita, cursiva, etc) son ignorados."
+,,
+,"Inglés","Español"
+,"# Generales",
+"confirm","Ok","Ok"
+"cancel","Cancel","Cancelar"
+,,
+,"# Menú principal",
+"new_game","New game","Juego nuevo"
+"options","Options","Opciones"
+"quit","Quit","Salir"
+,,
+,"# Menú de opciones",
+"change_language","Change language","Cambiar lenguaje"
+,,
+,"# Ataque",
+"attack","Attack","Ataque"
+"attack_tooltip","Cut over your enemy life points","Cortá sobre los puntos de vida de tu enemigo"
+,,
+,,
+,,
+,,
+"magic","Magic","Magia"
+"shield","Shield","Escudo"
+"health_potion","Health Potion","Poción de vida"
+,,
+,"# Batalla",
+"you_won","You won","Ganaste"
+"you_lose","You lose","Perdiste"
