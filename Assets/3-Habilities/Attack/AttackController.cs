@@ -2,71 +2,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Events;
+using UnityEngine.Events;
 
 public class AttackController : MonoBehaviour
 {
-    bool _cast;
-
-    [SerializeField] GameObject _attackTrailGameObject = null;
-    [SerializeField] CountdownController _uiRectCountdown = null;
+    [SerializeField] GameObject _attackTrailGameObject;
+    [SerializeField] CountdownController _uiRectCountdown;
+    [SerializeField] UnityEvent _castEndEvent;
 
     [Header("Countdown time")]
     [SerializeField] float _countdownTime = 2;
 
-    AttackTrail _attackTrail = null;
+    AttackTrail _attackTrail;
 
-    void Start()
+    public void StopCasting()
     {
-        CloseAndCreateTrail();
-        _uiRectCountdown.StartCountdown(_countdownTime);
+        StopAllCoroutines();
+        _castEndEvent.Invoke();
     }
 
-    void Update()
+    IEnumerator Start()
     {
-        if (_cast) return;
+        _uiRectCountdown.StartCountdown(_countdownTime);
 
-        if (!_uiRectCountdown.Running)
+        while (true)
         {
-            FinishCasting();
-            return;
-        }
+            var newAttackTrailGo = Instantiate(_attackTrailGameObject);
+            var attackTrail = newAttackTrailGo.GetComponent<AttackTrail>();
 
-        if (Input.GetMouseButtonDown(0))
-        {
+            yield return new WaitWhile(() => !Input.GetMouseButtonDown(0));
+
             if (!RaycastHelper.MouseIsOnUI())
             {
-                _attackTrail.Open(Input.mousePosition);
+                attackTrail.Open(Input.mousePosition);
+
+                while (Input.GetMouseButton(0))
+                {
+                    attackTrail.Move(Input.mousePosition);
+
+                    if (attackTrail.IsOutOfBounds())
+                        break;
+                    
+                    yield return null;
+                }
             }
-        }
-        else if (Input.GetMouseButton(0))
-        {
-            _attackTrail.Move(Input.mousePosition);
 
-            if (_attackTrail.IsOutOfBounds())
-            {
-                CloseAndCreateTrail();
-            }
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            CloseAndCreateTrail();
+            attackTrail.Close();
+
+            yield return null;
         }
     }
-
-    void CloseAndCreateTrail()
-    {
-        _attackTrail?.Close();
-        var newAttackTrailGo = Instantiate(_attackTrailGameObject);
-        _attackTrail = newAttackTrailGo.GetComponent<AttackTrail>();
-    }
-
-    void FinishCasting()
-    {
-        _attackTrail.Close();
-        _cast = true;
-        EventController.TriggerEvent(new HabilityCastEvent{});
-    }
-
-    WaitForSeconds _briefWait = new WaitForSeconds(0.35f);
 }

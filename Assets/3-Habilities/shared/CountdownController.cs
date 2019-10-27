@@ -4,36 +4,40 @@ using UnityEngine;
 
 public class CountdownController : MonoBehaviour
 {
-    float _countdownTime = 0;
-    float _time;
     float _progress;
-    bool _running = false;
+    bool _isRunning = false;
 
-    public bool Running => _running;
+    public bool IsRunning => _isRunning;
     public float Progress => _progress;
 
-    void Update()
+    public void StartCountdown(float duration)
     {
-        if (_running)
-        {
-            _time -= Time.deltaTime;
-            if (_time < 0) _time = 0;
-
-            _progress = _time / _countdownTime;
-
-            _running = _time > 0;
-        }
+        _isRunning = true;
+        StartCoroutine(CountdownCoroutine(duration));
     }
 
-    public void StartCountdown(float time)
+    IEnumerator CountdownCoroutine(float duration)
     {
-        _running = true;
-        _countdownTime = _time = time;
+        var startTime = Time.time;
+
+        _progress = 0;
+
+        while (_isRunning && Time.time < startTime + duration)
+        {
+            _progress = (Time.time - startTime) / duration;
+            yield return null;
+        }
+
+        if (_isRunning)
+            _progress = 1;
+        
+        yield return null;
+        
+        _isRunning = false;
     }
 
     public void StopCountdown()
     {
-        _running = false;
-        _progress = 0;
+        _isRunning = false;
     }
 }

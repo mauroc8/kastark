@@ -29,7 +29,7 @@ public class MagicController : MonoBehaviour
     {
         if (_cast) return;
 
-        if (!_countdownController.Running)
+        if (!_countdownController.IsRunning)
         {
             _cast = true;
             

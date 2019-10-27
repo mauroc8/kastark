@@ -5,8 +5,6 @@ using Events;
 
 public class ChangeLifePointsState : MonoBehaviourStateMachine
 {
-    [SerializeField] Creature _creature = null;
-
     [SerializeField] LifePointIdleState _idleState = null;
     [SerializeField] LifePointSpinState _capsuleSpinState = null;
     [SerializeField] LifePointSpinState _beltSpinState = null;
