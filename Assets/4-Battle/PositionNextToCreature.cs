@@ -15,7 +15,7 @@ public class PositionNextToCreature : MonoBehaviour
     void OnEnable()
     {
         var reference = _bodyPart == BodyPart.Head ? _creature.head : _creature.feet;
-        Vector2 position = Camera.main.WorldToScreenPoint(reference.position); 
+        Vector2 position = Camera.main.WorldToScreenPoint(reference.position);
 
         position.x += Screen.height * _xOffsetVH;
         position.y += Screen.height * _yOffsetVH;

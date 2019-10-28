@@ -7,16 +7,19 @@ using UnityEngine.UI;
 
 public static class RaycastHelper
 {
-    public static bool MouseIsOnUI() {
+    public static bool MouseIsOnUI()
+    {
         // https://answers.unity.com/questions/844158/how-do-you-perform-a-graphic-raycast.html
 
         PointerEventData cursor = new PointerEventData(EventSystem.current);
         cursor.position = Input.mousePosition;
-        List<RaycastResult> objectsHit = new List<RaycastResult> ();
+        List<RaycastResult> objectsHit = new List<RaycastResult>();
         EventSystem.current.RaycastAll(cursor, objectsHit);
 
-        foreach (RaycastResult result in objectsHit) {
-            if (result.gameObject.CompareTag("UI")) {
+        foreach (RaycastResult result in objectsHit)
+        {
+            if (result.gameObject.CompareTag("UI"))
+            {
                 return true;
             }
         }
@@ -29,8 +32,9 @@ public static class RaycastHelper
         Ray mRay = Camera.main.ScreenPointToRay(screenPoint);
 
         RaycastHit hit;
-        
-        if (Physics.Raycast(mRay, out hit, Mathf.Infinity, layerMask)){
+
+        if (Physics.Raycast(mRay, out hit, Mathf.Infinity, layerMask))
+        {
             return hit.transform.gameObject;
         }
 
@@ -55,11 +59,13 @@ public static class RaycastHelper
         return GetGameObjectAtScreenPoint(Input.mousePosition);
     }
 
-    public static float FloatToHDCoords(float value) {
+    public static float FloatToHDCoords(float value)
+    {
         return value * 1080f / Screen.height;
     }
 
-    public static Vector2 ScreenPointToHDCoords(Vector2 screenPoint) {
+    public static Vector2 ScreenPointToHDCoords(Vector2 screenPoint)
+    {
         return screenPoint * 1080f / Screen.height;
     }
 }

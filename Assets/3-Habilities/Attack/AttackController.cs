@@ -6,50 +6,50 @@ using UnityEngine.Events;
 
 public class AttackController : MonoBehaviour
 {
-    [SerializeField] GameObject _attackTrailGameObject;
-    [SerializeField] CountdownController _uiRectCountdown;
+    [SerializeField] GameObject _trail;
+    [SerializeField] CountdownController _countdownController;
     [SerializeField] UnityEvent _castEndEvent;
 
     [Header("Countdown time")]
     [SerializeField] float _countdownTime = 2;
 
-    AttackTrail _attackTrail;
-
-    public void StopCasting()
+    void Start()
     {
-        StopAllCoroutines();
-        _castEndEvent.Invoke();
+        _countdownController.StartCountdown(_countdownTime);
     }
 
-    IEnumerator Start()
+    AttackTrail _attackTrail;
+    bool _cast;
+
+    void Update()
     {
-        _uiRectCountdown.StartCountdown(_countdownTime);
+        if (_cast)
+            return;
 
-        while (true)
+        if (!_countdownController.IsRunning)
         {
-            var newAttackTrailGo = Instantiate(_attackTrailGameObject);
-            var attackTrail = newAttackTrailGo.GetComponent<AttackTrail>();
+            _attackTrail?.Close();
+            _castEndEvent.Invoke();
+            _cast = true;
+            return;
+        }
 
-            yield return new WaitWhile(() => !Input.GetMouseButtonDown(0));
-
-            if (!RaycastHelper.MouseIsOnUI())
+        if (Input.GetMouseButtonDown(0))
+        {
+            _attackTrail = Instantiate(_trail).GetComponent<AttackTrail>();
+            _attackTrail.Open(Input.mousePosition);
+        }
+        else if (_attackTrail != null)
+        {
+            if (Input.GetMouseButton(0) && !_attackTrail.IsOutOfBounds)
             {
-                attackTrail.Open(Input.mousePosition);
-
-                while (Input.GetMouseButton(0))
-                {
-                    attackTrail.Move(Input.mousePosition);
-
-                    if (attackTrail.IsOutOfBounds())
-                        break;
-                    
-                    yield return null;
-                }
+                _attackTrail.Move(Input.mousePosition);
             }
-
-            attackTrail.Close();
-
-            yield return null;
+            else
+            {
+                _attackTrail.Close();
+                _attackTrail = null;
+            }
         }
     }
 }

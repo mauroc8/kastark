@@ -9,7 +9,8 @@ public class LanguageSettings : ScriptableObject
 {
     public Language language = Language.English;
 
-    public void Init() {
+    public void Init()
+    {
         Localization.CurrentLanguage = language;
     }
 
@@ -19,11 +20,13 @@ public class LanguageSettings : ScriptableObject
         Localization.CurrentLanguage = newLanguage;
     }
 
-    public void Save() {
-        PlayerPrefs.SetInt("GameSettings.language", (int) language);
+    public void Save()
+    {
+        PlayerPrefs.SetInt("GameSettings.language", (int)language);
     }
 
-    public void Load() {
-        language = (Language) PlayerPrefs.GetInt("GameSettings.language");
+    public void Load()
+    {
+        language = (Language)PlayerPrefs.GetInt("GameSettings.language");
     }
 }

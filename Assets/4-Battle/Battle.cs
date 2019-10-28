@@ -32,9 +32,9 @@ public class Battle : MonoBehaviour
             _cancellationTokenSource.Dispose();
             _cancellationTokenSource = null;
         }
-        #pragma warning disable 168
-        catch (TaskCanceledException e) {}
-        #pragma warning restore 168
+#pragma warning disable 168
+        catch (TaskCanceledException e) { }
+#pragma warning restore 168
     }
 
     void OnDisable()
@@ -46,7 +46,7 @@ public class Battle : MonoBehaviour
 
     async Task BattleStart(CancellationToken token)
     {
-        var teams = new Team[]{ playerTeam, enemyTeam };
+        var teams = new Team[] { playerTeam, enemyTeam };
 
         while (true)
         {
@@ -65,7 +65,7 @@ public class Battle : MonoBehaviour
                         _battleWinEvent.Invoke();
                         return;
                     }
-                    
+
                     token.ThrowIfCancellationRequested();
 
                     await creature.TurnAsync(token);

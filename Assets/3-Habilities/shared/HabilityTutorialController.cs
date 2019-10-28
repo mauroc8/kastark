@@ -7,7 +7,7 @@ public class HabilityTutorialController : MonoBehaviour
 {
     [SerializeField] List<GameObject> _enableOnStart = null;
     [SerializeField] List<GameObject> _disableOnStart = null;
-    
+
     int _timesCast = 0;
 
     void Start()

@@ -977,7 +977,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3185461216045805937}
-  - {fileID: 4307006554519087834}
   m_Father: {fileID: 2086166692}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7519,7 +7518,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -550.1653, w: -94.36639}
   m_textInfo:
     textComponent: {fileID: 17037475172509447}
-    characterCount: 15
+    characterCount: 14
     spriteCount: 0
     spaceCount: 0
     wordCount: 2
@@ -7731,7 +7730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enableOnStart:
-  - {fileID: 4307006554519087835}
+  - {fileID: 3989107766655261142}
   _disableOnStart:
   - {fileID: 3185461216045805948}
 --- !u!224 &1860680467918635459
@@ -7756,19 +7755,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1966814649492279398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4307006554519087835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99b9ddc42f0b12249b825c9e92051b13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _updateEachFrame: 0
 --- !u!114 &2023149334874951256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7793,8 +7779,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1860680467918635459}
-  m_Father: {fileID: 4307006554519087834}
-  m_RootOrder: 0
+  m_Father: {fileID: 3185461216045805937}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8035,6 +8021,7 @@ Transform:
   m_Children:
   - {fileID: 4903870974903575666}
   - {fileID: 7680182295281284908}
+  - {fileID: 2127735930098316775}
   m_Father: {fileID: 1180888648}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8050,8 +8037,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02417987fa0fb3b49ba7a939b88ecbf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackTrailGameObject: {fileID: 4903870974903575565}
-  _uiRectCountdown: {fileID: 440746357980947795}
+  _trail: {fileID: 4903870974903575565}
+  _countdownController: {fileID: 440746357980947795}
   _castEndEvent:
     m_PersistentCalls:
       m_Calls:
@@ -8158,7 +8145,7 @@ GameObject:
   - component: {fileID: 5891190930344678377}
   - component: {fileID: 7527899044048622559}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Tutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8244,38 +8231,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4223101974296352180}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &4307006554519087834
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4307006554519087835}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2127735930098316775}
-  m_Father: {fileID: 1180888648}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4307006554519087835
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4307006554519087834}
-  - component: {fileID: 1966814649492279398}
-  m_Layer: 0
-  m_Name: Tutorial
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!114 &4422769507568731561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8356,7 +8311,7 @@ GameObject:
   - component: {fileID: 4903870974903575667}
   - component: {fileID: 4903870974903575664}
   m_Layer: 0
-  m_Name: AttackTrail
+  m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8504,8 +8459,8 @@ TrailRenderer:
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.07
-  m_Autodestruct: 1
+  m_MinVertexDistance: 0.1
+  m_Autodestruct: 0
   m_Emitting: 1
 --- !u!114 &4927375279525810394
 MonoBehaviour:

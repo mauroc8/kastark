@@ -5,8 +5,8 @@ using UnityEngine;
 public class LightFollowsActingCreature : MonoBehaviour
 {
     [SerializeField] float _duration = 0.4f;
-    [SerializeField] float _power    = 0.5f;
-    
+    [SerializeField] float _power = 0.5f;
+
     void OnEnable()
     {
         EventController.AddListener<TurnStartEvent>(OnTurnStart);
@@ -25,14 +25,14 @@ public class LightFollowsActingCreature : MonoBehaviour
     public IEnumerator TurnStartCoroutine(Creature creature)
     {
         var time = Time.time;
-        
+
         var initialPosition = transform.position;
         var creaturePosition = creature.transform.position;
 
         creaturePosition.y = initialPosition.y;
-        
+
         yield return null;
-        
+
         while (Time.time < time + _duration)
         {
             var t = Mathf.Pow((Time.time - time) / _duration, _power);

@@ -12,8 +12,8 @@ public class CountdownController : MonoBehaviour
 
     public void StartCountdown(float duration)
     {
-        _isRunning = true;
         StartCoroutine(CountdownCoroutine(duration));
+        _isRunning = true;
     }
 
     IEnumerator CountdownCoroutine(float duration)
@@ -21,16 +21,15 @@ public class CountdownController : MonoBehaviour
         var startTime = Time.time;
 
         _progress = 0;
+        yield return null;
 
-        while (_isRunning && Time.time < startTime + duration)
+        while (Time.time < startTime + duration)
         {
             _progress = (Time.time - startTime) / duration;
             yield return null;
         }
 
-        if (_isRunning)
-            _progress = 1;
-        
+        _progress = 1;
         yield return null;
         
         _isRunning = false;
@@ -38,6 +37,7 @@ public class CountdownController : MonoBehaviour
 
     public void StopCountdown()
     {
+        StopAllCoroutines();
         _isRunning = false;
     }
 }
