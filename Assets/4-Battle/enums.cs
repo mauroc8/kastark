@@ -10,7 +10,8 @@ public enum BodyPart
 public enum TeamId
 {
     Player,
-    Enemy
+    Enemy,
+    None
 }
 
 public enum DamageType

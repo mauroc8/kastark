@@ -88,5 +88,4 @@
         "yaml",
         "yml"
     ],
-    "terminal.integrated.rendererType": "dom"
 }

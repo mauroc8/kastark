@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MagicHability : Hability
 {
-    public override Task CastAsync(Creature owner, CancellationToken token)
+    public override Task CastAsync(CancellationToken token)
     {
         Debug.Log("Casting Magic");
 

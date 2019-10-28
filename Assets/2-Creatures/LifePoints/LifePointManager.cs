@@ -1,41 +1,41 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LifePointManager : MonoBehaviour
 {
     [SerializeField] Creature _creature;
-    [SerializeField] GameObject _lifePointPrefab;
+    [SerializeField] GameObject _lifePoint;
 
-    List<LifePointController> _lifePoints;
+    List<GameObject> _lifePoints = new List<GameObject>();
 
-    public List<LifePointController> LifePoints => _lifePoints;
+    public List<GameObject> LifePoints => _lifePoints;
+    public List<LifePointController> LifePointControllers =>
+        _lifePoints.ConvertAll(
+            lifePoint => lifePoint.GetComponent<LifePointController>()
+        );
 
     void Start()
     {
-        var lifePointsAmount = (int) _creature.maxHealth;
-
-        _lifePoints = new List<LifePointController>(lifePointsAmount);
+        var lifePointsAmount = (int)_creature.maxHealth;
 
         for (int i = 0; i < lifePointsAmount; i++)
         {
-            var instance = Instantiate(_lifePointPrefab);
-            instance.transform.SetParent(transform);
-            instance.transform.localPosition = Vector3.zero;
-            
-            var lifePointBehaviour = instance.GetComponent<LifePointController>();
-            _lifePoints.Add(lifePointBehaviour);
+            var lifePoint = Instantiate(_lifePoint);
+            lifePoint.SetActive(true);
+            lifePoint.transform.SetParent(transform);
+            lifePoint.transform.localPosition = Vector3.zero;
 
-            lifePointBehaviour.percentage = (float) i / (float) lifePointsAmount;
-            // this is basically for suscribing to messages, like GotHit
-            lifePointBehaviour.lifePointManager = this;
+            var percentage = (float)i / (float)lifePointsAmount;
+
+            _lifePoints.Add(lifePoint);
         }
     }
 
-    public void LifePointGotHit(LifePointController lifePoint)
+    public void OnLifePointHit(GameObject lifePoint)
     {
         _lifePoints.Remove(lifePoint);
-
-        Destroy(lifePoint.gameObject);
+        Destroy(lifePoint);
     }
 }

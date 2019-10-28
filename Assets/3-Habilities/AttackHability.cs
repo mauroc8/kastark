@@ -6,12 +6,12 @@ public class AttackHability : Hability
 {
     TaskCompletionSourceWithAutoCancel<bool> _taskCompletionSource;
 
-    public override Task CastAsync(Creature owner, CancellationToken token)
+    public override Task CastAsync(CancellationToken token)
     {
         Debug.Log("Casting Attack");
-        _taskCompletionSource = new TaskCompletionSourceWithAutoCancel<bool>(token);
         gameObject.SetActive(true);
 
+        _taskCompletionSource = new TaskCompletionSourceWithAutoCancel<bool>(token);
         return _taskCompletionSource.Task;
     }
 

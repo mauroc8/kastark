@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Events;
 
-public class CreatureColorEffects : MonoBehaviour
+public class CreatureColorController : MonoBehaviour
 {
     [SerializeField] MultiColorController _creatureColorController = null;
 
@@ -13,7 +13,7 @@ public class CreatureColorEffects : MonoBehaviour
     [SerializeField] Color _damageColor = Color.red;
     [SerializeField] Color _deadColor   = Color.black;
 
-    public void ReceiveDamage(float damage)
+    public void OnLifePointHit(GameObject lifePoint)
     {
         _creatureColorController.FadeAndReturn(_damageColor, 0.1f, 0.3f);
     }

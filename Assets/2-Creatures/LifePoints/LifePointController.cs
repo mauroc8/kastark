@@ -1,48 +1,29 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+[Serializable]
+public class LifePointHitEvent : UnityEvent<GameObject> { }
 
 public class LifePointController : MonoBehaviour
 {
-    [NonSerialized]
-    public float percentage;
-    
-    [SerializeField]
-    public LifePointManager lifePointManager;
-
-    [Header("Creature")]
-    [SerializeField] Creature _creature;
-
-
-    [Header("Color")]
-    [SerializeField] MultiAlphaController _alphaController;
+    [Header("Event Handlers")]
+    [SerializeField] LifePointHitEvent _lifePointHitEvent;
 
     bool _isHit = false;
+
+    public bool IsAlive => !_isHit;
 
     public void GetsHit()
     {
         if (_isHit) return;
-        
         _isHit = true;
-        
-        _creature.health--;
 
-        lifePointManager.LifePointGotHit(this);
+        _lifePointHitEvent.Invoke(this.gameObject);
     }
 
-    public void SetTarget(Vector3 target)
-    {
-        transform.localPosition = target;
-    }
+    // This should be in a different behaviour.
 
-    public void FadeIn()
-    {
-        _alphaController.FadeIn(0.3f, 2);
-    }
-
-    public void FadeOut()
-    {
-        _alphaController.FadeOut(0.3f, 2);
-    }
+    [Header("Color")]
+    public MultiAlphaController alphaController;
 }

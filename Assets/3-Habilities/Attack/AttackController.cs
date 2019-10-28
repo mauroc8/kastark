@@ -8,14 +8,19 @@ public class AttackController : MonoBehaviour
 {
     [SerializeField] GameObject _trail;
     [SerializeField] CountdownController _countdownController;
+
+    [Header("Event")]
     [SerializeField] UnityEvent _castEndEvent;
 
     [Header("Countdown time")]
-    [SerializeField] float _countdownTime = 2;
+    [SerializeField] float _countdownTime = 3.5f;
 
-    void Start()
+    int _damageMade;
+
+    void OnEnable()
     {
         _countdownController.StartCountdown(_countdownTime);
+        _damageMade = 0;
     }
 
     AttackTrail _attackTrail;
@@ -28,9 +33,8 @@ public class AttackController : MonoBehaviour
 
         if (!_countdownController.IsRunning)
         {
-            _attackTrail?.Close();
-            _castEndEvent.Invoke();
-            _cast = true;
+            Close();
+            CastEnd();
             return;
         }
 
@@ -47,9 +51,31 @@ public class AttackController : MonoBehaviour
             }
             else
             {
-                _attackTrail.Close();
-                _attackTrail = null;
+                Close();
             }
         }
+    }
+
+    public void OnLifePointHit(GameObject lifePoint)
+    {
+        _damageMade++;
+
+        if (_damageMade >= 5)
+        {
+            Close();
+            CastEnd();
+        }
+    }
+
+    void Close()
+    {
+        _attackTrail?.Close();
+        _attackTrail = null;
+    }
+
+    void CastEnd()
+    {
+        _cast = true;
+        _castEndEvent.Invoke();
     }
 }

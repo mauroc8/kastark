@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class Hability : MonoBehaviour
 {
-    public abstract Task CastAsync(Creature owner, CancellationToken token);
+    public abstract Task CastAsync(CancellationToken token);
 }

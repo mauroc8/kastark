@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Creature : MonoBehaviour
 {
@@ -23,6 +24,11 @@ public class Creature : MonoBehaviour
     [Header("Behaviour related")]
     [SerializeField] HabilitySelection _habilitySelection;
 
+    [Header("Events")]
+    [SerializeField] UnityEvent _turnStartEvent;
+    [SerializeField] UnityEvent _habilitySelectedEvent;
+    [SerializeField] UnityEvent _turnEndEvent;
+
     void Awake()
     {
         health = maxHealth;
@@ -31,8 +37,18 @@ public class Creature : MonoBehaviour
     public async Task TurnAsync(CancellationToken token)
     {
         Debug.Log($"{creatureName}'s turn");
-        
+        _turnStartEvent.Invoke();
+
         var selectedHability = await _habilitySelection.SelectHabilityAsync(token);
-        await selectedHability.CastAsync(this, token);
+        _habilitySelectedEvent.Invoke();
+
+        await selectedHability.CastAsync(token);
+        _turnEndEvent.Invoke();
     }
+
+    public void OnLifePointHit(GameObject lifePoint)
+    {
+        health--;
+    }
+
 }

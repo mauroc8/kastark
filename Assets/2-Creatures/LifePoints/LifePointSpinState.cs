@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LifePointSpinState : MonoBehaviour
 {
-    [SerializeField] LifePointManager _lifePointsController = null;
+    [SerializeField] LifePointManager _lifePointsManager = null;
 
     [SerializeField] float _spinSpeed = 1;
     [SerializeField] float _spinRadius = 1;
@@ -10,23 +10,27 @@ public class LifePointSpinState : MonoBehaviour
     [SerializeField] float _maxHeight = 1;
     [SerializeField] float _amountOfTurns = 1;
 
-    void Update() {
+    void Update()
+    {
         var spinSpeed = _spinSpeed / _spinRadius;
-        foreach (var lifePointBehaviour in _lifePointsController.LifePoints)
+        var lifePoints = _lifePointsManager.LifePoints;
+
+        for (int i = 0; i < lifePoints.Count; i++)
         {
-            if (lifePointBehaviour == null) continue; // Destroyed instances
-            
+            var lifePoint = lifePoints[i];
+            var percentage = (float)i / (float)lifePoints.Count;
+
             var t = Time.time;
-            var offset = lifePointBehaviour.percentage * _amountOfTurns * Mathf.PI * 2;
-            var height = Mathf.Lerp(_minHeight, _maxHeight, lifePointBehaviour.percentage);
-            
+            var offset = percentage * _amountOfTurns * Mathf.PI * 2;
+            var height = Mathf.Lerp(_minHeight, _maxHeight, percentage);
+
             var target = new Vector3(
                 Mathf.Sin(offset + t * spinSpeed) * _spinRadius,
                 height,
                 Mathf.Cos(offset + t * spinSpeed) * _spinRadius
             );
 
-            lifePointBehaviour.SetTarget(target);
+            lifePoint.transform.localPosition = target;
         }
     }
 }

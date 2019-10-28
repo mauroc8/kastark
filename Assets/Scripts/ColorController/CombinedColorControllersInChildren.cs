@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombineChildrenColorControllers : MultiColorController
+public class CombinedColorControllersInChildren : MultiColorController
 {
     List<ColorController> _colorControllers;
 
