@@ -21,6 +21,7 @@ public class AttackController : MonoBehaviour
     {
         _countdownController.StartCountdown(_countdownTime);
         _damageMade = 0;
+        _cast = false;
     }
 
     AttackTrail _attackTrail;

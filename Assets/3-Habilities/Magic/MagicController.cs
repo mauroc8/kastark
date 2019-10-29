@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Events;
+using UnityEngine.Events;
 
 public class MagicController : MonoBehaviour
 {
@@ -12,14 +12,18 @@ public class MagicController : MonoBehaviour
     [SerializeField] Transform _bigParticleTransform = null;
     [SerializeField] CountdownController _countdownController = null;
 
+    [Header("Event")]
+    [SerializeField] UnityEvent _castEndEvent;
+
     bool _cast;
     public bool Cast => _cast;
 
     float _castStartTime;
     Vector3 _lastPosition;
 
-    void Start()
+    void OnEnable()
     {
+        _cast = false;
         _castStartTime = Time.time;
         _countdownController.StartCountdown(_countdownTime);
         _lastPosition = _bigParticleTransform.position;
@@ -32,8 +36,7 @@ public class MagicController : MonoBehaviour
         if (!_countdownController.IsRunning)
         {
             _cast = true;
-            
-            EventController.TriggerEvent(new HabilityCastEvent{});
+            _castEndEvent.Invoke();
         }
 
         var diff = _bigParticleTransform.position - _lastPosition;
