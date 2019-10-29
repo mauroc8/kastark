@@ -16,7 +16,7 @@ public class HabilityTutorialController : MonoBehaviour
         _controller.enabled = false;
     }
 
-    void Start()
+    void OnEnable()
     {
         if (_timesCast == 0)
             _tutorial.SetActive(true);
@@ -24,6 +24,12 @@ public class HabilityTutorialController : MonoBehaviour
             _controller.enabled = true;
         
         _timesCast++;
+    }
+
+    void OnDisable()
+    {
+        _tutorial.SetActive(false);
+        _controller.enabled = false;
     }
 
     public void EndTutorial()

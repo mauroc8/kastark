@@ -473,7 +473,7 @@ GameObject:
   m_Component:
   - component: {fileID: 244201974000114621}
   - component: {fileID: 7839227065684286710}
-  - component: {fileID: 5877610596958379708}
+  - component: {fileID: 6972650348144212200}
   m_Layer: 0
   m_Name: Trail
   m_TagString: Untagged
@@ -565,7 +565,7 @@ TrailRenderer:
       serializedVersion: 2
       key0: {r: 1, g: 1, b: 1, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key2: {r: 0, g: 0, b: 0, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -581,13 +581,13 @@ TrailRenderer:
       ctime7: 0
       atime0: 0
       atime1: 65535
-      atime2: 0
+      atime2: 65535
       atime3: 0
       atime4: 0
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 2
@@ -598,8 +598,8 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
-  m_Emitting: 1
---- !u!114 &5877610596958379708
+  m_Emitting: 0
+--- !u!114 &6972650348144212200
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1308,7 +1308,7 @@ GameObject:
   - component: {fileID: 5944706539731187505}
   - component: {fileID: 2098915258047056539}
   - component: {fileID: 8567684657951407288}
-  - component: {fileID: 49621227957722252}
+  - component: {fileID: 4745430460988929825}
   m_Layer: 8
   m_Name: LifePoint
   m_TagString: Untagged
@@ -1343,7 +1343,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.45
+  m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8567684657951407288
 MonoBehaviour:
@@ -1395,8 +1395,8 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: LifePointHitEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  _alphaController: {fileID: 49621227957722252}
---- !u!114 &49621227957722252
+  alphaController: {fileID: 4745430460988929825}
+--- !u!114 &4745430460988929825
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1405,7 +1405,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7822176353926103582}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e8214ef66e76fc4da0c9146c7ffa5c9, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d2ddfac30e699445af6eedae847b9d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8596857392635970947

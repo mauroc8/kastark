@@ -1177,18 +1177,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1253436822}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1401571692 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 49621227957722252, guid: 87da043f95164dd409504ae4d9388d3c,
-    type: 3}
-  m_PrefabInstance: {fileID: 2086166691}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e8214ef66e76fc4da0c9146c7ffa5c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1501174685
 GameObject:
   m_ObjectHideFlags: 0
@@ -6902,6 +6890,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1915663532}
   - component: {fileID: 1915663533}
+  - component: {fileID: 1915663534}
   m_Layer: 0
   m_Name: Attack
   m_TagString: Untagged
@@ -6935,6 +6924,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2235966c7ad41ee4393d5b2841f33562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1915663534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915663531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29c2fe23d8fecbd42a3f843645a8da9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _castEndEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1915663533}
+        m_MethodName: OnCastEnd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!224 &1921567805 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8121021861716409980, guid: 8a1c5e051fa06e047acf5827d9a30b82,
@@ -7436,11 +7453,6 @@ PrefabInstance:
       propertyPath: _lifePointHitEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    - target: {fileID: 8567684657951407288, guid: 87da043f95164dd409504ae4d9388d3c,
-        type: 3}
-      propertyPath: alphaController
-      value: 
-      objectReference: {fileID: 1401571692}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87da043f95164dd409504ae4d9388d3c, type: 3}
 --- !u!4 &2086166692 stripped

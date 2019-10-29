@@ -16,7 +16,7 @@ public class LifePointManager : MonoBehaviour
             lifePoint => lifePoint.GetComponent<LifePointController>()
         );
 
-    void Start()
+    void Awake()
     {
         var lifePointsAmount = (int)_creature.maxHealth;
 
