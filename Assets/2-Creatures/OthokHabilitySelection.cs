@@ -6,7 +6,7 @@ using UnityEngine;
 public class OthokHabilitySelection : HabilitySelection
 {
     [SerializeField] List<Hability> _habilities;
-    
+
     public override async Task<Hability> SelectHabilityAsync(CancellationToken token)
     {
         await Task.Delay(400, token);

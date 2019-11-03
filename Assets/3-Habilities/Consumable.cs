@@ -1,5 +1,5 @@
 
-public abstract class Consumable : Hability
+public class Consumable : Hability
 {
     public int amount;
 }

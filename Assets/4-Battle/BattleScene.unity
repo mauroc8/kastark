@@ -343,9 +343,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 365344856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e673435d60a9bbf429724cd03cb2971d, type: 3}
+  m_Script: {fileID: 11500000, guid: a121ed542fb4bf64c90c6597e7909475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  habilityName: Health Potion
   amount: 1
 --- !u!1 &473505240
 GameObject:
@@ -483,9 +484,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 479036695}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67e53025bba96dd43a2c0dcf1a02c57f, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c8186dfad205d34d8eef8850d07e2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  habilityName: Magic
 --- !u!114 &479036698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1195,7 +1197,7 @@ PrefabInstance:
     - target: {fileID: 2405590385846610472, guid: 8051a9d4cf710a94e8fdf78206a20574,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: Hability, Assembly-CSharp
+      value: CastHabilityController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2405590385846610472, guid: 8051a9d4cf710a94e8fdf78206a20574,
         type: 3}
@@ -6985,9 +6987,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1915663531}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2235966c7ad41ee4393d5b2841f33562, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c8186dfad205d34d8eef8850d07e2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  habilityName: Attack
 --- !u!114 &1915663534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7284,7 +7287,7 @@ PrefabInstance:
     - target: {fileID: 2405590385846610472, guid: 8051a9d4cf710a94e8fdf78206a20574,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: Hability, Assembly-CSharp
+      value: CastHabilityController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2405590385846610472, guid: 8051a9d4cf710a94e8fdf78206a20574,
         type: 3}
@@ -8239,7 +8242,7 @@ PrefabInstance:
     - target: {fileID: 2405590385846610472, guid: 8051a9d4cf710a94e8fdf78206a20574,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: Hability, Assembly-CSharp
+      value: CastHabilityController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2405590385846610472, guid: 8051a9d4cf710a94e8fdf78206a20574,
         type: 3}
@@ -8391,9 +8394,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3185461216045805948}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2235966c7ad41ee4393d5b2841f33562, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c8186dfad205d34d8eef8850d07e2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  habilityName: Attack
 --- !u!33 &3455982078976607671
 MeshFilter:
   m_ObjectHideFlags: 0

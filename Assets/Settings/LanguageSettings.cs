@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using StringLocalization;
 
-[CreateAssetMenu(fileName = "LanguageSettings", menuName = "Kastark/Settings/Language")]
+[CreateAssetMenu(fileName = "LanguageSettings", menuName = "Kastark/Language Settings")]
 
 public class LanguageSettings : ScriptableObject
 {
@@ -16,8 +16,7 @@ public class LanguageSettings : ScriptableObject
 
     public void ChangeLanguage(Language newLanguage)
     {
-        language = newLanguage;
-        Localization.CurrentLanguage = newLanguage;
+        Localization.CurrentLanguage = language = newLanguage;
     }
 
     public void Save()
@@ -29,4 +28,10 @@ public class LanguageSettings : ScriptableObject
     {
         language = (Language)PlayerPrefs.GetInt("GameSettings.language");
     }
+
+    void Awake()
+    { Load(); }
+
+    void OnDisable()
+    { Save(); }
 }
