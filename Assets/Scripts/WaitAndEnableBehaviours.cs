@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class WaitAndEnableBehaviours : MonoBehaviour
 {
-    [SerializeField] float _waitSeconds = 0;
-    [SerializeField] MonoBehaviour[] _components = new MonoBehaviour[0];
-    [SerializeField] bool _autoDisable = true;
-    
+    [SerializeField] float _waitSeconds;
+    [SerializeField] MonoBehaviour[] _components;
+
     void OnEnable()
     {
         StartCoroutine(WaitAndEnable());
@@ -17,10 +16,13 @@ public class WaitAndEnableBehaviours : MonoBehaviour
     {
         yield return new WaitForSeconds(_waitSeconds);
         foreach (MonoBehaviour component in _components)
-        {
             component.enabled = true;
-        }
-        
-        if (_autoDisable) enabled = false;
+    }
+
+    void OnDisable()
+    {
+        StopAllCoroutines();
+        foreach (MonoBehaviour component in _components)
+            component.enabled = false;
     }
 }
