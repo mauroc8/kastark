@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 1808964478692034005}
   - component: {fileID: 5327399731725055372}
   m_Layer: 8
-  m_Name: Change State
+  m_Name: State Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -882,7 +882,6 @@ MonoBehaviour:
   _components:
   - {fileID: 4141244459750112284}
   - {fileID: 301089939335520419}
-  _autoDisable: 1
 --- !u!1 &7739504722559951909
 GameObject:
   m_ObjectHideFlags: 0

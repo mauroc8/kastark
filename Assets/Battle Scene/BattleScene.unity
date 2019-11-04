@@ -598,6 +598,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 915087710799836499470a24963a39c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &693180193 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5327399731725055372, guid: 87da043f95164dd409504ae4d9388d3c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2086166691}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b26106ef7ecb3147a69fed5ebf61a11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &832031515
 GameObject:
   m_ObjectHideFlags: 0
@@ -1197,7 +1209,7 @@ PrefabInstance:
     - target: {fileID: 2405590385846610472, guid: 8051a9d4cf710a94e8fdf78206a20574,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: CastHabilityController, Assembly-CSharp
+      value: Hability, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2405590385846610472, guid: 8051a9d4cf710a94e8fdf78206a20574,
         type: 3}
@@ -1357,6 +1369,36 @@ PrefabInstance:
       propertyPath: _habilitySelection
       value: 
       objectReference: {fileID: 128749297}
+    - target: {fileID: 1137901453618565141, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: _turnStartEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 693180193}
+    - target: {fileID: 1137901453618565141, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: _turnStartEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnTurnStart
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137901453618565141, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: _habilitySelectedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 693180193}
+    - target: {fileID: 1137901453618565141, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: _habilitySelectedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnHabilitySelect
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137901453618565141, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: _turnEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 693180193}
+    - target: {fileID: 1137901453618565141, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: _turnEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnTurnEnd
+      objectReference: {fileID: 0}
     - target: {fileID: 7739504723204175228, guid: 87da043f95164dd409504ae4d9388d3c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1466,6 +1508,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Radius
       value: 2.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822176353926103582, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87da043f95164dd409504ae4d9388d3c, type: 3}
@@ -7136,6 +7183,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2069384467 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5327399731725055372, guid: 87da043f95164dd409504ae4d9388d3c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1538981654}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b26106ef7ecb3147a69fed5ebf61a11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2076319318
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7287,7 +7346,7 @@ PrefabInstance:
     - target: {fileID: 2405590385846610472, guid: 8051a9d4cf710a94e8fdf78206a20574,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: CastHabilityController, Assembly-CSharp
+      value: Hability, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2405590385846610472, guid: 8051a9d4cf710a94e8fdf78206a20574,
         type: 3}
@@ -7364,6 +7423,36 @@ PrefabInstance:
         type: 3}
       propertyPath: team
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137901453618565141, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: _turnStartEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2069384467}
+    - target: {fileID: 1137901453618565141, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: _turnStartEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnTurnStart
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137901453618565141, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: _habilitySelectedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2069384467}
+    - target: {fileID: 1137901453618565141, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: _habilitySelectedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnHabilitySelect
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137901453618565141, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: _turnEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2069384467}
+    - target: {fileID: 1137901453618565141, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: _turnEndEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnTurnEnd
       objectReference: {fileID: 0}
     - target: {fileID: 7739504723204175228, guid: 87da043f95164dd409504ae4d9388d3c,
         type: 3}
@@ -7489,6 +7578,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822176353926103582, guid: 87da043f95164dd409504ae4d9388d3c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8567684657951407288, guid: 87da043f95164dd409504ae4d9388d3c,
         type: 3}
@@ -8242,7 +8336,7 @@ PrefabInstance:
     - target: {fileID: 2405590385846610472, guid: 8051a9d4cf710a94e8fdf78206a20574,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: CastHabilityController, Assembly-CSharp
+      value: Hability, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2405590385846610472, guid: 8051a9d4cf710a94e8fdf78206a20574,
         type: 3}
@@ -8687,7 +8781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19cbfc51d7451844692ab7b00cf77759, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _team: 0
+  _enemyTeam: 1
   worstScenarioDirectionStdDev: 0.34
   _distanceToCamera: 10
   minLengthVh: 0

@@ -5,9 +5,9 @@ using Events;
 
 public class LifePointStateManager : MonoBehaviourStateMachine
 {
-    [SerializeField] LifePointIdleState _idleState;
-    [SerializeField] LifePointSpinState _capsuleSpinState;
-    [SerializeField] LifePointSpinState _beltSpinState;
+    [SerializeField] MonoBehaviour _idleState;
+    [SerializeField] MonoBehaviour _capsuleSpinState;
+    [SerializeField] MonoBehaviour _beltSpinState;
 
     public void OnTurnStart()
     {

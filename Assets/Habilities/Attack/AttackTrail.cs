@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AttackTrail : MonoBehaviour
 {
-    [SerializeField] TeamId _team;
+    [SerializeField] TeamId _enemyTeam;
 
     private bool _open;
     float _effectiveness;
@@ -104,7 +104,7 @@ public class AttackTrail : MonoBehaviour
     {
         var target = RaycastHelper.SphereCastAtScreenPoint(screenPoint, LayerMask.HabilityRaycast);
 
-        if (target != null && target.CompareTag(_team.ToString()))
+        if (target != null && target.CompareTag(_enemyTeam.ToString()))
         {
             var lifePointController = target.GetComponent<LifePointController>();
             lifePointController?.GetsHit();
