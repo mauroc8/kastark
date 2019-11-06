@@ -9,8 +9,12 @@ public class MagicController : MonoBehaviour
     [SerializeField] float _countdownTime = 0.8f;
 
     [Header("Refs")]
-    [SerializeField] Transform _bigParticleTransform = null;
-    [SerializeField] CountdownController _countdownController = null;
+    [SerializeField] MagicEnergy _magicEnergy;
+    [SerializeField] CountdownController _countdown;
+
+    [Header("Position near creature's head")]
+    [SerializeField] Creature _creature;
+    [SerializeField] Vector2 _offsetVh;
 
     [Header("Event")]
     [SerializeField] UnityEvent _castEndEvent;
@@ -25,48 +29,23 @@ public class MagicController : MonoBehaviour
     {
         _cast = false;
         _castStartTime = Time.time;
-        _countdownController.StartCountdown(_countdownTime);
-        _lastPosition = _bigParticleTransform.position;
+        _countdown.StartCountdown(_countdownTime);
+        _magicEnergy.Open(
+            Camera.main.WorldToScreenPoint(_creature.head.position) +
+            new Vector3(_offsetVh.x * Screen.height, _offsetVh.y * Screen.height, 0)
+        );
     }
 
     void Update()
     {
         if (_cast) return;
 
-        if (!_countdownController.IsRunning)
+        if (!_countdown.IsRunning)
         {
             _cast = true;
             _castEndEvent.Invoke();
         }
 
-        var diff = _bigParticleTransform.position - _lastPosition;
-        var diffMagnitudeVh = diff.magnitude / Screen.height;
-
-        var diffUnit = 0.03f / diffMagnitudeVh;
-        float t = diffUnit;
-
-        while (t < 1)
-        {
-            
-            var intermediatePoint = Vector2.Lerp(_bigParticleTransform.position, _lastPosition, t);
-            var target = RaycastHelper.SphereCastAtScreenPoint(intermediatePoint, LayerMask.HabilityRaycast);
-            if (target != null)
-            {
-                target.GetComponent<LifePointController>()?.GetsHit();
-            }
-
-            t += diffUnit;
-        }
-
-        {
-            var target = RaycastHelper.SphereCastAtScreenPoint(_bigParticleTransform.position, LayerMask.HabilityRaycast);
-
-            if (target != null)
-            {
-                target.GetComponent<LifePointController>()?.GetsHit();
-            }
-        }
-        
-        _lastPosition = _bigParticleTransform.position;
+        _magicEnergy.Move(Input.mousePosition);
     }
 }

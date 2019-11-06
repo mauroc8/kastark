@@ -6,7 +6,12 @@ public class OthokAttackController : MonoBehaviour
 {
     [SerializeField] UnityEvent _castEndEvent;
 
-    IEnumerator Start()
+    void OnEnable()
+    {
+        StartCoroutine(Attack());
+    }
+
+    IEnumerator Attack()
     {
         yield return new WaitForSeconds(2);
         _castEndEvent.Invoke();

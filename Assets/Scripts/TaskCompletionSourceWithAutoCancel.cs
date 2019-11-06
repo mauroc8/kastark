@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public class TaskCompletionSourceWithAutoCancel<T>
 {
@@ -12,9 +13,9 @@ public class TaskCompletionSourceWithAutoCancel<T>
     public TaskCompletionSourceWithAutoCancel(CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        
-        _taskCompletionSource = new TaskCompletionSource<T>();        
-        _cancellationTokenRegistration = cancellationToken.Register(SetCanceled);
+
+        _taskCompletionSource = new TaskCompletionSource<T>();
+        _cancellationTokenRegistration = cancellationToken.Register(TrySetCanceled);
     }
 
     public void SetCanceled()
