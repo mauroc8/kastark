@@ -13,8 +13,7 @@ public class Hability : MonoBehaviour
         Debug.Log($"Casting {habilityName}");
         gameObject.SetActive(true);
 
-        _taskCompletionSource = new TaskCompletionSourceWithAutoCancel<bool>(token)
-        { taskName = "hability" };
+        _taskCompletionSource = new TaskCompletionSourceWithAutoCancel<bool>(token);
         return _taskCompletionSource.Task;
     }
 

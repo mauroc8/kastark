@@ -9,8 +9,7 @@ public class ButtonHabilitySelection : HabilitySelection
 
     public override Task<Hability> SelectHabilityAsync(CancellationToken token)
     {
-        _taskCompletionSource = new TaskCompletionSourceWithAutoCancel<Hability>(token)
-        { taskName = "button hability selection" };
+        _taskCompletionSource = new TaskCompletionSourceWithAutoCancel<Hability>(token);
         return _taskCompletionSource.Task;
     }
 
