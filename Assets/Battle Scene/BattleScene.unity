@@ -163,8 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99dd8689dd10f6f4dbd0495a93b9ef11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _habilities:
-  - {fileID: 1915663533}
+  _hability: {fileID: 1915663533}
 --- !u!1 &144790874
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,6 +255,18 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &278315344 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2405590385846610472, guid: 8051a9d4cf710a94e8fdf78206a20574,
+    type: 3}
+  m_PrefabInstance: {fileID: 2076319318}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9f8a5e3b02b81047b1b6d738b56ffe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &351799663
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,6 +592,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _creatures:
   - {fileID: 965234642}
+--- !u!114 &541806431 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2405590385846610472, guid: 8051a9d4cf710a94e8fdf78206a20574,
+    type: 3}
+  m_PrefabInstance: {fileID: 2405590385497405964}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9f8a5e3b02b81047b1b6d738b56ffe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &661813357 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 4119fa8f0c4342049b162f064e720b54,
@@ -1629,6 +1652,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _duration: 0.4
   _power: 0.5
+--- !u!114 &1690580126 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2405590385846610472, guid: 8051a9d4cf710a94e8fdf78206a20574,
+    type: 3}
+  m_PrefabInstance: {fileID: 1253436822}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9f8a5e3b02b81047b1b6d738b56ffe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1698972956
 GameObject:
   m_ObjectHideFlags: 0
@@ -1741,6 +1776,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce157cdb0c5483f4c8ff52f300bf0ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _habilitySelectionStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 541806431}
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 278315344}
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1690580126}
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  _habilitySelectionEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 541806431}
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 278315344}
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1690580126}
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1785343961
 GameObject:
   m_ObjectHideFlags: 0
@@ -7583,7 +7694,7 @@ PrefabInstance:
     - target: {fileID: 2445560315112356021, guid: 87da043f95164dd409504ae4d9388d3c,
         type: 3}
       propertyPath: m_Name
-      value: State Manager
+      value: LifePoint State
       objectReference: {fileID: 0}
     - target: {fileID: 8567684657951407288, guid: 87da043f95164dd409504ae4d9388d3c,
         type: 3}
@@ -7615,7 +7726,10 @@ PrefabInstance:
       propertyPath: _lifePointHitEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7338857594046434423, guid: 87da043f95164dd409504ae4d9388d3c, type: 3}
+    - {fileID: 8087907094798153083, guid: 87da043f95164dd409504ae4d9388d3c, type: 3}
+    - {fileID: 4228803193527567780, guid: 87da043f95164dd409504ae4d9388d3c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 87da043f95164dd409504ae4d9388d3c, type: 3}
 --- !u!4 &2086166692 stripped
 Transform:

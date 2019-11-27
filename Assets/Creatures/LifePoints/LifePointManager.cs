@@ -10,24 +10,22 @@ public class LifePointManager : MonoBehaviour
 
     List<GameObject> _lifePoints = new List<GameObject>();
 
+    public Creature Creature => _creature;
+    public int MaxLifePoints => (int)_creature.maxHealth;
     public List<GameObject> LifePoints => _lifePoints;
     public List<LifePointController> LifePointControllers =>
-        _lifePoints.ConvertAll(
-            lifePoint => lifePoint.GetComponent<LifePointController>()
-        );
+        _lifePoints.ConvertAll(go => go.GetComponent<LifePointController>());
 
     void Awake()
     {
-        var lifePointsAmount = (int)_creature.maxHealth;
+        var maxLifePoints = MaxLifePoints;
 
-        for (int i = 0; i < lifePointsAmount; i++)
+        for (int i = 0; i < maxLifePoints; i++)
         {
             var lifePoint = Instantiate(_lifePoint);
             lifePoint.SetActive(true);
             lifePoint.transform.SetParent(transform);
             lifePoint.transform.localPosition = Vector3.zero;
-
-            var percentage = (float)i / (float)lifePointsAmount;
 
             _lifePoints.Add(lifePoint);
         }

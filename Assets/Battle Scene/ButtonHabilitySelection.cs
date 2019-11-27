@@ -5,10 +5,14 @@ using UnityEngine.Events;
 
 public class ButtonHabilitySelection : HabilitySelection
 {
+    [SerializeField] UnityEvent _habilitySelectionStart;
+    [SerializeField] UnityEvent _habilitySelectionEnd;
+    
     TaskCompletionSourceWithAutoCancel<Hability> _taskCompletionSource;
 
     public override Task<Hability> SelectHabilityAsync(CancellationToken token)
     {
+        _habilitySelectionStart.Invoke();
         _taskCompletionSource = new TaskCompletionSourceWithAutoCancel<Hability>(token);
         return _taskCompletionSource.Task;
     }
@@ -19,5 +23,6 @@ public class ButtonHabilitySelection : HabilitySelection
 
         _taskCompletionSource.SetResult(hability);
         _taskCompletionSource = null;
+        _habilitySelectionEnd.Invoke();
     }
 }

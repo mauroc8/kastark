@@ -16,6 +16,8 @@ public class Creature : MonoBehaviour
     public Transform head;
     public Transform feet;
 
+    public float Height => Vector3.Distance(head.position, feet.position);
+
     [NonSerialized] public float health;
     [NonSerialized] public float shield;
 

@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class OthokHabilitySelection : HabilitySelection
 {
-    [SerializeField] List<Hability> _habilities;
+    [SerializeField] Hability _hability;
 
     public override async Task<Hability> SelectHabilityAsync(CancellationToken token)
     {
         await Task.Delay(400, token);
-        return _habilities[(int)Random.Range(0, _habilities.Count)];
+        return _hability;
     }
 }
