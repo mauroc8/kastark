@@ -1,16 +1,23 @@
 using UnityEngine;
 using TMPro;
-using StringLocalization;
 using Events;
+
+public class LanguageChangeEvent : GameEvent { }
 
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class TMProLocalizer : MonoBehaviour
 {
     string _key;
+    Localization _localization;
 
-    void Awake()
+    void Start()
     {
+        _localization = GetComponentInParent<LocalizationSource>()?.localization;
+
+        Debug.Assert(_localization != null);
+
         _key = GetComponent<TextMeshProUGUI>().text;
+
         OnLanguageChange(null);
     }
 
@@ -23,6 +30,6 @@ public class TMProLocalizer : MonoBehaviour
     void OnLanguageChange(LanguageChangeEvent evt)
     {
         GetComponent<TextMeshProUGUI>().text =
-            Localization.GetLocalizedString(_key);
+            _localization.GetLocalizedString(_key);
     }
 }

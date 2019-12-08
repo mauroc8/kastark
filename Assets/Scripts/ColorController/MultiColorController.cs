@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using ListExtensions;
 
 public abstract class MultiColorController : MultiAlphaController
 {
@@ -13,7 +14,7 @@ public abstract class MultiColorController : MultiAlphaController
         {
             Debug.Assert(value.Count == Alphas.Count);
             var newColors = new List<Color>();
-            
+
             for (int i = 0; i < Alphas.Count; i++)
             {
                 var newColor = MyColors[i];
@@ -24,19 +25,9 @@ public abstract class MultiColorController : MultiAlphaController
             MyColors = newColors;
         }
     }
-    
+
     public abstract List<Color> MyColors { get; set; }
     public virtual int ColorCount => MyColors.Count;
-
-    public static List<Color> ColorListLerp(List<Color> from, List<Color> to, float t)
-    {
-        var result = new List<Color>();
-
-        for (int i = 0; i < from.Count; i++)
-            result.Add(Color.Lerp(from[i], to[i], t));
-        
-        return result;
-    }
 
     protected List<Color> _originalColors;
 
@@ -98,10 +89,10 @@ public abstract class MultiColorController : MultiAlphaController
         while (Time.time < startTime + duration)
         {
             float t = Mathf.Pow((Time.time - startTime) / duration, power);
-            MyColors = Helpers.ListLerp<Color>(startColors, endColors, t, Color.Lerp);
+            MyColors = startColors.Lerp(endColors, t, Color.Lerp);
             yield return null;
         }
-        
+
         MyColors = endColors;
 
         if (callback != null)

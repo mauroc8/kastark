@@ -294,11 +294,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: El abrazo de la serpiente
   _lifePointsManager: {fileID: 4989046815891231472}
-  _spinSpeed: 4
-  _spinRadius: 4
-  _minHeight: 0
-  _maxHeight: 1
-  _amountOfTurns: 3
+  _spinSpeed: 4.47
+  _spinRadius: 3.55
+  _minHeight: 0.061
+  _maxHeight: 0.924
+  _amountOfTurns: 1.3
+  _oscillationAmount: 0.038
+  _oscillationSpeed: 1.56
 --- !u!114 &3651320565295135783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,6 +320,8 @@ MonoBehaviour:
   _minHeight: 0.5
   _maxHeight: 0.5
   _amountOfTurns: 1
+  _oscillationAmount: 0.053
+  _oscillationSpeed: 1
 --- !u!1 &4590038933085161927
 GameObject:
   m_ObjectHideFlags: 0

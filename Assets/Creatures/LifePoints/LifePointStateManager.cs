@@ -1,20 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Events;
+﻿using UnityEngine;
 
 public class LifePointStateManager : MonoBehaviourStateMachine
 {
+    [SerializeField] Event _enemySelectsHability;
+    [SerializeField] Event _enemyEndsTurn;
+
     [SerializeField] MonoBehaviour _idleState;
     [SerializeField] MonoBehaviour _capsuleSpinState;
     [SerializeField] MonoBehaviour _beltSpinState;
 
-    public void OnTurnStart()
+    void OnEnable()
+    {
+        _enemySelectsHability.AddListener(OnEnemyHabilitySelect);
+        _enemyEndsTurn.AddListener(OnEnemyTurnEnd);
+    }
+
+    void OnDisable()
+    {
+        _enemySelectsHability.RemoveListener(OnEnemyHabilitySelect);
+        _enemyEndsTurn.RemoveListener(OnEnemyTurnEnd);
+    }
+
+    void Start()
     {
         SwitchState(_idleState);
     }
 
-    public void OnHabilitySelect()
+    public void OnEnemyHabilitySelect()
     {
         if (Random.Range(0, 100) < 50)
         {
@@ -26,7 +38,7 @@ public class LifePointStateManager : MonoBehaviourStateMachine
         }
     }
 
-    public void OnTurnEnd()
+    public void OnEnemyTurnEnd()
     {
         SwitchState(_idleState);
     }

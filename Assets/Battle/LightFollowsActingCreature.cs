@@ -6,22 +6,22 @@ public class LightFollowsActingCreature : MonoBehaviour
 {
     [SerializeField] float _duration = 0.4f;
     [SerializeField] float _power = 0.5f;
+    /*
+        void OnEnable()
+        {
+            EventController.AddListener<TurnStartEvent>(OnTurnStart);
+        }
 
-    void OnEnable()
-    {
-        EventController.AddListener<TurnStartEvent>(OnTurnStart);
-    }
+        void OnDisable()
+        {
+            EventController.RemoveListener<TurnStartEvent>(OnTurnStart);
+        }
 
-    void OnDisable()
-    {
-        EventController.RemoveListener<TurnStartEvent>(OnTurnStart);
-    }
-
-    void OnTurnStart(TurnStartEvent evt)
-    {
-        StartCoroutine(TurnStartCoroutine(evt.actingCreature));
-    }
-
+        void OnTurnStart(TurnStartEvent evt)
+        {
+            StartCoroutine(TurnStartCoroutine(evt.actingCreature));
+        }
+    */
     public IEnumerator TurnStartCoroutine(Creature creature)
     {
         var time = Time.time;

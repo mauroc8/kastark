@@ -1,86 +1,81 @@
-﻿using System.Collections.Generic;
-using Events;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using ListExtensions;
 
-namespace StringLocalization
+public enum LanguageId
 {
-    public enum Language {
-        English, Spanish, Count
-    };
+    English,
+    Spanish
+};
 
-    public static class Localization
+[CreateAssetMenu(menuName = "Kastark/Localization")]
+public class Localization : ScriptableObject
+{
+    // Static members
+
+    public static List<string> languageNames =
+        new List<string>
+        {
+            "English",
+            "Español"
+        };
+
+    public static LanguageId currentLanguage = LanguageId.English;
+
+    // Public members for code
+    public string GetLocalizedString(string key)
     {
-        static Dictionary<string, string> _englishLanguage = null;
-        static Dictionary<string, string> _spanishLanguage = null;
+        foreach (var entry in entries)
+            if (entry.key == key)
+                return entry.data[(int)currentLanguage];
 
-        static void Init() {
-            _englishLanguage = new Dictionary<string, string>();
-            _spanishLanguage = new Dictionary<string, string>();
+        if (parent != null)
+            return parent.GetLocalizedString(key);
 
-            var csvParser = new CSVParser("textos-localizados");
-            List<List<string>> content = csvParser.Content;
-
-            for (var i = 1; i < content.Count; i++)
-            {
-                var row = content[i];
-
-                for (var j = 1; j < row.Count; j++)
-                {
-                    // Empty keys are used to comment things out.
-                    if (row[0] == "") continue;
-                    
-                    var dictionary =
-                        j == 1 ? _englishLanguage :
-                        j == 2 ? _spanishLanguage :
-                        null;
-                    
-                    if (dictionary != null)
-                    {
-                        //Debug.Log($"Adding key {row[0]} as {row[j]} to dictionary {j}.");
-                        dictionary.Add(row[0], row[j]);
-                    }
-                }
-            }
-
-            // Force initialization.
-            CurrentLanguage = CurrentLanguage;
-        }
-
-        static Dictionary<string, string> _currentDictionary;
-
-        static Language _language;
-
-        public static Language CurrentLanguage
-        {
-            get { return _language; }
-            set
-            {
-                _language = value;
-                _currentDictionary =
-                    _language == Language.English ? _englishLanguage :
-                    _language == Language.Spanish ? _spanishLanguage : null;
-                EventController.TriggerEvent(new LanguageChangeEvent{});
-            }
-        }
-
-        public static string GetLocalizedString(string key)
-        {
-            string value;
-
-            if (_englishLanguage == null) Init();
-
-            if (_currentDictionary == null)
-            {
-                Debug.LogWarning($"Current dictionary is not set.");
-                return key;
-            }
-            if (!_currentDictionary.TryGetValue(key, out value))
-            {
-                Debug.LogWarning($"Failed to localize key {key}.");
-                return key;
-            }
-
-            return value;
-        }
+        Debug.Log($"Could not find key {key} in localization {name}.");
+        return "";
     }
+
+    // Public members for the Inspector and EditorWindow
+
+    public List<LocalizationEntry> entries = new List<LocalizationEntry>();
+    public Localization parent;
+
+    public void NewEntry()
+    {
+        entries.Add(new LocalizationEntry());
+    }
+
+    List<Action> _queue = new List<Action>();
+
+    public bool HasQueuedActions => _queue.Count > 0;
+
+    public void ExecuteQueuedActions()
+    {
+        _queue.ForEach(action => action.Invoke());
+        _queue.Clear();
+    }
+
+    public void QueueDelete(LocalizationEntry entry)
+    {
+        _queue.Add(() => entries.Remove(entry));
+    }
+
+    public void QueueMoveDown(LocalizationEntry entry)
+    {
+        _queue.Add(() => entries.MoveElementDown(entry));
+    }
+}
+
+[Serializable]
+public class LocalizationEntry
+{
+    public LocalizationEntry()
+    {
+        data = ListExtension.Repeat("", Localization.languageNames.Count);
+    }
+
+    public string key;
+    public List<string> data;
 }

@@ -27,9 +27,8 @@ public class Creature : MonoBehaviour
     [SerializeField] HabilitySelection _habilitySelection;
 
     [Header("Events")]
-    [SerializeField] UnityEvent _turnStartEvent;
-    [SerializeField] UnityEvent _habilitySelectedEvent;
-    [SerializeField] UnityEvent _turnEndEvent;
+    [SerializeField] Event _habilitySelectEvent;
+    [SerializeField] Event _turnEndEvent;
 
     void Awake()
     {
@@ -39,10 +38,9 @@ public class Creature : MonoBehaviour
     public async Task TurnAsync(CancellationToken token)
     {
         Debug.Log($"{creatureName}'s turn");
-        _turnStartEvent.Invoke();
 
         var selectedHability = await _habilitySelection.SelectHabilityAsync(token);
-        _habilitySelectedEvent.Invoke();
+        _habilitySelectEvent.Invoke();
 
         await selectedHability.CastAsync(token);
         _turnEndEvent.Invoke();

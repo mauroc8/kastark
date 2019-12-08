@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ListExtensions;
 
 public abstract class MultiAlphaController : MonoBehaviour
 {
@@ -28,8 +29,8 @@ public abstract class MultiAlphaController : MonoBehaviour
     {
         var startTime = Time.time;
 
-        var startAlphas = Helpers.Repeat<float>(startAlpha, AlphasCount);
-        var endAlphas   = Helpers.Repeat<float>(endAlpha, AlphasCount);
+        var startAlphas = ListExtension.Repeat<float>(startAlpha, AlphasCount);
+        var endAlphas = ListExtension.Repeat<float>(endAlpha, AlphasCount);
 
         Alphas = startAlphas;
         yield return null;
@@ -37,10 +38,10 @@ public abstract class MultiAlphaController : MonoBehaviour
         while (Time.time < startTime + duration)
         {
             float t = Mathf.Pow((Time.time - startTime) / duration, power);
-            Alphas = Helpers.ListLerp<float>(startAlphas, endAlphas, t, Mathf.Lerp);
+            Alphas = startAlphas.Lerp(endAlphas, t, Mathf.Lerp);
             yield return null;
         }
-        
+
         Alphas = endAlphas;
 
         if (callback != null)
