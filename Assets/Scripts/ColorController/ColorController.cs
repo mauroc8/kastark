@@ -53,7 +53,7 @@ public abstract class ColorController : AlphaController
             MyColor = Color.Lerp(startColor, endColor, t);
             yield return null;
         }
-        
+
         MyColor = endColor;
 
         if (callback != null)

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3293677496d07264297b0eac3d10c0cd, type: 3}
-  m_Name: MainMenuLocalization
+  m_Name: EndBattleLocalization
   m_EditorClassIdentifier: 
   entries:
-  - key: new_game
+  - key: battle_win_message
     data:
-    - New game
-    - Juego nuevo
-  - key: change_language
+    - You win!
+    - Ganaste!
+  - key: battle_loose_message
     data:
-    - Change language
-    - Cambiar idioma
-  - key: quit
+    - You lose!
+    - Perdiste!
+  - key: return_to_main_menu
     data:
-    - Quit
-    - Salir
+    - Return
+    - Volver

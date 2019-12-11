@@ -12,4 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3293677496d07264297b0eac3d10c0cd, type: 3}
   m_Name: BattleLocalization
   m_EditorClassIdentifier: 
-  entries: []
+  entries:
+  - key: attack
+    data:
+    - Attack
+    - Ataque
+  - key: magic
+    data:
+    - Magic
+    - Magia
+  - key: health_potion
+    data:
+    - Health potion
+    - "Poci\xF3n de vida"
+  - key: attack_tooltip
+    data:
+    - Cut over your enemy life points
+    - Haz un corte sobre los puntos de vida de tu enemigo

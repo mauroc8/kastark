@@ -277,6 +277,7 @@ GameObject:
   m_Component:
   - component: {fileID: 351799664}
   - component: {fileID: 351799665}
+  - component: {fileID: 351799666}
   m_Layer: 0
   m_Name: EndBattle
   m_TagString: Untagged
@@ -314,6 +315,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _battleWinNode: {fileID: 890934880}
   _battleLoseNode: {fileID: 1862305656}
+--- !u!114 &351799666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351799663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5131697c03b30c46a533561f5785078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localization: {fileID: 11400000, guid: 288374b42822023419d731e1a78e0932, type: 2}
 --- !u!1 &365344856
 GameObject:
   m_ObjectHideFlags: 0
@@ -6870,7 +6884,7 @@ PrefabInstance:
     - target: {fileID: 8121021862577281590, guid: 8a1c5e051fa06e047acf5827d9a30b82,
         type: 3}
       propertyPath: m_text
-      value: battlelose
+      value: battle_loose_message
       objectReference: {fileID: 0}
     - target: {fileID: 8121021862577281590, guid: 8a1c5e051fa06e047acf5827d9a30b82,
         type: 3}
@@ -9298,6 +9312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b1c7996425c414398845dbf67db349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _localization: {fileID: 0}
 --- !u!114 &7527899044048622559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9699,22 +9714,22 @@ PrefabInstance:
     - target: {fileID: 8121021862577281590, guid: 8a1c5e051fa06e047acf5827d9a30b82,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 0
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8121021862577281590, guid: 8a1c5e051fa06e047acf5827d9a30b82,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8121021862577281590, guid: 8a1c5e051fa06e047acf5827d9a30b82,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8121021862577281590, guid: 8a1c5e051fa06e047acf5827d9a30b82,
         type: 3}
       propertyPath: m_textInfo.pageCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8121021862577281590, guid: 8a1c5e051fa06e047acf5827d9a30b82,
         type: 3}

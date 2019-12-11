@@ -316,6 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b1c7996425c414398845dbf67db349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _localization: {fileID: 0}
 --- !u!1 &8121021861716409976
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,7 +558,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: battlewin
+  m_text: battle_win_message
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9917367b538eb064d848221fde25ffed, type: 2}
   m_sharedMaterial: {fileID: -6580228756896398948, guid: 9917367b538eb064d848221fde25ffed,
@@ -662,3 +663,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b1c7996425c414398845dbf67db349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _localization: {fileID: 0}

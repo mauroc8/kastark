@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f67132297df6aef40a444404bb5e829a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameSettings: {fileID: 11400000, guid: 5bf8decad7da16c449c6e196d9324aa3, type: 2}
 --- !u!114 &7406422023698090520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35,7 +34,7 @@ PrefabInstance:
     - target: {fileID: 2716144974643876491, guid: 93624870c11827845b6604a49dc74825,
         type: 3}
       propertyPath: m_Name
-      value: LanguageMenuButton2
+      value: LanguageMenuButton
       objectReference: {fileID: 0}
     - target: {fileID: 2716144974643876492, guid: 93624870c11827845b6604a49dc74825,
         type: 3}
@@ -177,7 +176,33 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 2716144975717753946, guid: 93624870c11827845b6604a49dc74825,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4292410111
+      objectReference: {fileID: 0}
+    - target: {fileID: 2716144975717753946, guid: 93624870c11827845b6604a49dc74825,
+        type: 3}
+      propertyPath: m_margin.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2716144975717753946, guid: 93624870c11827845b6604a49dc74825,
+        type: 3}
+      propertyPath: m_margin.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2716144975717753946, guid: 93624870c11827845b6604a49dc74825,
+        type: 3}
+      propertyPath: m_margin.z
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2716144975717753946, guid: 93624870c11827845b6604a49dc74825,
+        type: 3}
+      propertyPath: m_margin.w
+      value: 30
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4629904707459100505, guid: 93624870c11827845b6604a49dc74825, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 93624870c11827845b6604a49dc74825, type: 3}
 --- !u!1 &6835159482184510946 stripped
 GameObject:

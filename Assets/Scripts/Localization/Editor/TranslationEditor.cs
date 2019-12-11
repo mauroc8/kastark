@@ -32,7 +32,7 @@ public class LocalizationWindow : EditorWindow
 
         GUILayout.Space(10);
 
-        WithinHorizontalGroup(() =>
+        GUILayout.BeginHorizontal();
         {
             GUILayout.Label("Key", GUILayout.Width(110));
 
@@ -41,7 +41,8 @@ public class LocalizationWindow : EditorWindow
 
             // Reserve space for "Delete" and "Down" buttons
             GUILayout.Space(110);
-        });
+        }
+        GUILayout.EndHorizontal();
 
         foreach (var entry in localization.entries)
         {
@@ -69,10 +70,19 @@ public class LocalizationWindow : EditorWindow
 
         GUILayout.Space(10);
 
-        if (GUILayout.Button("New entry", GUILayout.MaxWidth(110)))
+        GUILayout.BeginHorizontal();
         {
-            localization.NewEntry();
+            if (GUILayout.Button("New entry", GUILayout.MaxWidth(110)))
+            {
+                localization.NewEntry();
+            }
+
+            if (GUILayout.Button("Save", GUILayout.MaxWidth(110)))
+            {
+                EditorUtility.SetDirty(localization);
+            }
         }
+        GUILayout.EndHorizontal();
 
         if (localization.HasQueuedActions)
         {
@@ -83,27 +93,5 @@ public class LocalizationWindow : EditorWindow
         }
 
         GUILayout.Space(10);
-
-        GUI.SetNextControlName("parent");
-        localization.parent = (Localization)EditorGUILayout.ObjectField(
-            "Parent",
-            localization.parent,
-            typeof(Localization),
-            false,
-            GUILayout.MaxWidth(350)
-        );
-    }
-
-    public static void WithinHorizontalGroup(Action draw)
-    {
-        GUILayout.BeginHorizontal();
-        draw.Invoke();
-        GUILayout.EndHorizontal();
-    }
-    public static void WithinVerticalGroup(Action draw)
-    {
-        GUILayout.BeginVertical();
-        draw.Invoke();
-        GUILayout.EndVertical();
     }
 }
