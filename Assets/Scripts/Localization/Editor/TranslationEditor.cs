@@ -80,18 +80,23 @@ public class LocalizationWindow : EditorWindow
             if (GUILayout.Button("Save", GUILayout.MaxWidth(110)))
             {
                 EditorUtility.SetDirty(localization);
+                Debug.Log($"{localization.name} saved.");
             }
         }
         GUILayout.EndHorizontal();
+
+        GUILayout.Space(10);
+
+        GUI.SetNextControlName("dummy");
+        EditorGUILayout.SelectableLabel(" ");
 
         if (localization.HasQueuedActions)
         {
             // If we edit an input while focused, its content doesn't get updated.
             // We need to move focus out.
-            EditorGUI.FocusTextInControl("parent");
+            EditorGUI.FocusTextInControl("dummy");
             localization.ExecuteQueuedActions();
         }
 
-        GUILayout.Space(10);
     }
 }
