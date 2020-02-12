@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class AttackController : MonoBehaviour
+public class AttackController : StreamBehaviour
 {
     [SerializeField] GameObject _trail;
     [SerializeField] CountdownController _countdownController;
@@ -12,60 +12,66 @@ public class AttackController : MonoBehaviour
     [Header("Event")]
     [SerializeField] UnityEvent _castEndEvent;
 
-    [Header("Countdown time")]
+    [Header("Settings")]
     [SerializeField] float _countdownTime = 3.5f;
+    [SerializeField] int _maxDamage = 5;
 
     int _damageMade;
-
-    void OnEnable()
-    {
-        _countdownController.StartCountdown(_countdownTime);
-        _damageMade = 0;
-        _cast = false;
-    }
 
     AttackTrail _attackTrail;
     bool _cast;
 
-    void Update()
+    protected override void Awake()
     {
-        if (_cast)
-            return;
+        var creature = GetContext<Creature>();
 
-        if (!_countdownController.IsRunning)
+        enableStream.Get(_ =>
         {
-            Close();
-            CastEnd();
-            return;
-        }
+            _countdownController.StartCountdown(_countdownTime);
+            _damageMade = 0;
+            _cast = false;
+        });
 
-        if (Input.GetMouseButtonDown(0))
+        creature.EventStream<CreatureEvts.ReceivedDamage>().Get(_ =>
         {
-            _attackTrail = Instantiate(_trail).GetComponent<AttackTrail>();
-            _attackTrail.Open(Input.mousePosition);
-        }
-        else if (_attackTrail != null)
-        {
-            if (Input.GetMouseButton(0) && !_attackTrail.IsOutOfBounds)
-            {
-                _attackTrail.Move(Input.mousePosition);
-            }
-            else
+            _damageMade++;
+
+            if (_damageMade >= _maxDamage)
             {
                 Close();
+                CastEnd();
             }
-        }
-    }
+        });
 
-    public void OnLifePointHit(GameObject lifePoint)
-    {
-        _damageMade++;
-
-        if (_damageMade >= 5)
+        updateStream.Get(_ =>
         {
-            Close();
-            CastEnd();
-        }
+            if (_cast)
+                return;
+
+            if (!_countdownController.IsRunning)
+            {
+                Close();
+                CastEnd();
+                return;
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                _attackTrail = Instantiate(_trail).GetComponent<AttackTrail>();
+                _attackTrail.Open(Input.mousePosition);
+            }
+            else if (_attackTrail != null)
+            {
+                if (Input.GetMouseButton(0) && !_attackTrail.IsOutOfBounds)
+                {
+                    _attackTrail.Move(Input.mousePosition);
+                }
+                else
+                {
+                    Close();
+                }
+            }
+        });
     }
 
     void Close()
@@ -79,4 +85,5 @@ public class AttackController : MonoBehaviour
         _cast = true;
         _castEndEvent.Invoke();
     }
+
 }

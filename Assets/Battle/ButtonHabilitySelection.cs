@@ -7,7 +7,7 @@ public class ButtonHabilitySelection : HabilitySelection
 {
     [SerializeField] UnityEvent _habilitySelectionStart;
     [SerializeField] UnityEvent _habilitySelectionEnd;
-    
+
     TaskCompletionSourceWithAutoCancel<Hability> _taskCompletionSource;
 
     public override Task<Hability> SelectHabilityAsync(CancellationToken token)

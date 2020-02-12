@@ -1,29 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Events
+namespace GlobalEvents
 {
-    public class GameEvent { }
+    public class GlobalEvent { }
 
     public static class EventController
     {
-        delegate void EventDelegate(GameEvent eventData);
+        static Dictionary<System.Type, Action<GlobalEvent>> _listeners = new Dictionary<System.Type, Action<GlobalEvent>>();
 
-        static Dictionary<System.Type, EventDelegate> _listeners = new Dictionary<System.Type, EventDelegate>();
+        static Dictionary<System.Delegate, Action<GlobalEvent>> _delegateLookup =
+            new Dictionary<System.Delegate, Action<GlobalEvent>>();
 
-        static Dictionary<System.Delegate, EventDelegate> _delegateLookup =
-            new Dictionary<System.Delegate, EventDelegate>();
-
-        public delegate void EventDelegate<T>(T eventData) where T : GameEvent;
-
-        public static void AddListener<T>(EventDelegate<T> listener) where T : GameEvent
+        public static void AddListener<T>(Action<T> listener) where T : GlobalEvent
         {
             if (_delegateLookup.ContainsKey(listener)) return;
 
             //Create a generic delegate from non-generic param.
-            EventDelegate genericListener = (eventData) => listener((T)eventData);
+            Action<GlobalEvent> genericListener = (eventData) => listener((T)eventData);
             _delegateLookup[listener] = genericListener;
-            EventDelegate tempListener;
+            Action<GlobalEvent> tempListener;
 
             if (_listeners.TryGetValue(typeof(T), out tempListener))
             {
@@ -36,12 +33,12 @@ namespace Events
             }
         }
 
-        public static void RemoveListener<T>(EventDelegate<T> listener) where T : GameEvent
+        public static void RemoveListener<T>(Action<T> listener) where T : GlobalEvent
         {
-            EventDelegate genericListener;
+            Action<GlobalEvent> genericListener;
             if (!_delegateLookup.TryGetValue(listener, out genericListener)) return;
 
-            EventDelegate tempListener;
+            Action<GlobalEvent> tempListener;
 
             if (_listeners.TryGetValue(typeof(T), out tempListener))
             {
@@ -63,9 +60,9 @@ namespace Events
             _delegateLookup.Remove(listener);
         }
 
-        public static void TriggerEvent(GameEvent evt)
+        public static void TriggerEvent(GlobalEvent evt)
         {
-            EventDelegate listener;
+            Action<GlobalEvent> listener;
             if (_listeners.TryGetValue(evt.GetType(), out listener))
             {
                 listener.Invoke(evt);

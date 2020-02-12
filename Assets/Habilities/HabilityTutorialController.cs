@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Events;
+using GlobalEvents;
 
 public class HabilityTutorialController : MonoBehaviour
 {
@@ -22,7 +22,7 @@ public class HabilityTutorialController : MonoBehaviour
             _tutorial.SetActive(true);
         else
             _controller.enabled = true;
-        
+
         _timesCast++;
     }
 

@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Events;
+using ListExtensions;
 
-public class CreatureColorController : MonoBehaviour
+public class CreatureColorController : StreamBehaviour
 {
     [SerializeField] MultiColorController _creatureColorController = null;
 
@@ -11,20 +11,25 @@ public class CreatureColorController : MonoBehaviour
     [SerializeField] Color _healColor = Color.green;
     [SerializeField] Color _shieldColor = Color.gray;
     [SerializeField] Color _damageColor = Color.red;
-    [SerializeField] Color _deadColor   = Color.black;
+    [SerializeField] Color _deadColor = Color.black;
 
-    public void OnLifePointHit(GameObject lifePoint)
+    protected override void Awake()
     {
-        _creatureColorController.FadeAndReturn(_damageColor, 0.1f, 0.3f);
+        var creature = GetContext<Creature>();
+
+        creature.EventStream<CreatureEvts.ReceivedDamage>().Get(_ =>
+        {
+            _creatureColorController.FadeAndReturn(_damageColor, 0.1f, 0.3f);
+        });
+
+        creature.EventStream<CreatureEvts.ReceivedHeal>().Get(_ =>
+        {
+            _creatureColorController.FadeAndReturn(_healColor, 0.1f, 0.3f);
+        });
     }
 
     public void ReceiveShield(float shield)
     {
         _creatureColorController.FadeAndReturn(_shieldColor, 0.1f, 0.3f);
-    }
-
-    public void ReceiveHeal(float heal)
-    {
-        _creatureColorController.FadeAndReturn(_healColor, 0.1f, 0.3f);
     }
 }

@@ -23,7 +23,7 @@ public class MagicEnergy : MonoBehaviour
             Camera.main.transform.position + Camera.main.transform.forward * _distanceToCamera);
 
         Position = screenPosition;
-        Move(screenPosition);
+        //Move(screenPosition);
     }
 
     [SerializeField] float _minTargetSeekDistanceVh = 0.1f;
@@ -51,7 +51,10 @@ public class MagicEnergy : MonoBehaviour
 
             if (target != null && target.CompareTag(_enemyTeam.ToString()))
             {
-                target.GetComponent<LifePointController>()?.GetsHit();
+                var lifePoint = target.GetComponent<LifePointController>();
+
+                if (lifePoint != null)
+                    lifePoint.Hit();
             }
         }
     }

@@ -17,11 +17,13 @@ public abstract class MultiAlphaController : MonoBehaviour
 
     public virtual void FadeOut(float duration, float power = 1, Action callback = null)
     {
+        StopAllCoroutines();
         StartCoroutine(FadeCoroutine(1, 0, duration, power, callback));
     }
 
     public virtual void FadeIn(float duration, float power = 1, Action callback = null)
     {
+        StopAllCoroutines();
         StartCoroutine(FadeCoroutine(0, 1, duration, power, callback));
     }
 
@@ -38,7 +40,7 @@ public abstract class MultiAlphaController : MonoBehaviour
         while (Time.time < startTime + duration)
         {
             float t = Mathf.Pow((Time.time - startTime) / duration, power);
-            Alphas = startAlphas.Lerp(endAlphas, t, Mathf.Lerp);
+            Alphas = ListExtension.Lerp(startAlphas, endAlphas, t, Mathf.Lerp);
             yield return null;
         }
 

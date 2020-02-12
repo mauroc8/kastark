@@ -89,7 +89,7 @@ public abstract class MultiColorController : MultiAlphaController
         while (Time.time < startTime + duration)
         {
             float t = Mathf.Pow((Time.time - startTime) / duration, power);
-            MyColors = startColors.Lerp(endColors, t, Color.Lerp);
+            MyColors = ListExtension.Lerp(startColors, endColors, t, Color.Lerp);
             yield return null;
         }
 

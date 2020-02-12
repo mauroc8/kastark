@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Events;
+using GlobalEvents;
 using UnityEngine;
 
 public class BeginBattleCameraAnimation : MonoBehaviour

@@ -64,7 +64,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.2, y: 93.4}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 492.2, y: 102.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3297593854191360117
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 257
+  m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -218,110 +218,6 @@ Transform:
   m_Father: {fileID: 4467861227661026972}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2445560315112356021
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1808964478692034005}
-  - component: {fileID: 5327399731725055372}
-  - component: {fileID: 5494310712097750913}
-  - component: {fileID: 4036958167721183617}
-  - component: {fileID: 3651320565295135783}
-  m_Layer: 8
-  m_Name: LifePoint State
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1808964478692034005
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2445560315112356021}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4386123551867602528}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5327399731725055372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2445560315112356021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b26106ef7ecb3147a69fed5ebf61a11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _idleState: {fileID: 5494310712097750913}
-  _capsuleSpinState: {fileID: 4036958167721183617}
-  _beltSpinState: {fileID: 3651320565295135783}
---- !u!114 &5494310712097750913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2445560315112356021}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b10c92ec127c7343bdf4e68718b46e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lifePointsManager: {fileID: 4989046815891231472}
---- !u!114 &4036958167721183617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2445560315112356021}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16cd670322d207a4b86d76f2f0db8c59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: El abrazo de la serpiente
-  _lifePointsManager: {fileID: 4989046815891231472}
-  _spinSpeed: 4.47
-  _spinRadius: 3.55
-  _minHeight: 0.061
-  _maxHeight: 0.924
-  _amountOfTurns: 1.3
-  _oscillationAmount: 0.038
-  _oscillationSpeed: 1.56
---- !u!114 &3651320565295135783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2445560315112356021}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16cd670322d207a4b86d76f2f0db8c59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Belt
-  _lifePointsManager: {fileID: 4989046815891231472}
-  _spinSpeed: 10
-  _spinRadius: 8
-  _minHeight: 0.5
-  _maxHeight: 0.5
-  _amountOfTurns: 1
-  _oscillationAmount: 0.053
-  _oscillationSpeed: 1
 --- !u!1 &4590038933085161927
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,7 +391,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.3
+  m_Time: 0.1
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.6
@@ -558,7 +454,7 @@ TrailRenderer:
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.1
+  m_MinVertexDistance: 0.01
   m_Autodestruct: 0
   m_Emitting: 0
 --- !u!114 &6972650348144212200
@@ -622,7 +518,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7739504722457091520
 RectTransform:
   m_ObjectHideFlags: 0
@@ -944,7 +840,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7739504723012522029
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1013,6 +909,7 @@ GameObject:
   - component: {fileID: 6857939913626060271}
   - component: {fileID: 7739504723204175227}
   - component: {fileID: 1137901453618565141}
+  - component: {fileID: 4704159093184953845}
   m_Layer: 0
   m_Name: Creature
   m_TagString: Player
@@ -1086,55 +983,18 @@ MonoBehaviour:
   maxHealth: 10
   head: {fileID: 3303938696963508319}
   feet: {fileID: 7129928038216873559}
-  _habilitySelection: {fileID: 0}
-  _turnStartEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5327399731725055372}
-        m_MethodName: OnTurnStart
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  _habilitySelectedEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5327399731725055372}
-        m_MethodName: OnHabilitySelect
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  _turnEndEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5327399731725055372}
-        m_MethodName: OnTurnEnd
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+--- !u!114 &4704159093184953845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7739504723204175231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36101d5f6bdf17b4db3ba118cc4ae590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7739504723813171490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1152,7 +1012,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7739504723813171491
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1242,7 +1102,7 @@ Transform:
   - {fileID: 4412221759629838787}
   - {fileID: 244201974000114621}
   m_Father: {fileID: 4386123551867602528}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &2098915258047056539
 SphereCollider:
@@ -1269,44 +1129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7b848233bbab141a71d8ab0f3e856f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lifePointHitEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1137901453618565141}
-        m_MethodName: OnLifePointHit
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 4989046815891231472}
-        m_MethodName: OnLifePointHit
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7739504723204175227}
-        m_MethodName: OnLifePointHit
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: LifePointHitEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
   alphaController: {fileID: 4745430460988929825}
 --- !u!114 &4745430460988929825
 MonoBehaviour:
@@ -1348,7 +1170,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1808964478692034005}
   - {fileID: 5944706539731187505}
   m_Father: {fileID: 7739504723204175228}
   m_RootOrder: 0
@@ -1365,5 +1186,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68eb2680517bce64f823d4c9cf879ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _creature: {fileID: 1137901453618565141}
   _lifePoint: {fileID: 7822176353926103582}

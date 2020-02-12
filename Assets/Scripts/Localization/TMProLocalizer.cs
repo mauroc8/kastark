@@ -1,42 +1,30 @@
 using UnityEngine;
 using TMPro;
-using Events;
+using GlobalEvents;
+using System;
 
-public class LanguageChangeEvent : GameEvent { }
+public class LanguageChangeEvent : GlobalEvent { }
 
 [RequireComponent(typeof(TextMeshProUGUI))]
-public class TMProLocalizer : MonoBehaviour
+public class TMProLocalizer : StreamBehaviour
 {
-    [SerializeField] Localization _localization;
-    string _key;
-
-    void Start()
+    protected override void Awake()
     {
-        if (_localization == null)
-            _localization = GetComponentInParent<LocalizationSource>()?.localization;
+        var localizationSource = GetContext<LocalizationSource>();
 
-        if (_localization == null)
-            Debug.LogError(
-                "TMProLocalizer needs to have a _localization, or an available LocalizationSource" +
-                " in a parent."
-            );
+        var localization = localizationSource.localization;
 
-        _key = GetComponent<TextMeshProUGUI>().text;
+        var key = GetComponent<TextMeshProUGUI>().text;
 
-        OnLanguageChange(null);
-    }
+        Action changeLanguage = () =>
+        {
+            if (localization == null) return;
 
-    void OnEnable()
-    { EventController.AddListener<LanguageChangeEvent>(OnLanguageChange); }
+            GetComponent<TextMeshProUGUI>().text =
+                localization.GetLocalizedString(key);
+        };
 
-    void OnDisable()
-    { EventController.RemoveListener<LanguageChangeEvent>(OnLanguageChange); }
-
-    void OnLanguageChange(LanguageChangeEvent evt)
-    {
-        if (_localization == null) return;
-
-        GetComponent<TextMeshProUGUI>().text =
-            _localization.GetLocalizedString(_key);
+        startStream.Do(changeLanguage);
+        GlobalEventStream<LanguageChangeEvent>().Do(changeLanguage);
     }
 }

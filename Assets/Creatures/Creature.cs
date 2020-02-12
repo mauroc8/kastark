@@ -1,54 +1,192 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Events;
+using ListExtensions;
 
-public class Creature : MonoBehaviour
+
+// State ------------------
+
+public struct CreatureState
 {
-    [Header("Information and stats")]
+    public List<LifePointState> lifePoints;
+}
+
+
+
+// Events ------------------
+
+public interface CreatureEvt
+{
+}
+
+namespace CreatureEvts
+{
+    public struct ReceivedDamage : CreatureEvt { }
+
+    public struct ReceivedHeal : CreatureEvt { }
+}
+
+
+
+// Creature -------------------------------------------------------
+
+
+public class Creature : StreamBehaviour<CreatureState, CreatureEvt>
+{
+    [Header("Params")]
+
     public string creatureName;
     public CreatureKind species;
     public TeamId team;
-    public float maxHealth = 10;
+    public int maxHealth = 10;
 
     public Transform head;
     public Transform feet;
 
     public float Height => Vector3.Distance(head.position, feet.position);
 
-    [NonSerialized] public float health;
+    [NonSerialized] public int health;
     [NonSerialized] public float shield;
 
     public bool IsAlive => health > 0;
 
-    [Header("Behaviour related")]
-    [SerializeField] HabilitySelection _habilitySelection;
+    public CreatureTurn Turn => GetComponent<CreatureTurn>();
 
-    [Header("Events")]
-    [SerializeField] Event _habilitySelectEvent;
-    [SerializeField] Event _turnEndEvent;
 
-    void Awake()
+
+    protected override void Awake()
     {
         health = maxHealth;
+
+        // Initial state -----------------
+
+        stateStream.Push(new CreatureState
+        {
+            lifePoints =
+                    ListExtension.Repeat(
+                        LifePointState.Idle,
+                        maxHealth
+                    )
+        });
+
+
+        // Battle Events -----------------------------------------
+
+
+        var battle = GetContext<Battle>();
+
+
+        battle.EventStream<BattleEvts.CreatureBeganAttack>().Get(evt =>
+        {
+            if (evt.team != team)
+            {
+                // Enemy Began Attack.
+
+                ExposeLifePoints();
+            }
+        });
+
+
+        battle.EventStream<BattleEvts.CreatureCeasedAttack>().Get(evt =>
+        {
+            if (evt.team != team)
+            {
+                // Enemy Is About To End Attack.
+
+                HideLifePoints();
+            }
+        });
     }
 
-    public async Task TurnAsync(CancellationToken token)
+
+
+    // Creature Events ------------------------------
+
+
+    public void LifePointWasHit(int index)
     {
-        Debug.Log($"{creatureName}'s turn");
+        stateStream.Update(state =>
+        {
+            state.lifePoints =
+                state.lifePoints.MapAtIndex(index, _ => LifePointState.Dead);
 
-        var selectedHability = await _habilitySelection.SelectHabilityAsync(token);
-        _habilitySelectEvent.Invoke();
 
-        await selectedHability.CastAsync(token);
-        _turnEndEvent.Invoke();
+            return state;
+        });
+
+        eventStream.Push(new CreatureEvts.ReceivedDamage { });
     }
 
-    public void OnLifePointHit(GameObject lifePoint)
+
+    public void HealthPotionWasDrank(int heal)
     {
-        health--;
+        for (int i = 0; i < heal; i++)
+            SpawnLifePoint();
     }
 
+    private void SpawnLifePoint()
+    {
+        stateStream.Update(state =>
+        {
+            var indexOfFirstDead = state.lifePoints.IndexOf(LifePointState.Dead);
+
+            if (indexOfFirstDead == -1)
+                return state;
+
+            state.lifePoints =
+                state.lifePoints
+                    .MapAtIndex(indexOfFirstDead, _ => LifePointState.Idle);
+
+            return state;
+        });
+
+        eventStream.Push(new CreatureEvts.ReceivedHeal { });
+    }
+
+
+    public void HabilityWasSelected(HabilityId habilityId)
+    {
+        if (habilityId == HabilityId.Attack || habilityId == HabilityId.Magic)
+        {
+            GetContext<Battle>().CreatureBeganAttack(team);
+        }
+    }
+
+
+    public void TurnIsAboutToEnd()
+    {
+        GetContext<Battle>().CreatureCeasedAttack(team);
+    }
+
+
+    private void ExposeLifePoints()
+    {
+        stateStream.Update(state =>
+        {
+            LifePointState newLifePointState;
+
+            if (UnityEngine.Random.Range(0, 100) < 50)
+                newLifePointState = LifePointState.Belt;
+            else
+                newLifePointState = LifePointState.Dance;
+
+            state.lifePoints =
+                state.lifePoints
+                    .Map(lp => _.ChangeLifePointAnimation(lp, newLifePointState));
+
+            return state;
+        });
+    }
+
+    private void HideLifePoints()
+    {
+        stateStream.Update(state =>
+        {
+            state.lifePoints =
+                state.lifePoints
+                    .Map(lp => _.ChangeLifePointAnimation(lp, LifePointState.Idle));
+
+            return state;
+        });
+    }
 }

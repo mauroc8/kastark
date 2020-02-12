@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LocalizationSource : MonoBehaviour
+public class LocalizationSource : MonoBehaviour, StreamContext
 {
     public Localization localization;
 }

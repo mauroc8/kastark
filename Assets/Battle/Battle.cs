@@ -1,76 +1,46 @@
-﻿using System.Linq;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Threading;
-using System.Threading.Tasks;
-using System;
-using UnityEngine.Events;
+using System.Collections.Generic;
+using ListExtensions;
+using System.Linq;
 
-public class Battle : MonoBehaviour
+public class Battle : StreamBehaviour<Void, BattleEvt>
 {
-    public Team playerTeam;
-    public Team enemyTeam;
-
-    [SerializeField]
-    UnityEvent _battleWinEvent;
-
-    [SerializeField]
-    UnityEvent _battleLoseEvent;
-
-    CancellationTokenSource _cancellationTokenSource;
-
-    async void OnEnable()
+    protected override void Awake()
     {
-        _cancellationTokenSource = new CancellationTokenSource();
-
-        try
-        {
-            await BattleStart(
-                _cancellationTokenSource.Token
-            );
-            _cancellationTokenSource.Cancel();
-            _cancellationTokenSource.Dispose();
-            _cancellationTokenSource = null;
-        }
-#pragma warning disable 168
-        catch (TaskCanceledException e) { }
-#pragma warning restore 168
     }
 
-    void OnDisable()
+    public void CreatureBeganAttack(TeamId team)
     {
-        _cancellationTokenSource?.Cancel();
-        _cancellationTokenSource?.Dispose();
-        _cancellationTokenSource = null;
+        eventStream.Push(new BattleEvts.CreatureBeganAttack { team = team });
     }
 
-    async Task BattleStart(CancellationToken token)
+    public void CreatureCeasedAttack(TeamId team)
     {
-        var teams = new Team[] { playerTeam, enemyTeam };
+        eventStream.Push(new BattleEvts.CreatureCeasedAttack { team = team });
+    }
+}
 
-        while (true)
-        {
-            foreach (var team in teams)
-            {
-                foreach (var creature in team.Creatures)
-                {
-                    if (!playerTeam.IsAlive)
-                    {
-                        _battleLoseEvent.Invoke();
-                        return;
-                    }
+// State ??
 
-                    if (!enemyTeam.IsAlive)
-                    {
-                        _battleWinEvent.Invoke();
-                        return;
-                    }
+public struct BattleState
+{
+}
 
-                    token.ThrowIfCancellationRequested();
+// Events ----------------
 
-                    await creature.TurnAsync(token);
-                }
-            }
-        }
+public interface BattleEvt
+{
+}
+
+namespace BattleEvts
+{
+    public struct CreatureBeganAttack : BattleEvt
+    {
+        public TeamId team;
+    }
+
+    public struct CreatureCeasedAttack : BattleEvt
+    {
+        public TeamId team;
     }
 }

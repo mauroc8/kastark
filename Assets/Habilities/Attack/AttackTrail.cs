@@ -106,8 +106,10 @@ public class AttackTrail : MonoBehaviour
 
         if (target != null && target.CompareTag(_enemyTeam.ToString()))
         {
-            var lifePointController = target.GetComponent<LifePointController>();
-            lifePointController?.GetsHit();
+            var lifePoint = target.GetComponent<LifePointController>();
+
+            if (lifePoint != null)
+                lifePoint.Hit();
         }
     }
 }

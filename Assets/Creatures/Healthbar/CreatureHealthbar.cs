@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Events;
+using GlobalEvents;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,20 +24,24 @@ public class CreatureHealthbar : MonoBehaviour
     Transform _headTransform;
     float _distanceToHeadPx;
 
-    void Start() {
+    void Start()
+    {
         _healthbarTransform = _healthbarGroup.transform;
         _headTransform = _creature.head;
         _distanceToHeadPx = Screen.height * _distanceToHeadVH;
     }
 
-    void Update() {
-        if (_show) {
+    void Update()
+    {
+        if (_show)
+        {
             Vector2 pos = Camera.main.WorldToScreenPoint(_headTransform.position);
             pos.y += _distanceToHeadPx;
-            
+
             _healthbarTransform.position = pos;
 
-            if (!_lastShow) {
+            if (!_lastShow)
+            {
                 _healthbarGroup.alpha = 1;
             }
 
@@ -55,8 +59,11 @@ public class CreatureHealthbar : MonoBehaviour
             _healthImage.fillAmount = healthFillAmount;
             _shieldImage.fillAmount = shieldFillAmount;
 
-        } else {
-            if (_lastShow) {
+        }
+        else
+        {
+            if (_lastShow)
+            {
                 _healthbarGroup.alpha = 0;
             }
         }
