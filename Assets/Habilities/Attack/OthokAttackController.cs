@@ -34,7 +34,7 @@ public class OthokAttackController : MonoBehaviour
         {
             // Pick a target life point
             var targetLifePoints = targetLifePointManager.LifePoints;
-            var targetLifePoint = targetLifePoints[targetLifePoints.Count / 2];
+            var targetLifePoint = targetLifePoints[Random.Range(0, targetLifePoints.Count - 1)];
             var targetLifePointPosition = targetLifePoint.transform.position;
 
             // Pick a short path centered on (0, 0)

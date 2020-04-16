@@ -5,17 +5,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System;
 using UnityEngine.Events;
+using System.Collections;
 
 public class BattleManager : MonoBehaviour
 {
     public Team playerTeam;
     public Team enemyTeam;
 
-    [SerializeField]
-    UnityEvent _battleWinEvent;
-
-    [SerializeField]
-    UnityEvent _battleLoseEvent;
+    public BattleEnd _battleEnd = null;
 
     CancellationTokenSource _cancellationTokenSource;
 
@@ -34,7 +31,7 @@ public class BattleManager : MonoBehaviour
         }
         catch (TaskCanceledException e)
         {
-            // Evitamos un warning ...
+            // Evitamos un warning ... :facepalm:
             if (e.GetType() == typeof(TaskCanceledException))
             {
             }
@@ -58,23 +55,49 @@ public class BattleManager : MonoBehaviour
             {
                 foreach (var creature in team.Creatures)
                 {
-                    if (!playerTeam.IsAlive)
-                    {
-                        _battleLoseEvent.Invoke();
-                        return;
-                    }
-
-                    if (!enemyTeam.IsAlive)
-                    {
-                        _battleWinEvent.Invoke();
-                        return;
-                    }
-
                     token.ThrowIfCancellationRequested();
 
                     await creature.Turn.TurnAsync(token);
+
+                    if (BattleWinStatus.battleEnded)
+                    {
+                        StartCoroutine(BattleEndCoroutine(BattleWinStatus.looser));
+                        break;
+                    }
                 }
             }
+        }
+    }
+
+    IEnumerator BattleEndCoroutine(Creature looser)
+    {
+        if (_battleEnd != null)
+        {
+            if (looser.name == "Aira")
+                _battleEnd.PlayerLooses();
+            else
+                _battleEnd.PlayerWins();
+        }
+
+        var animator =
+            looser.gameObject.GetComponent<Animator>();
+
+        if (animator != null)
+        {
+            animator.SetBool("is_dead", true);
+        }
+
+        yield return new WaitForSeconds(1.5f);
+
+        if (looser.name == "Aira")
+            WorldBattleCommunication.AiraLostBattle();
+        else
+            WorldBattleCommunication.OthokLostBattle();
+
+
+        if (animator != null)
+        {
+            animator.SetBool("is_dead", false);
         }
     }
 }

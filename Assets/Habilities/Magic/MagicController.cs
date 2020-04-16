@@ -11,6 +11,7 @@ public class MagicController : MonoBehaviour
     [Header("Refs")]
     [SerializeField] MagicEnergy _magicEnergy;
     [SerializeField] CountdownController _countdown;
+    [SerializeField] Animator _animator = null;
 
     [Header("Position near creature's head")]
     [SerializeField] Creature _creature;
@@ -34,6 +35,9 @@ public class MagicController : MonoBehaviour
             Camera.main.WorldToScreenPoint(_creature.head.position) +
             new Vector3(_offsetVh.x * Screen.height, _offsetVh.y * Screen.height, 0)
         );
+
+        if (_animator != null)
+            _animator.SetTrigger("attack_magic");
     }
 
     void Update()

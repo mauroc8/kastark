@@ -10,7 +10,7 @@ public class TMProLocalizer : StreamBehaviour
 {
     protected override void Awake()
     {
-        var localizationSource = GetContext<LocalizationSource>();
+        var localizationSource = GetComponentInParent<LocalizationSource>();
 
         var localization = localizationSource.localization;
 
@@ -24,7 +24,7 @@ public class TMProLocalizer : StreamBehaviour
                 localization.GetLocalizedString(key);
         };
 
-        startStream.Do(changeLanguage);
+        start.Do(changeLanguage);
         GlobalEventStream<LanguageChangeEvent>().Do(changeLanguage);
     }
 }

@@ -8,6 +8,7 @@ public class AttackController : StreamBehaviour
 {
     [SerializeField] GameObject _trail;
     [SerializeField] CountdownController _countdownController;
+    [SerializeField] Animator _animator = null;
 
     [Header("Event")]
     [SerializeField] UnityEvent _castEndEvent;
@@ -23,27 +24,29 @@ public class AttackController : StreamBehaviour
 
     protected override void Awake()
     {
-        var creature = GetContext<Creature>();
+        var creature = GetComponentInParent<Creature>();
 
-        enableStream.Get(_ =>
+        enable.Get(_ =>
         {
             _countdownController.StartCountdown(_countdownTime);
             _damageMade = 0;
             _cast = false;
         });
 
-        creature.EventStream<CreatureEvts.ReceivedDamage>().Get(_ =>
-        {
-            _damageMade++;
-
-            if (_damageMade >= _maxDamage)
+        creature.Events
+            .FilterMap(Optional.FromCast<CreatureEvt, CreatureEvts.ReceivedDamage>)
+            .Get(_ =>
             {
-                Close();
-                CastEnd();
-            }
-        });
+                _damageMade++;
 
-        updateStream.Get(_ =>
+                if (_damageMade >= _maxDamage)
+                {
+                    Close();
+                    CastEnd();
+                }
+            });
+
+        update.Get(_ =>
         {
             if (_cast)
                 return;
@@ -59,6 +62,9 @@ public class AttackController : StreamBehaviour
             {
                 _attackTrail = Instantiate(_trail).GetComponent<AttackTrail>();
                 _attackTrail.Open(Input.mousePosition);
+
+                if (_animator != null)
+                    _animator.SetTrigger("attack_sword");
             }
             else if (_attackTrail != null)
             {

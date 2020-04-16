@@ -1,7 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using GlobalEvents;
-using NodeExtensions;
 using UnityEngine;
 
 public class TurnStartEvent : GlobalEvent
@@ -19,7 +18,7 @@ public class CreatureTurn : MonoBehaviour
 
     void Awake()
     {
-        creature = this.GetContext<Creature>();
+        creature = GetComponentInParent<Creature>();
     }
 
     public async Task TurnAsync(CancellationToken token)

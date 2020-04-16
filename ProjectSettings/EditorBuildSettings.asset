@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/MainMenu/MainMenu.unity
     guid: e62f9fdf21b647142b4d80a5e56a9831
   - enabled: 1
+    path: Assets/World/World.unity
+    guid: bcad04b9676ce0a449df59ab54df0dbe
+  - enabled: 1
     path: Assets/Battle/BattleScene.unity
     guid: d9e198d893d8d024d9b684b21e6f88f2
   m_configObjects: {}

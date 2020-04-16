@@ -31,7 +31,7 @@ namespace CreatureEvts
 // Creature -------------------------------------------------------
 
 
-public class Creature : StreamBehaviour<CreatureState, CreatureEvt>
+public class Creature : StreamBehaviour
 {
     [Header("Params")]
 
@@ -45,76 +45,70 @@ public class Creature : StreamBehaviour<CreatureState, CreatureEvt>
 
     public float Height => Vector3.Distance(head.position, feet.position);
 
-    [NonSerialized] public int health;
-    [NonSerialized] public float shield;
+    [NonSerialized] public int health = 10;
+    [NonSerialized] public int shield = 0;
 
     public bool IsAlive => health > 0;
 
     public CreatureTurn Turn => GetComponent<CreatureTurn>();
 
+    // State
 
+    private CreatureState _state;
+
+    protected StreamSource<CreatureState> stateStream = new StreamSource<CreatureState>();
+    public Stream<CreatureState> State => stateStream;
+
+    protected StreamSource<CreatureEvt> eventStream = new StreamSource<CreatureEvt>();
+    public Stream<CreatureEvt> Events => eventStream;
 
     protected override void Awake()
     {
         health = maxHealth;
 
-        // Initial state -----------------
-
-        stateStream.Push(new CreatureState
+        start.Do(() =>
         {
-            lifePoints =
-                    ListExtension.Repeat(
-                        LifePointState.Idle,
-                        maxHealth
-                    )
+            _state =
+                new CreatureState
+                {
+                    lifePoints =
+                            ListExtension.Repeat(
+                                LifePointState.Idle,
+                                maxHealth
+                            )
+                };
+
+            stateStream.Push(_state);
         });
 
-
-        // Battle Events -----------------------------------------
-
-
-        var battle = GetContext<Battle>();
-
-
-        battle.EventStream<BattleEvts.CreatureBeganAttack>().Get(evt =>
-        {
-            if (evt.team != team)
+        stateStream
+            .Map(state =>
+                state.lifePoints
+                    .Filter(lifePoint => lifePoint != LifePointState.Dead)
+                    .Count)
+            .WithLastValue(maxHealth)
+            .Get((lastLifePoints, lifePoints) =>
             {
-                // Enemy Began Attack.
-
-                ExposeLifePoints();
-            }
-        });
-
-
-        battle.EventStream<BattleEvts.CreatureCeasedAttack>().Get(evt =>
-        {
-            if (evt.team != team)
-            {
-                // Enemy Is About To End Attack.
-
-                HideLifePoints();
-            }
-        });
+                if (lifePoints < lastLifePoints)
+                {
+                    eventStream.Push(new CreatureEvts.ReceivedDamage { });
+                }
+                else if (lifePoints > lastLifePoints)
+                {
+                    eventStream.Push(new CreatureEvts.ReceivedHeal { });
+                }
+            });
     }
 
 
-
-    // Creature Events ------------------------------
-
+    // Creature Events ------------------
 
     public void LifePointWasHit(int index)
     {
-        stateStream.Update(state =>
-        {
-            state.lifePoints =
-                state.lifePoints.MapAtIndex(index, _ => LifePointState.Dead);
+        _state.lifePoints =
+            _state.lifePoints.MapAtIndex(index, _ => LifePointState.Dead);
 
-
-            return state;
-        });
-
-        eventStream.Push(new CreatureEvts.ReceivedDamage { });
+        stateStream.Push(_state);
     }
 
 
@@ -126,67 +120,55 @@ public class Creature : StreamBehaviour<CreatureState, CreatureEvt>
 
     private void SpawnLifePoint()
     {
-        stateStream.Update(state =>
-        {
-            var indexOfFirstDead = state.lifePoints.IndexOf(LifePointState.Dead);
+        var indexOfDead = _state.lifePoints.IndexOf(LifePointState.Dead);
 
-            if (indexOfFirstDead == -1)
-                return state;
+        if (indexOfDead == -1)
+            return;
 
-            state.lifePoints =
-                state.lifePoints
-                    .MapAtIndex(indexOfFirstDead, _ => LifePointState.Idle);
+        _state.lifePoints =
+            _state.lifePoints.MapAtIndex(indexOfDead, _ => LifePointState.Idle);
 
-            return state;
-        });
-
-        eventStream.Push(new CreatureEvts.ReceivedHeal { });
+        stateStream.Push(_state);
     }
 
+    private Battle __battle = null;
+    private Battle _battle => __battle ?? (__battle = GetComponentInParent<Battle>());
 
     public void HabilityWasSelected(HabilityId habilityId)
     {
         if (habilityId == HabilityId.Attack || habilityId == HabilityId.Magic)
         {
-            GetContext<Battle>().CreatureBeganAttack(team);
+            _battle.CreatureBeganAttack(team);
         }
     }
 
-
     public void TurnIsAboutToEnd()
     {
-        GetContext<Battle>().CreatureCeasedAttack(team);
+        _battle.CreatureCeasedAttack(team);
     }
 
-
-    private void ExposeLifePoints()
+    public void AnimateLifePoints()
     {
-        stateStream.Update(state =>
-        {
-            LifePointState newLifePointState;
+        LifePointState newLifePointState;
 
-            if (UnityEngine.Random.Range(0, 100) < 50)
-                newLifePointState = LifePointState.Belt;
-            else
-                newLifePointState = LifePointState.Dance;
+        if (UnityEngine.Random.Range(0, 100) < 35)
+            newLifePointState = LifePointState.Belt;
+        else
+            newLifePointState = LifePointState.Dance;
 
-            state.lifePoints =
-                state.lifePoints
-                    .Map(lp => _.ChangeLifePointAnimation(lp, newLifePointState));
+        _state.lifePoints =
+            _state.lifePoints
+                .Map(lp => Functions.ChangeLifePointAnimation(lp, newLifePointState));
 
-            return state;
-        });
+        stateStream.Push(_state);
     }
 
-    private void HideLifePoints()
+    public void PauseLifePoints()
     {
-        stateStream.Update(state =>
-        {
-            state.lifePoints =
-                state.lifePoints
-                    .Map(lp => _.ChangeLifePointAnimation(lp, LifePointState.Idle));
+        _state.lifePoints =
+            _state.lifePoints
+                .Map(lp => Functions.ChangeLifePointAnimation(lp, LifePointState.Idle));
 
-            return state;
-        });
+        stateStream.Push(_state);
     }
 }

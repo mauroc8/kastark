@@ -41,6 +41,12 @@ public static class RaycastHelper
         return null;
     }
 
+    public static
+    Optional<GameObject> OptionalGameObjectAtScreenPoint(Vector2 screenPoint, int layerMask = 0)
+    {
+        return Optional.FromNullable(GetGameObjectAtScreenPoint(screenPoint, layerMask));
+    }
+
     public static GameObject SphereCastAtScreenPoint(Vector2 screenPoint, int layerMask = 0)
     {
         Ray ray = Camera.main.ScreenPointToRay(screenPoint);

@@ -67,6 +67,7 @@ namespace ListExtensions
 
             var list = new List<C>(minCount);
 
+            // Warning: O(n^2)
             for (int i = 0; i < minCount; i++)
             {
                 list.Add(map(self[i], other[i]));
@@ -90,7 +91,7 @@ namespace ListExtensions
         }
 
         public static
-        List<B> FilterMap<A, B>(this List<A> self, Func<A, Maybe<B>> filterMap)
+        List<B> FilterMap<A, B>(this List<A> self, Func<A, Optional<B>> filterMap)
         {
             return self
                 .Map(filterMap)

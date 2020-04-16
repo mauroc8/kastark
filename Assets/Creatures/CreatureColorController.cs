@@ -15,17 +15,21 @@ public class CreatureColorController : StreamBehaviour
 
     protected override void Awake()
     {
-        var creature = GetContext<Creature>();
+        var creature = GetComponentInParent<Creature>();
 
-        creature.EventStream<CreatureEvts.ReceivedDamage>().Get(_ =>
-        {
-            _creatureColorController.FadeAndReturn(_damageColor, 0.1f, 0.3f);
-        });
+        creature.Events
+            .FilterMap(Optional.FromCast<CreatureEvt, CreatureEvts.ReceivedDamage>)
+            .Get(_ =>
+            {
+                _creatureColorController.FadeAndReturn(_damageColor, 0.1f, 0.3f);
+            });
 
-        creature.EventStream<CreatureEvts.ReceivedHeal>().Get(_ =>
-        {
-            _creatureColorController.FadeAndReturn(_healColor, 0.1f, 0.3f);
-        });
+        creature.Events
+            .FilterMap(Optional.FromCast<CreatureEvt, CreatureEvts.ReceivedHeal>)
+            .Get(_ =>
+            {
+                _creatureColorController.FadeAndReturn(_healColor, 0.1f, 0.3f);
+            });
     }
 
     public void ReceiveShield(float shield)

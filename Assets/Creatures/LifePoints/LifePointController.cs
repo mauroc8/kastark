@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using static Functions;
 
 public enum LifePointState
 {
@@ -9,9 +10,11 @@ public enum LifePointState
     Dead
 };
 
-public static partial class _
+public static partial class Functions
 {
-    public static LifePointState ChangeLifePointAnimation(LifePointState lifePoint, LifePointState animation)
+    public static LifePointState ChangeLifePointAnimation(
+        LifePointState lifePoint,
+        LifePointState animation)
     {
         if (lifePoint == LifePointState.Dead)
             return lifePoint;
@@ -20,122 +23,187 @@ public static partial class _
     }
 }
 
+// Lifepoints always move spinning. `Spin` is how I call their movement.
+
+delegate SpinCoordinates Spin(float time);
+
+struct SpinCoordinates
+{
+    public PolarVector2 position;
+    public float height;
+
+    public SpinCoordinates(float radius, float polar, float height)
+    {
+        this.position = new PolarVector2(radius, polar);
+        this.height = height;
+    }
+
+    public Vector3 ToVector3()
+    {
+        var v2 = position.ToVector2();
+
+        return new Vector3
+        (
+            v2.x,
+            height,
+            v2.y
+        );
+    }
+
+    public static SpinCoordinates Lerp(SpinCoordinates from, SpinCoordinates to, float amount)
+    {
+        return new SpinCoordinates
+        {
+            position = PolarVector2.Lerp(from.position, to.position, amount),
+            height = Mathf.Lerp(from.height, to.height, amount)
+        };
+    }
+}
+
 public class LifePointController : StreamBehaviour
 {
-    private int _index = -1;
-    private Creature _creature;
-
-    [Header("Idle State")]
     public MultiAlphaController alphaController;
 
-    public void Init(int index)
+    private int _index = -1;
+    private int _maxIndex = -1;
+    private float _creatureHeight = -1;
+
+    private float _percentage => (float)_index / (float)_maxIndex;
+    private readonly float PHI = (1 + Mathf.Sqrt(5)) / 2;
+
+    public void Init(int index, int maxIndex, float creatureHeight)
     {
         _index = index;
+        _maxIndex = maxIndex;
+        _creatureHeight = creatureHeight;
+    }
+
+    SpinCoordinates danceSpin(float t)
+    {
+        return new SpinCoordinates
+        (
+            radius: 3.55f,
+            polar: Angle.Turn * (_index % 2 / 2 + _percentage + t / PHI),
+            height: (0.06f + _percentage * 0.84f) * _creatureHeight
+        );
+    }
+
+    SpinCoordinates beltSpin(float t)
+    {
+        return new SpinCoordinates
+        (
+            radius: 6.13f,
+            polar: _percentage * Angle.Turn + t * 2.4f,
+            height:
+                (0.5f
+                    + 0.17f * Mathf.Sin(_percentage * Angle.Turn * 1.63f + t * 3.3f)
+                ) * _creatureHeight
+        );
+    }
+
+    SpinCoordinates idleSpin(float t)
+    {
+        return new SpinCoordinates
+        (
+            radius: 4.6f,
+            polar: _percentage * Angle.Turn + t * 0.1f,
+            height:
+                0.23f * _creatureHeight
+                    + 0.06f * Mathf.Sin(_percentage * Angle.Turn + t * 1.6f)
+        );
+    }
+
+    SpinCoordinates deadSpin(float t)
+    {
+        return new SpinCoordinates
+        (
+            radius: 4.6f,
+            polar: _percentage * Angle.Turn + t * 0.1f,
+            height: 0
+        );
+    }
+
+    SpinCoordinates aboutToSpawnSpin(float t)
+    {
+        return new SpinCoordinates
+        (
+            radius: 4.6f,
+            polar: 0.07f,
+            height:
+                0.7f * _creatureHeight
+        );
     }
 
     protected override void Awake()
     {
+        // > Should have called Init() before SetActive(true).
         Debug.Assert(_index != -1);
 
-        _creature = GetContext<Creature>();
+        var creature = GetComponentInParent<Creature>();
 
         var stateChange =
-            _creature.StateStream
-                .Map(creature => creature.lifePoints[_index])
+            creature.State
+                .Map(state => state.lifePoints[_index])
                 .Lazy();
 
         stateChange
-            .Get(state =>
+            .WithLastValue(LifePointState.Idle)
+            .Get((lastState, state) =>
             {
                 if (state == LifePointState.Dead)
                 {
                     alphaController.FadeOut(0.3f, 2f);
                 }
-                else
+                else if (lastState == LifePointState.Dead)
                 {
                     alphaController.FadeIn(1.7f, 1f);
                 }
             });
 
-        var timeSinceLastChange =
-            stateChange
-                .StartWith(LifePointState.Idle)
-                .Map(_ => Time.time)
-                .AndThen(updateStream.Always)
-                .Map(time => Time.time - time);
-
-        var dancePosition = new LifePointSpinSettings
-        {
-            speed = 1.47f,
-            radius = 3.55f,
-            minHeight = 0.061f,
-            maxHeight = 0.924f,
-            amountOfTurns = 1.3f,
-            oscillationAmount = 0,
-            oscillationSpeed = 0
-        }.GetPosition(_index, _creature.maxHealth, _creature.Height);
-
-        var beltPosition = new LifePointSpinSettings
-        {
-            speed = 2,
-            radius = 6.13f,
-            minHeight = 0.5f,
-            maxHeight = 0.5f,
-            amountOfTurns = 1,
-            oscillationAmount = 0.07f,
-            oscillationSpeed = 9
-        }.GetPosition(_index, _creature.maxHealth, _creature.Height);
-
-        var idlePosition = new LifePointSpinSettings
-        {
-            speed = 0.11f,
-            radius = 4.6f,
-            minHeight = 0.23f,
-            maxHeight = 0.23f,
-            amountOfTurns = 1f,
-            oscillationAmount = 0.06f,
-            oscillationSpeed = 0.08f
-        }.GetPosition(_index, _creature.maxHealth, _creature.Height);
-
-        Func<float, Vector3> deadPosition = _ => Vector3.up * 6f;
 
         stateChange
-            .StartWith(LifePointState.Idle)
             .Map(state =>
                 state == LifePointState.Dance ?
-                    dancePosition :
+                    danceSpin :
                 state == LifePointState.Belt ?
-                    beltPosition :
+                    beltSpin :
                 state == LifePointState.Idle ?
-                    idlePosition :
+                    idleSpin :
                 state == LifePointState.Dead ?
-                    deadPosition :
-                    deadPosition)
-            .MapTuple(position => (transform.localPosition, position))
-            .AndThen((changePosition, position) =>
-                timeSinceLastChange
-                    .Map(time => time / 0.5f)
-                    .Map(t => Mathf.Pow(t, 0.4f))
-                    .Map(changeAnimation =>
-                        Vector3.Lerp(changePosition, position(Time.time), changeAnimation))
-            )
-            .Get(newPosition =>
+                    deadSpin :
+                    (Spin)idleSpin)
+            .WithLastValue(idleSpin)
+            .AndThen((lastSpin, spin) =>
             {
-                transform.localPosition = newPosition;
+                var duration = 0.4f;
+
+                if (lastSpin == deadSpin)
+                {
+                    // This just makes the spawn transition
+                    // different from the dead transition.
+                    lastSpin = aboutToSpawnSpin;
+                }
+
+                return
+                    stateChange
+                        .Map(_ => Time.time)
+                        .AndThen(update.Always)
+                        .Map(time => EaseInOut((Time.time - time) / duration))
+                        .Map(amount =>
+                        {
+                            return SpinCoordinates
+                                .Lerp(lastSpin(Time.time), spin(Time.time), amount)
+                                .ToVector3();
+                        });
+            })
+            .Get(position =>
+            {
+                transform.localPosition = position;
             });
-
-        enableStream.Do(() =>
-                _isHit = false);
     }
-
-    bool _isHit = false;
 
     public void Hit()
     {
-        if (_isHit) return;
-        _isHit = true;
-
-        _creature.LifePointWasHit(_index);
+        GetComponentInParent<Creature>().LifePointWasHit(_index);
     }
-
 }
