@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8166b30473f227a48a35a35d2751c74b, type: 3}
+  m_Name: CursorSkin
+  m_EditorClassIdentifier: 
+  _interactableTexture: {fileID: 2800000, guid: ee1b6f56f59885f47b71f54397c286c1,
+    type: 3}
+  _friendlyTexture: {fileID: 2800000, guid: 89913c10e17280a4b8f7302f39f28db9, type: 3}
+  _aggressiveTexture: {fileID: 2800000, guid: 861ea0d6afce8364587666216e2dd41e, type: 3}
+  _forbiddenTexture: {fileID: 2800000, guid: e947f1d3af4fc7242a2ea2a9ff3f9309, type: 3}
