@@ -27,6 +27,22 @@ public static class RaycastHelper
         return false;
     }
 
+    public static List<GameObject> RaycastCanvas(GraphicRaycaster raycaster, EventSystem eventSystem, Vector3 position)
+    {
+        PointerEventData pointerEventData =
+            new PointerEventData(eventSystem);
+
+        pointerEventData.position =
+            position;
+
+        List<RaycastResult> raycastResults =
+            new List<RaycastResult>();
+
+        raycaster.Raycast(pointerEventData, raycastResults);
+
+        return raycastResults.ConvertAll(result => result.gameObject);
+    }
+
     public static GameObject GetGameObjectAtScreenPoint(Vector2 screenPoint, int layerMask = 0)
     {
         Ray mRay = Camera.main.ScreenPointToRay(screenPoint);
@@ -47,12 +63,12 @@ public static class RaycastHelper
         return Optional.FromNullable(GetGameObjectAtScreenPoint(screenPoint, layerMask));
     }
 
-    public static GameObject SphereCastAtScreenPoint(Vector2 screenPoint, int layerMask = 0)
+    public static GameObject SphereCastAtScreenPoint(Vector2 screenPoint, int layerMask = 0, float radius = 1.0f)
     {
         Ray ray = Camera.main.ScreenPointToRay(screenPoint);
         RaycastHit hit;
 
-        if (Physics.SphereCast(ray, 0.6f, out hit, Mathf.Infinity, layerMask))
+        if (Physics.SphereCast(ray, radius, out hit, Mathf.Infinity, layerMask))
         {
             return hit.transform.gameObject;
         }

@@ -96,8 +96,9 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -172,11 +173,10 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: d556a43f1aff5fe4682d0188e97c1b01, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -202,10 +202,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 520879902}
     m_Modifications:
+    - target: {fileID: 4263303483284672560, guid: cc0a67343ba23194f90ae7f4e16631d0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6835159482184510946, guid: cc0a67343ba23194f90ae7f4e16631d0,
         type: 3}
       propertyPath: m_Name
       value: "Espa\xF1ol"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6835159482184510948, guid: cc0a67343ba23194f90ae7f4e16631d0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6835159482184510948, guid: cc0a67343ba23194f90ae7f4e16631d0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeLanguageToSpanish
+      objectReference: {fileID: 0}
+    - target: {fileID: 6835159482184510948, guid: cc0a67343ba23194f90ae7f4e16631d0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6835159482184510949, guid: cc0a67343ba23194f90ae7f4e16631d0,
         type: 3}
@@ -302,16 +322,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -30.00001
       objectReference: {fileID: 0}
-    - target: {fileID: 6835159482184510948, guid: cc0a67343ba23194f90ae7f4e16631d0,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeLanguageToSpanish
-      objectReference: {fileID: 0}
-    - target: {fileID: 6835159482184510948, guid: cc0a67343ba23194f90ae7f4e16631d0,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 6835159483258379059, guid: cc0a67343ba23194f90ae7f4e16631d0,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -347,12 +357,8 @@ PrefabInstance:
       propertyPath: m_firstOverflowCharacterIndex
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4263303483284672560, guid: cc0a67343ba23194f90ae7f4e16631d0,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7406422023698090520, guid: cc0a67343ba23194f90ae7f4e16631d0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cc0a67343ba23194f90ae7f4e16631d0, type: 3}
 --- !u!224 &502229468 stripped
 RectTransform:
@@ -367,10 +373,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 520879902}
     m_Modifications:
+    - target: {fileID: 4263303483284672560, guid: cc0a67343ba23194f90ae7f4e16631d0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6835159482184510946, guid: cc0a67343ba23194f90ae7f4e16631d0,
         type: 3}
       propertyPath: m_Name
       value: English
+      objectReference: {fileID: 0}
+    - target: {fileID: 6835159482184510948, guid: cc0a67343ba23194f90ae7f4e16631d0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6835159482184510949, guid: cc0a67343ba23194f90ae7f4e16631d0,
         type: 3}
@@ -487,12 +503,8 @@ PrefabInstance:
       propertyPath: m_text
       value: English
       objectReference: {fileID: 0}
-    - target: {fileID: 4263303483284672560, guid: cc0a67343ba23194f90ae7f4e16631d0,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7406422023698090520, guid: cc0a67343ba23194f90ae7f4e16631d0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cc0a67343ba23194f90ae7f4e16631d0, type: 3}
 --- !u!224 &514290026 stripped
 RectTransform:
@@ -627,8 +639,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579363701}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
@@ -894,11 +907,10 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: (alpha)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9917367b538eb064d848221fde25ffed, type: 2}

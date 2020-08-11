@@ -2,6 +2,11 @@
 using UnityEngine;
 using static Functions;
 
+public interface IHittable
+{
+    void Hit(Component source, int hitId);
+}
+
 public enum LifePointState
 {
     Idle,
@@ -61,8 +66,7 @@ struct SpinCoordinates
     }
 }
 
-[RequireComponent(typeof(AudioSource))]
-public class LifePointController : StreamBehaviour
+public class LifePointController : StreamBehaviour, IHittable
 {
     public MultiAlphaController alphaController;
 
@@ -107,6 +111,8 @@ public class LifePointController : StreamBehaviour
 
     SpinCoordinates shieldedSpin(float t)
     {
+        return idleSpin(t);
+        /*
         var growRadius = 3.0f;
 
         return new SpinCoordinates
@@ -120,6 +126,7 @@ public class LifePointController : StreamBehaviour
                     + 0.17f * Mathf.Sin(_percentage * Angle.Turn * .163f + t * 3.3f)
                 ) * _creatureHeight
         );
+        */
     }
 
     SpinCoordinates idleSpin(float t)
@@ -224,22 +231,37 @@ public class LifePointController : StreamBehaviour
                 transform.localPosition = position;
             });
 
-        var hitSoundSource =
-            GetComponent<AudioSource>();
+        // Sounds!
+
+        var killSoundSource =
+            Query
+                .From(this, "kill-sound")
+                .Get<AudioSource>();
+
+        var spawnSoundSource =
+            Query
+                .From(this, "spawn-sound")
+                .Get<AudioSource>();
 
         stateChange
             .Lazy()
-            .Get(state =>
+            .WithLastValue(LifePointState.Idle)
+            .Get((lastState, currentState) =>
             {
-                if (state == LifePointState.Dead)
+                if (currentState == LifePointState.Dead)
                 {
-                    Functions.PlaySwooshSound(hitSoundSource);
+                    killSoundSource.Play();
+                }
+                else if (lastState == LifePointState.Dead)
+                {
+                    spawnSoundSource.Play();
                 }
             });
     }
 
-    public void Hit()
+    public void Hit(Component source, int hitId)
     {
-        GetComponentInParent<Creature>().LifePointWasHit(_index);
+        GetComponentInParent<Creature>()
+            .LifePointWasHit(_index);
     }
 }

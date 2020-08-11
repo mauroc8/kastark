@@ -1,88 +1,269 @@
-using System.Threading;
-using System.Threading.Tasks;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Linq;
 
-public class ButtonHabilitySelection : HabilitySelection
+public class ButtonHabilitySelection : MonoBehaviour
 {
-    TaskCompletionSourceWithAutoCancel<Hability> _taskCompletionSource;
+    public ItemsDictionary itemsDictionary = null;
 
-    private StateStream<bool> isChoosingHability =
-        new StateStream<bool>(true);
+    [Header("Abilities")]
+    public Ability swordAbility = null;
+    public Ability magicAbility = null;
+    public Ability shieldAbility = null;
+    public Ability potionAbility = null;
+
+    public Ability smallSword = null;
+    public Ability smallMagic = null;
+
+    Ability AbilityFromItem(Item item)
+    {
+        switch (item)
+        {
+            case Items.Sword _:
+                return swordAbility;
+
+            case Items.Magic _:
+                return magicAbility;
+
+            case Items.Shield _:
+                return shieldAbility;
+
+            case Items.Potion _:
+                return potionAbility;
+
+            case Items.SmallSword _:
+                return smallSword;
+
+            case Items.SmallMagic _:
+                return smallMagic;
+
+            default:
+                return null;
+        }
+    }
 
     void Awake()
     {
-        var attackButton =
-            Node.Query(this, "attack-button")
-                .GetComponent<UnityEngine.UI.Button>();
-
-        var shieldButton =
-            Node.Query(this, "shield-button")
-                .GetComponent<UnityEngine.UI.Button>();
-
-        var potionButton =
-            Node.Query(this, "potion-button")
-                .GetComponent<UnityEngine.UI.Button>();
-
-        var magicButton =
+        var abilityBar =
             Query
-                .From(this, "magic-button")
-                .Get<UnityEngine.UI.Button>();
+                .From(this, "ability-bar")
+                .Get();
 
-        Stream.Merge(
-            Globals.potions.Map(_ => new Void { }),
-            isChoosingHability.Map(_ => new Void { })
-        )
-            .Listen(this, _ =>
+        var slots =
+            GetComponentsInChildren<AbilityBarSlot>();
+
+        var slotIcons =
+            slots
+                .Select(slot =>
+                    Query
+                        .From(slot, "icon")
+                        .Get<Image>()
+                )
+                .ToArray();
+
+        var slotTitles =
+            slots
+                .Select(slot =>
+                    Query
+                        .From(slot, "title")
+                        .Get<TMPro.TextMeshProUGUI>()
+                )
+                .ToArray();
+
+        var slotDescriptions =
+            slots
+                .Select(slot =>
+                    Query
+                        .From(slot, "description")
+                        .Get<TMPro.TextMeshProUGUI>()
+                )
+                .ToArray();
+
+        var battle =
+            GetComponentInParent<Battle>();
+
+        var creature =
+            GetComponentInParent<Creature>();
+
+        var isChoosingHability =
+            battle
+                .turn
+                .Map(turn =>
+                    turn
+                        .CaseOf(
+                            turnValue =>
+                                battle.ActingCreature(turnValue) == creature
+                                    && turnValue.action == TurnAction.SelectAbility,
+                            () => false
+                        )
+                )
+                .Lazy();
+
+        isChoosingHability
+            .InitializeWith(false)
+            .Get(choosing =>
             {
-                var choosing =
-                    isChoosingHability.Value;
-
-                attackButton.interactable =
-                    choosing && Globals.hasSword.Value;
-
-                shieldButton.interactable =
-                    choosing && Globals.hasShield.Value;
-
-                potionButton.interactable =
-                    choosing && Globals.potions.Value > 0;
-
-                magicButton.interactable =
-                    choosing && Globals.hasMagic.Value;
+                abilityBar.SetActive(choosing);
             });
 
-        var amount =
-            Node.Query(this, "potion-button amount")
-                .GetComponent<TMPro.TextMeshProUGUI>();
-
-        amount.text =
-            $"x{Globals.potions.Value}";
+        var startAbilityBarIdx = 6;
 
         Globals
-            .potions
-            .Listen(this, value =>
+            .inventory
+            .Bind(this)
+            .Initialized
+            .Get(items =>
             {
-                amount.text =
-                    $"x{value}";
+                for (var i = 0; i + startAbilityBarIdx < items.Length; i++)
+                {
+                    var item =
+                        FromInventory(i);
+
+                    slots[i]
+                        .gameObject
+                        .SetActive(
+                            !Items.Empty.IsEmpty(item)
+                        );
+
+                    slotIcons[i].sprite =
+                        itemsDictionary.SpriteFromItem(item);
+
+                    slotTitles[i].text =
+                        item.Title;
+
+                    slotDescriptions[i].text =
+                        item.Description;
+                }
+            });
+
+        // Hover info
+
+        var slotEventTriggers =
+            slots
+                .Select(slot =>
+                    Query
+                        .From(slot)
+                        .Get<HoverAndClickEventTrigger>()
+                )
+                .ToArray();
+
+        var slotHovers =
+            slotEventTriggers
+                .Select(eventTrigger =>
+                    eventTrigger.isHovering
+                )
+                .ToArray();
+
+        var slotHoverInfos =
+            slots
+                .Select(slot =>
+                    Query
+                        .From(slot, "hover-info")
+                        .Get()
+                )
+                .ToArray();
+
+        Stream
+            .FromArray(slotHovers)
+            .Get((isHovering, i) =>
+            {
+                slotHoverInfos[i]
+                    .SetActive(isHovering);
+            });
+
+        // Click
+
+        var slotClicks =
+            slotEventTriggers
+                .Select(eventTrigger =>
+                    eventTrigger.click
+                )
+                .ToArray();
+
+        Stream
+            .FromArray(slotClicks)
+            .Get((_, i) =>
+            {
+                var item =
+                    FromInventory(i);
+
+                switch (item)
+                {
+                    case Items.Shield _:
+                        if (creature.shield.Value > 0)
+                        {
+                            // We do not cast a shield twice!
+                            return;
+                        }
+                        break;
+                }
+
+                var ability =
+                    AbilityFromItem(item);
+
+                if (ability != null)
+                {
+                    battle.CreatureSelectsAbility(ability);
+                }
+            });
+
+        // Disable shield
+
+        creature
+            .shield
+            .Map(value => value != 0)
+            .Lazy()
+            .Get(hasShield =>
+            {
+                var items =
+                    Globals.inventory.Value;
+
+                for (var i = 0; i + startAbilityBarIdx < items.Length; i++)
+                {
+                    var item =
+                        FromInventory(i);
+
+                    switch (item)
+                    {
+                        case Items.Shield _:
+
+                            slotIcons[i].color =
+                                hasShield
+                                    ? Color.gray
+                                    : Color.white;
+
+                            return;
+                    }
+                }
             });
     }
 
-    public override Task<Hability> SelectHabilityAsync(CancellationToken token)
+    public void SelectAbilityHandler(Ability ability)
     {
-        // Hability selection start
-        isChoosingHability.Push(true);
+        var battle =
+            GetComponentInParent<Battle>();
 
-        _taskCompletionSource = new TaskCompletionSourceWithAutoCancel<Hability>(token);
-        return _taskCompletionSource.Task;
+        battle.CreatureSelectsAbility(ability);
     }
 
-    public void SelectHabilityHandler(Hability hability)
+    Item FromInventory(int index)
     {
-        if (_taskCompletionSource == null) return;
+        var startAbilityBarIdx = 6;
 
-        _taskCompletionSource.SetResult(hability);
-        _taskCompletionSource = null;
+        var item =
+            Globals.inventory.Value[startAbilityBarIdx + index];
 
-        // Hability Selection end
-        isChoosingHability.Push(false);
+        if (Items.Empty.IsEmpty(item))
+        {
+            if (index == 0)
+                return new Items.SmallSword();
+            if (index == 1)
+                return new Items.SmallMagic();
+        }
+
+        return item;
     }
 }

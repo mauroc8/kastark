@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,11 +13,142 @@ public class WorldScene : UpdateAsStream
 
     void Start()
     {
-        stateStream.Push(stateStream.Value);
+        stateStream.Value =
+            stateStream.Value;
     }
-
     void Awake()
     {
+        // --- Return from Battle ---
+
+        var (battleResult, battleId) =
+            Scenes.ConsumeBattleResult();
+
+        // Finish Quest
+
+        if (battleResult == BattleResult.Win && battleId == 4)
+        {
+            var inventory =
+                Globals.inventory.Value;
+
+            for (int i = 0; i < 6; i++)
+            {
+                if (Items.Empty.IsEmpty(inventory[i]))
+                {
+                    inventory[i] =
+                        new Items.Clover();
+
+                    break;
+                }
+            }
+
+            Globals.inventory.Value =
+                inventory;
+
+            Globals.quest =
+                QuestStatus.GetReward;
+        }
+
+        // Update checkpoint
+
+        if (battleResult != BattleResult.None)
+        {
+            Globals.checkpoint =
+                battleId == 0 ? Checkpoint.Enemy0 :
+                battleId == 1 ? Checkpoint.Enemy1 :
+                battleId == 2 ? Checkpoint.Enemy2 :
+                battleId == 3 ? Checkpoint.Enemy3 :
+                battleId == 4 ? Checkpoint.Arthur :
+                Globals.checkpoint;
+        }
+
+        // Kill enemy
+
+        if (battleResult == BattleResult.Win)
+        {
+            Globals.enemiesAreAlive[battleId] =
+                false;
+        }
+
+        // Earn resources
+
+        var earnedPlastic =
+            battleId == 0 ? 5 :
+            battleId == 1 ? 5 :
+            battleId == 2 ? 6 :
+            battleId == 3 ? 8 :
+            battleId == 4 ? 12 :
+            0;
+
+        Action earnResources = () =>
+        {
+            Globals.playerResources.Value =
+                Globals.playerResources.Value
+                    .Add(new PlayerResources(earnedPlastic, 0, 0));
+        };
+
+        // Win battle
+
+        if (battleResult == BattleResult.Win)
+        {
+            stateStream.Value =
+                new InteractStates.Popup
+                {
+                    title =
+                        "You win",
+                    content =
+                        $"You earned <color=#D67A7A>{earnedPlastic} runes</color>.\n"
+                            + (
+                                battleId == 4
+                                    ? $"You earned a <color=#84CA90>four-leaf clover</color>.\n"
+                                        + $"Talk to <b>Dhendé</b> to finish the quest.\n"
+                                    : ""
+                              )
+                            ,
+                    acceptButton =
+                        "Accept",
+                    onAccept =
+                        earnResources
+                };
+        }
+
+        // Lose battle
+
+        if (battleResult == BattleResult.Lose)
+        {
+            stateStream.Value =
+                new InteractStates.Popup
+                {
+                    title =
+                        "You lose",
+                    content =
+                        "You can try again anytime.",
+                    acceptButton =
+                        "Accept",
+                    onAccept =
+                        null
+                };
+        }
+
+        // Play resources audio
+
+        var winBattleAudio =
+            Query
+                .From(this, "audio win-battle")
+                .Get<AudioSource>();
+
+        earnResources +=
+            () =>
+            {
+                winBattleAudio.Play();
+            };
+
+        // Save all changes
+
+        Globals.Save();
+
+        earnResources +=
+            Globals.Save;
+
         // --- APPROACH NPC --- 
 
         var airaTrigger =
@@ -37,10 +169,13 @@ public class WorldScene : UpdateAsStream
         // --- APPROACH ENEMY ---
 
         var enemies =
-            new List<GameObject>
+            new Enemy[]
             {
-                Query.From(this, "othok").Get(),
-                Query.From(this, "arthur").Get()
+                Query.From(this, "enemy-0").Get<Enemy>(),
+                Query.From(this, "enemy-1").Get<Enemy>(),
+                Query.From(this, "enemy-2").Get<Enemy>(),
+                Query.From(this, "enemy-3").Get<Enemy>(),
+                Query.From(this, "enemy-boss").Get<Enemy>()
             };
 
         foreach (var enemy in enemies)
@@ -50,18 +185,12 @@ public class WorldScene : UpdateAsStream
                     .From(enemy)
                     .Get<TriggerEvents>();
 
-            var enemyId =
-                Query
-                    .From(enemy)
-                    .Get<Enemy>()
-                    .id;
-
             enemyTrigger.TriggerEnter
                 .Filter(trigger => trigger == airaTrigger)
                 .Get(_ =>
                 {
                     stateStream.Value =
-                        new InteractStates.InFrontOfEnemy(enemyId);
+                        new InteractStates.InFrontOfEnemy(enemy);
                 });
 
             enemyTrigger.TriggerExit
@@ -69,53 +198,45 @@ public class WorldScene : UpdateAsStream
                 .Do(ExitInteractState);
         }
 
+        // --- Hide dead enemies ---
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i].gameObject.SetActive(
+                Globals.enemiesAreAlive[i]
+            );
+        }
+
 
         // --- APPROACH MATCH 3s ---
 
-        var firstMatch3 = Node.Query(this, "match3-first");
-        var secondMatch3 = Node.Query(this, "match3-second");
+        AwakeMinigame(
+            Query
+                .From(this, "garbage")
+                .Get<Minigame>(),
+            airaTrigger
+        );
 
-        var match3s = new List<GameObject> { firstMatch3, secondMatch3 };
+        AwakeMinigame(
+            Query
+                .From(this, "puzzle-a")
+                .Get<Minigame>(),
+            airaTrigger
+        );
 
-        foreach (var match3 in match3s)
-        {
-            var triggerEvents = match3.GetComponentInChildren<TriggerEvents>();
-            var board = match3.GetComponentInChildren<Board>();
+        AwakeMinigame(
+            Query
+                .From(this, "puzzle-b2")
+                .Get<Minigame>(),
+            airaTrigger
+        );
 
-            triggerEvents.TriggerEnter
-                .Filter(trigger => trigger == airaTrigger)
-                .Always(board)
-                .Get(value =>
-                {
-                    if (value.isCleared.Value)
-                        return;
-
-                    stateStream.Value =
-                        new InteractStates.InFrontOfMatch3
-                        {
-                            board = value
-                        };
-                });
-
-            // End Match3 when board is cleared
-
-            board.isCleared
-                .Map(_ => Time.time)
-                .AndThen(update.Always)
-                .Filter(t =>
-                    (Time.time - t) / 0.7f >= 1
-                )
-                .Lazy()
-                .Get(_ =>
-                {
-                    stateStream.Value =
-                        new InteractStates.None();
-                });
-
-            triggerEvents.TriggerExit
-                .Filter(trigger => trigger == airaTrigger)
-                .Do(ExitInteractState);
-        }
+        AwakeMinigame(
+            Query
+                .From(this, "puzzle-c")
+                .Get<Minigame>(),
+            airaTrigger
+        );
 
         // --- Exit NPC ---
 
@@ -136,13 +257,9 @@ public class WorldScene : UpdateAsStream
                         stateStream.Value =
                             new InteractStates.TalkingWithNPC();
                         break;
-                    case InteractStates.InFrontOfMatch3 x:
+                    case InteractStates.InFrontOfMinigame x:
                         stateStream.Value =
-                            new InteractStates.PlayingMatch3 { board = x.board };
-                        break;
-                    case InteractStates.InFrontOfEnemy x:
-                        stateStream.Value =
-                            new InteractStates.TalkingWithEnemy(x.enemyId);
+                            new InteractStates.PlayingMinigame { minigameTag = x.minigameTag };
                         break;
                 }
             });
@@ -164,42 +281,35 @@ public class WorldScene : UpdateAsStream
 
         // --- Open Journal ---
 
-        Stream.Combine(
-            Globals.hasQuest,
-            State.Map(state => state.LockPlayerControl)
-        )
-            .AndThen((hasQuest, lockControl) =>
-                hasQuest && !lockControl
+        State.Map(state => state.LockPlayerControl)
+            .AndThen(lockControl =>
+                !lockControl && Globals.quest != QuestStatus.None
                     ? update
                     : Stream.None<Void>()
             )
-            .Filter(_ => Input.GetKeyDown(KeyCode.Tab))
-            .Listen(this, _ =>
+            .Filter(_ => Input.GetKeyDown(KeyCode.Q))
+            .Bind(this)
+            .Get(_ =>
             {
                 stateStream.Value =
-                   new InteractStates.ViewingJournal { };
+                   new InteractStates.ViewingQuest { };
             });
 
-        Globals.hasQuest.Value =
-            Globals.hasQuest.Value;
+        // --- Open Inventory ---
 
-        // --- Hide Othok if he's dead ---
-
-        var othok =
-            Query
-                .From(this, "othok")
-                .Get();
-
-        othok.SetActive(Globals.progress == GameProgress.Initial);
-
-        // --- Arthur is invisible until Othok is defeated ---
-
-        var arthur =
-            Query
-                .From(this, "arthur")
-                .Get();
-
-        arthur.SetActive(Globals.progress == GameProgress.DefeatedOthok);
+        State
+            .Map(state => state.LockPlayerControl)
+            .AndThen(lockControl =>
+                lockControl
+                    ? Stream.None<Void>()
+                    : update
+            )
+            .Filter(_ => Input.GetKeyDown(KeyCode.I))
+            .Get(_ =>
+            {
+                stateStream.Value =
+                    new InteractStates.ViewingInventory();
+            });
 
         // --- Escape menu ---
 
@@ -240,6 +350,32 @@ public class WorldScene : UpdateAsStream
                     ? update
                     : Stream.None<Void>()
             );
+
+        // --- Show ui window for dialogs and inventory and quest ---
+
+        var uiWindow =
+            Query
+                .From(this, "ui window")
+                .Get<CanvasGroup>();
+
+        var lerpedShowWindow =
+            stateStream
+                .Map(state => state.ShowPopupWindow)
+                .Map(value => value ? 1.0f : 0.0f)
+                .AndThen(Functions.LerpStreamOverTime(update, 0.3f));
+
+        lerpedShowWindow
+            .Map(t => t != 0)
+            .Lazy()
+            .InitializeWith(false)
+            .Get(uiWindow.gameObject.SetActive);
+
+        lerpedShowWindow
+            .Get(t =>
+            {
+                uiWindow.alpha =
+                    Mathf.Pow(t, 2.0f);
+            });
     }
 
     public void RequestPopupDialog()
@@ -252,5 +388,26 @@ public class WorldScene : UpdateAsStream
     {
         stateStream.Value =
             new InteractStates.None();
+    }
+
+    private void AwakeMinigame(Minigame minigame, Collider airaTrigger)
+    {
+        var triggerEvents = minigame.GetComponentInChildren<TriggerEvents>();
+        var board = minigame.GetComponentInChildren<Board>();
+
+        triggerEvents.TriggerEnter
+            .Filter(trigger => trigger == airaTrigger)
+            .Get(_ =>
+            {
+                stateStream.Value =
+                    new InteractStates.InFrontOfMinigame
+                    {
+                        minigameTag = minigame.minigameTag
+                    };
+            });
+
+        triggerEvents.TriggerExit
+            .Filter(trigger => trigger == airaTrigger)
+            .Do(ExitInteractState);
     }
 }

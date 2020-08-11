@@ -11,8 +11,6 @@ public class Player : UpdateAsStream
     float targetSpeed =
         0.0f;
 
-    public Stream<bool> canMove { get; protected set; }
-
     void OnDestroy()
     {
         Cursor.lockState =
@@ -24,7 +22,7 @@ public class Player : UpdateAsStream
 
     void Awake()
     {
-        canMove =
+        var canMove =
             GetComponentInParent<WorldScene>().State
             .Map(state => !state.LockPlayerControl)
             .Lazy();
@@ -44,7 +42,7 @@ public class Player : UpdateAsStream
                     return Stream.None<Void>();
                 });
 
-        var maxSpeed = 40.0f / 1.4f * 1.6f;
+        var maxSpeed = 28.57f * 1.6f;
 
         var acceleration = 9.3f;
 
@@ -74,7 +72,7 @@ public class Player : UpdateAsStream
         var cameraInitialRotation =
             camera.transform.localRotation;
 
-        /*
+
         canMove
             .AndThen(value =>
                 value
@@ -97,7 +95,6 @@ public class Player : UpdateAsStream
                         4.2f * Time.deltaTime
                     );
             });
-        */
 
         // Calculate and set movement
 

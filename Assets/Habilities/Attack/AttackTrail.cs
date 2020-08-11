@@ -13,7 +13,9 @@ public class AttackTrail : MonoBehaviour
     public bool IsOpen => _open;
     public float Effectiveness => _effectiveness;
 
-    [SerializeField] float _distanceToCamera = 4;
+    public bool PerformedCut = false;
+
+    float _distanceToCamera = 12;
 
     [Header("Configuration")]
     public float minLengthVh = 0.07f;
@@ -25,7 +27,7 @@ public class AttackTrail : MonoBehaviour
     private float _trailLifetime;
 
     TrailRenderer _trailRenderer;
-    float _minVertexDistance;
+    float _minVertexDistance = 0.08f;
     float _minLengthPx;
     float _maxLengthPx;
     Plane _rayCastPlane;
@@ -34,7 +36,6 @@ public class AttackTrail : MonoBehaviour
     public void Open(Vector2 screenPoint)
     {
         _trailRenderer = GetComponent<TrailRenderer>();
-        _minVertexDistance = 0.3f;
         _trailRenderer.widthMultiplier *= 300.0f / Screen.height;
 
         _minLengthPx = minLengthVh * Screen.height;
@@ -49,7 +50,7 @@ public class AttackTrail : MonoBehaviour
         _openTime = Time.time;
         _lastScreenPoint = screenPoint;
 
-        Move(screenPoint);
+        Move(screenPoint, false);
 
         _trailRenderer.Clear();
         gameObject.SetActive(true);
@@ -67,7 +68,7 @@ public class AttackTrail : MonoBehaviour
 
     Vector2 _lastScreenPoint;
 
-    public void Move(Vector2 screenPoint)
+    public void Move(Vector2 screenPoint, bool hitLifePoints = true)
     {
         Ray mRay = Camera.main.ScreenPointToRay(screenPoint);
 
@@ -79,17 +80,21 @@ public class AttackTrail : MonoBehaviour
         }
 
         Vector3 worldPoint = mRay.GetPoint(rayDistance);
-        float distance = Vector3.Distance(transform.position, worldPoint);
 
-        if (distance < _minVertexDistance)
-            return;
-
-        // Search Intermediate Targets.
-        for (float f = 0; f < distance; f += _minVertexDistance)
+        if (hitLifePoints)
         {
-            TryHitLifePoint(
-                Vector2.Lerp(screenPoint, _lastScreenPoint, f / distance)
-            );
+            float distance = Vector3.Distance(transform.position, worldPoint);
+
+            if (distance < _minVertexDistance)
+                return;
+
+            // Search Intermediate Targets.
+            for (float f = 0; f < distance; f += _minVertexDistance)
+            {
+                TryHitLifePoint(
+                    Vector2.Lerp(screenPoint, _lastScreenPoint, f / distance)
+                );
+            }
         }
 
         _screenPoints.Add(screenPoint);
@@ -100,14 +105,16 @@ public class AttackTrail : MonoBehaviour
 
     void TryHitLifePoint(Vector2 screenPoint)
     {
+        PerformedCut = true;
+
         var target = RaycastHelper.SphereCastAtScreenPoint(screenPoint, LayerMask.HabilityRaycast);
 
         if (target != null && target.CompareTag(_enemyTeam.ToString()))
         {
-            var lifePoint = target.GetComponent<LifePointController>();
+            var hittable = target.GetComponent<IHittable>();
 
-            if (lifePoint != null)
-                lifePoint.Hit();
+            if (hittable != null)
+                hittable.Hit(this, 0);
         }
     }
 }

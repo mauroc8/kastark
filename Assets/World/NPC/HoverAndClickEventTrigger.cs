@@ -28,8 +28,10 @@ public class HoverAndClickEventTrigger : MonoBehaviour
         entry.eventID = EventTriggerType.PointerExit;
         entry.callback
             .AddListener(data =>
-                isHovering.Push(false)
-            );
+            {
+                isHovering.Value =
+                    false;
+            });
 
         eventTrigger.triggers.Add(entry);
 
@@ -38,14 +40,18 @@ public class HoverAndClickEventTrigger : MonoBehaviour
         entry.eventID = EventTriggerType.PointerClick;
         entry.callback
             .AddListener(data =>
-                click.Push((PointerEventData)data)
-            );
+            {
+                click.Push(
+                    (PointerEventData)data
+                );
+            });
 
         eventTrigger.triggers.Add(entry);
     }
 
     void OnEnable()
     {
-        isHovering.Push(false);
+        isHovering.Value =
+            false;
     }
 }

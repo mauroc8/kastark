@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: ce6249e7636e0e143996beb7afc9a14f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - empty: {instanceID: 0}
+  - smallSword: {fileID: 21300000, guid: 16d96f398ac12914eb8a0629dc9376ef, type: 3}
+  - bigSword: {fileID: 21300000, guid: c36714ef2c61fb04bb419f84d807644e, type: 3}
+  - smallMagic: {fileID: 21300000, guid: 39f5b9ba42b6e154fa221075ffef23d8, type: 3}
+  - bigMagic: {fileID: 21300000, guid: 6f0385fee3e6b2545a1d98794efa1091, type: 3}
+  - shield: {fileID: 21300000, guid: 618df6a30696bad41b21f84961db5099, type: 3}
+  - potion: {fileID: 21300000, guid: 09aa278ef9ff1ac45b935483a67633d8, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

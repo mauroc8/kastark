@@ -1,3 +1,4 @@
+using System;
 
 /// <summary>
 /// 
@@ -11,7 +12,12 @@ public class StateStream<A> : Stream<A>
     public A Value
     {
         get { return _value; }
-        set { Push(value); }
+        set
+        {
+            this._value = value;
+
+            PushToListeners(value);
+        }
     }
 
     public StateStream(A initialValue)
@@ -19,13 +25,9 @@ public class StateStream<A> : Stream<A>
         this._value = initialValue;
     }
 
-    protected override void HasListener() { }
-    protected override void DoesntHaveListener() { }
+    protected override void Awake() { }
+    protected override void Sleep() { }
 
-    public void Push(A value)
-    {
-        this._value = value;
-
-        PushToListeners(value);
-    }
+    public override Optional<A> lastValue =>
+        Optional.Some(_value);
 }

@@ -117,4 +117,49 @@ public static partial class Functions
 
         swooshSource.Play();
     }
+
+    public static
+    Func<bool> NewFirstTime()
+    {
+        var isFirstTime = true;
+
+        return
+            () =>
+            {
+                if (isFirstTime)
+                {
+                    isFirstTime = false;
+
+                    return true;
+                }
+
+                return false;
+            };
+
+    }
+
+    public static
+    Func<A, Stream<A>> WaitForSeconds<A>(Stream<Void> update, float seconds)
+    {
+        return
+            value =>
+            {
+                var time =
+                    Time.time;
+
+                return
+                    update
+                        .Map(_ => Time.time - time >= seconds)
+                        .Lazy()
+                        .Filter(val => val)
+                        .Always(value);
+            };
+    }
+
+    public static
+    float SinusoidalWave(float t, float hz)
+    {
+        return
+            0.5f - Mathf.Cos(t * hz * Angle.Turn) * 0.5f;
+    }
 }

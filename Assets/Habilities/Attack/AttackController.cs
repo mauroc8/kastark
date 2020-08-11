@@ -5,113 +5,261 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(AudioSource))]
-public class AttackController : StreamBehaviour
+public class AttackController : Ability
 {
-    [SerializeField] GameObject _trail;
-    [SerializeField] CountdownController _countdownController;
-    [SerializeField] Animator _animator = null;
+    public override bool IsAgressive =>
+        true;
 
-    [Header("Event")]
-    [SerializeField] UnityEvent _castEndEvent;
+    interface CutStatus { }
 
-    [Header("Settings")]
-    [SerializeField] float _countdownTime = 3.5f;
-    [SerializeField] int _maxDamage = 5;
+    struct Preparing : CutStatus { }
 
-    int _damageMade;
+    struct Ready : CutStatus { }
 
-    AttackTrail _attackTrail;
-    bool _cast;
-
-    protected override void Awake()
+    struct Cutting : CutStatus
     {
-        var creature = GetComponentInParent<Creature>();
+        public AttackTrail attackTrail;
+    }
 
-        enable.Get(_ =>
-        {
-            _countdownController.StartCountdown(_countdownTime);
-            _damageMade = 0;
-            _cast = false;
-        });
+    struct AfterCutting : CutStatus { }
 
-        creature.Events
-            .FilterMap(Optional.FromCast<CreatureEvt, CreatureEvts.ReceivedDamage>)
+    public int amountOfCuts = 3;
+
+    void Awake()
+    {
+        var cuts =
+            new StateStream<int>(0);
+
+        var cutStatus =
+            new StateStream<CutStatus>(new Preparing());
+
+        var creature =
+            GetComponentInParent<Creature>();
+
+        var battle =
+            GetComponentInParent<Battle>();
+
+        var isCasting =
+            battle
+                .turn
+                .Map(optionalTurn =>
+                    optionalTurn.CaseOf(
+                        turn =>
+                            battle.ActingCreature(turn) == creature
+                                && turn.action == TurnAction.CastAbility
+                                && turn.selectedAbility == this,
+                        () => false
+                    )
+                )
+                .Lazy();
+
+        var castStart =
+            isCasting
+                .Filter(a => a);
+
+        var castUpdate =
+            isCasting
+                .AndThen(value =>
+                    value ? update : Stream.None<Void>()
+                );
+
+        // THIS IS HELL
+        castUpdate
+            .Get(_ => { });
+
+        // Init state
+
+        castStart
             .Get(_ =>
             {
-                _damageMade++;
+                cuts.Value =
+                    amountOfCuts;
 
-                if (_damageMade >= _maxDamage)
-                {
-                    Close();
-                    CastEnd();
-                }
+                cutStatus.Value =
+                    new Preparing();
             });
 
-        update.Get(_ =>
-        {
-            if (_cast)
-                return;
+        // finish preparing
 
-            if (!_countdownController.IsRunning)
-            {
-                Close();
-                CastEnd();
-                return;
-            }
+        var animationEvents =
+            Query
+                .From(creature)
+                .Get<AiraAbilityAnimationEvents>();
 
-            if (Input.GetMouseButtonDown(0))
+        animationEvents
+            .swordReady
+            .Get(_ =>
             {
-                Open();
-            }
-            else if (_attackTrail != null)
+                cutStatus.Value =
+                    new Ready();
+            });
+
+        var trail =
+            Query
+                .From(this, "trail")
+                .Get();
+
+        cutStatus
+            .Map(value =>
+                Functions.IsTypeOf<CutStatus, Ready>(value)
+                    || Functions.IsTypeOf<CutStatus, Preparing>(value))
+            .AndThen(value =>
+                value && cuts.Value > 0 ? castUpdate : Stream.None<Void>())
+            .Filter(_ => Input.GetMouseButtonDown(0))
+            .Get(_ =>
             {
-                if (Input.GetMouseButton(0) && !_attackTrail.IsOutOfBounds)
+                var attackTrail =
+                    Instantiate(trail)
+                        .GetComponent<AttackTrail>();
+
+                attackTrail
+                    .Open(Input.mousePosition);
+
+                cutStatus.Value =
+                    new Cutting { attackTrail = attackTrail };
+            });
+
+        var cuttingUpdate =
+            cutStatus
+                .Map(Functions.IsTypeOf<CutStatus, Cutting>)
+                .AndThen(value =>
+                    value
+                        ? castUpdate
+                            .Always((Cutting)cutStatus.Value)
+                        : Stream.None<Cutting>()
+                );
+
+        cuttingUpdate
+            .Filter(_ => Input.GetMouseButton(0) && !Input.GetMouseButtonDown(0))
+            .Get(cutting =>
+            {
+                cutting.attackTrail.Move(Input.mousePosition);
+            });
+
+        cuttingUpdate
+            .Filter(cutting => cutting.attackTrail.IsOutOfBounds || !Input.GetMouseButton(0))
+            .Get(cutting =>
+            {
+                cutting.attackTrail.Close();
+
+                Debug.Log($"Closing cut ({cutting.attackTrail.PerformedCut})");
+
+                if (cutting.attackTrail.PerformedCut)
                 {
-                    _attackTrail.Move(Input.mousePosition);
+                    cuts.Value--;
                 }
-                else
-                {
-                    Close();
-                }
-            }
-        });
 
-        // Audio source when open
+                cutStatus.Value =
+                    new AfterCutting();
+            });
+
+        animationEvents
+            .swordCast
+            .Get(_ =>
+            {
+                cutStatus.Value =
+                    new Preparing();
+            });
+
+
+        var castEnd =
+            cuts
+                .Filter(value => value <= 0)
+                .AndThen(Functions.WaitForSeconds<int>(update, 0.8f));
+
+        castEnd
+            .Get(_ =>
+            {
+                battle
+                    .CreatureEndsTurn();
+            });
+
+        // FX and animations
 
         var swooshSound =
             GetComponent<AudioSource>();
 
-        open
+        cuttingUpdate
+            .Filter(cutting => cutting.attackTrail.PerformedCut)
+            .Lazy()
             .Get(_ =>
             {
                 Functions.PlaySwooshSound(swooshSound);
             });
+
+        var animator =
+            Query
+                .From(creature, "mesh")
+                .Get<Animator>();
+
+        cutStatus
+            .Filter(_ => cuts.Value > 0)
+            .Get(status =>
+            {
+                switch (status)
+                {
+                    case Preparing _:
+                        animator.SetTrigger("attack_sword");
+
+                        animator.SetFloat("attack_sword_speed", 1.0f);
+
+                        break;
+
+                    case Ready _:
+                        animator.SetFloat("attack_sword_speed", 0.0f);
+
+                        break;
+
+                    case Cutting _:
+                        animator.SetFloat("attack_sword_speed", 1.0f);
+                        break;
+                }
+            });
+
+        // Show cuts bar
+
+        var cutBar =
+            Query
+                .From(this, "cut-bar")
+                .Get();
+
+        cutBar.SetActive(false);
+
+        castStart
+            .Get(_ =>
+            {
+                cutBar.SetActive(true);
+            });
+
+        castEnd
+            .Get(_ =>
+            {
+                cutBar.SetActive(false);
+            });
+
+        // Show remaining cuts
+
+        var abilityCuts =
+            GetComponentsInChildren<AbilityCut>(true);
+
+        cuts
+            .Get(value =>
+            {
+                for (int i = 0; i < amountOfCuts; i++)
+                {
+                    if (i < value)
+                        abilityCuts[i].Filled();
+                    else
+                        abilityCuts[i].Empty();
+                }
+            });
+
+        // Show amount of cuts
+
+        for (int i = 0; i < abilityCuts.Length; i++)
+        {
+            abilityCuts[i].gameObject.SetActive(i < amountOfCuts);
+        }
+
     }
-
-    EventStream<Void> open =
-        new EventStream<Void>();
-
-    void Open()
-    {
-        _attackTrail = Instantiate(_trail).GetComponent<AttackTrail>();
-        _attackTrail.Open(Input.mousePosition);
-
-        if (_animator != null)
-            _animator.SetTrigger("attack_sword");
-
-        open.Push(new Void());
-    }
-
-    void Close()
-    {
-        _attackTrail?.Close();
-        _attackTrail = null;
-    }
-
-    void CastEnd()
-    {
-        _cast = true;
-        _castEndEvent.Invoke();
-    }
-
 }

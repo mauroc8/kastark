@@ -2,7 +2,6 @@ using UnityEngine;
 using TMPro;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
-[RequireComponent(typeof(AudioSource))]
 public class ResourceAmountUI : UpdateAsStream
 {
     private StateStream<int> amount =
@@ -13,18 +12,11 @@ public class ResourceAmountUI : UpdateAsStream
         var text =
             GetComponent<TextMeshProUGUI>();
 
-        var audioSource =
-            gameObject.GetComponent<AudioSource>();
-
         amount
+            .Initialized
             .Get(value =>
             {
                 text.text = $"{value}";
-
-                audioSource.pitch =
-                    Random.Range(0.9f, 1.1f);
-
-                audioSource.Play();
             });
 
         // Animate text growing
@@ -54,8 +46,8 @@ public class ResourceAmountUI : UpdateAsStream
 
     public void SetResourceAmount(int amount)
     {
-        if (amount != this.amount.Value)
-            this.amount.Push(amount);
+        if (this.amount.Value != amount)
+            this.amount.Value = amount;
     }
 }
 

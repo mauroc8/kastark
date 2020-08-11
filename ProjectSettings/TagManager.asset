@@ -10,6 +10,7 @@ TagManager:
   - Fire
   - Enemy
   - EmptyBlock
+  - InventorySlot
   layers:
   - Default
   - TransparentFX
@@ -21,9 +22,9 @@ TagManager:
   - 
   - Hability Raycast
   - Bloom
-  - Match3Blocks
-  - 
-  - 
+  - MinigameSlots
+  - Aira
+  - Enemy
   - 
   - 
   - 

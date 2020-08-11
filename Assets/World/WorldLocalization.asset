@@ -38,3 +38,21 @@ MonoBehaviour:
     data:
     - Talk
     - Hablar
+  - key: Interact
+    data:
+    - Interact
+    - Interactuar
+  - key: Inventory
+    data:
+    - Inventory
+    - Inventario
+  - key: Quest
+    data:
+    - Quest
+    - "Misi\xF3n"
+  - key: quest_description
+    data:
+    - You must defeat Arthur. You will find him upstairs. Be carefull, though! You
+      need stronger abilities to defeat him.
+    - "Debes vencer a Arthur. Lo encontrar\xE1s subiendo las escaleras. \xA1Ten cuidado!
+      Necesitas habilidades m\xE1s fuertes para poder vencerlo."

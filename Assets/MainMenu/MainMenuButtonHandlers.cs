@@ -5,30 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuButtonHandlers : MonoBehaviour
 {
-    [SerializeField] MoveToNextSceneController _sceneController = null;
-
     public void NewGame()
     {
-        _sceneController.MoveToNextScene();
-        Globals.Reset();
+        Scenes.LoadNewGame();
     }
 
     public void ChangeLanguage()
     {
-        _sceneController.MoveToPreviousScene();
+        Scenes.ChangeLanguage();
     }
 
     public void QuitGame()
     {
-        Application.Quit();
+        Scenes.QuitGame();
     }
 
     public void Continue()
     {
-        if (!Globals.HasSavedGame())
-            return;
-
-        Globals.Load();
-        _sceneController.MoveToNextScene();
+        Scenes.ContinueGame();
     }
 }

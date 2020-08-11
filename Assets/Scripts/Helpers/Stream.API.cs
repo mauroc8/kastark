@@ -6,8 +6,6 @@ using System.Linq;
 /// <summary>
 /// A Stream is a flow of data through time.
 /// A Stream can represent an event or state that changes over time.
-///
-/// See StreamSource to create your own Stream.
 /// 
 /// To subscribe to the stream use `Get` or `AddListener`/`RemoveListener`.
 /// 
@@ -245,18 +243,20 @@ public abstract partial class Stream<A>
         );
     }
 
-    internal static Stream<A> None()
+    public Stream<A> InitializeWith(A initialValue)
     {
-        return new StreamNone<A> { };
-    }
-
-    internal static Stream<A> Of(A value)
-    {
-        return new StreamSingleton<A>
+        return new StreamInitializeWith<A>
         {
-            value = value
+            initialValue = initialValue,
+            source = this
         };
     }
+
+    public Stream<A> Initialized =>
+        new StreamInitialized<A>
+        {
+            source = this
+        };
 }
 
 /// <summary>
@@ -267,7 +267,6 @@ public abstract partial class Stream<A>
 /// </summary>
 public partial class Stream<A, B> : Stream<(A, B)>
 {
-
     public Stream<C> Map<C>(Func<A, B, C> map)
     {
         return source.Map(tuple => map(tuple.Item1, tuple.Item2));
@@ -296,6 +295,13 @@ public partial class Stream<A, B> : Stream<(A, B)>
     public void Get(Action<A, B> effect)
     {
         source.Get(tuple => effect(tuple.Item1, tuple.Item2));
+    }
+
+    public new Stream<A, B> Bind(UnityEngine.Component component)
+    {
+        return Stream<A, B>.From(
+            source.Bind(component)
+        );
     }
 }
 
@@ -339,7 +345,10 @@ public static class Stream
     /// </summary>
     public static Stream<A> Of<A>(A value)
     {
-        return Stream<A>.Of(value);
+        return new StreamOf<A>
+        {
+            value = value
+        };
     }
 
     /// <summary>
@@ -347,7 +356,7 @@ public static class Stream
     /// </summary>
     public static Stream<A> None<A>()
     {
-        return Stream<A>.None();
+        return new StreamNone<A> { };
     }
 
 
@@ -379,5 +388,16 @@ public static class Stream
     private static Stream<A> Merge2<A>(Stream<A> stream0, Stream<A> stream1)
     {
         return stream0.Merge(stream1);
+    }
+
+
+
+    public static Stream<A, int> FromArray<A>(params Stream<A>[] streamArray)
+    {
+        return
+            Stream<A, int>.From(new StreamFromArray<A>
+            {
+                streamArray = streamArray
+            });
     }
 }

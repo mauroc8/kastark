@@ -2,25 +2,50 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthPotionController : MonoBehaviour
+public class HealthPotionController : Ability
 {
+    public override bool IsAgressive =>
+        false;
+
     int heal = 5;
 
-    void OnEnable()
+    void Awake()
     {
-        var creature = GetComponentInParent<Creature>();
+        var creature =
+            GetComponentInParent<Creature>();
 
-        var consumable = Functions.NullCheck(GetComponent<Consumable>());
+        var battle =
+            GetComponentInParent<Battle>();
 
-        var healSound =
-            GetComponent<AudioSource>();
+        var isCasting =
+            battle
+                .turn
+                .Map(optionalTurn =>
+                    optionalTurn.CaseOf(
+                        turn =>
+                            battle.ActingCreature(turn) == creature
+                                && turn.action == TurnAction.CastAbility
+                                && turn.selectedAbility == this,
+                        () => false
+                    )
+                )
+                .Lazy();
 
-        StartCoroutine(DrinkPotionCoroutine(creature, consumable, healSound));
+        var castStart =
+            isCasting
+                .Filter(a => a);
+
+
+        castStart
+            .Get(_ =>
+            {
+                StartCoroutine(DrinkPotionCoroutine(creature, battle));
+            });
     }
 
-    IEnumerator DrinkPotionCoroutine(Creature creature, Consumable consumable, AudioSource sound)
+    IEnumerator DrinkPotionCoroutine(Creature creature, Battle battle)
     {
-        Globals.potions.Push(Globals.potions.Value - 1);
+        Globals.PotionAmount--;
 
         yield return new WaitForSeconds(0.1f);
 
@@ -29,12 +54,9 @@ public class HealthPotionController : MonoBehaviour
             yield return new WaitForSeconds(0.35f);
 
             creature.HealthPotionWasDrank(1);
-
-            if (sound)
-                Functions.PlaySwooshSound(sound);
         }
 
-        consumable.OnCastEnd();
+        battle.CreatureEndsTurn();
     }
 
 }

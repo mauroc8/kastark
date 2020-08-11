@@ -2,43 +2,57 @@ using System.Collections;
 using GlobalEvents;
 using UnityEngine;
 
-public class LightFollowsActingCreature : MonoBehaviour
+public class LightFollowsActingCreature : UpdateAsStream
 {
-    float _duration = 0.5f;
-    float _power = 0.5f;
-
-    void OnEnable()
+    void Awake()
     {
-        EventController.AddListener<TurnStartEvent>(OnTurnStart);
-    }
+        var battle =
+            GetComponentInParent<Battle>();
 
-    void OnDisable()
-    {
-        EventController.RemoveListener<TurnStartEvent>(OnTurnStart);
-    }
+        var changeTurnSound =
+            Query
+                .From(this, "change-turn-sound")
+                .Get<AudioSource>();
 
-    void OnTurnStart(TurnStartEvent evt)
-    {
-        transform.position = evt.creature.feet.position;
-        //StartCoroutine(TurnStartCoroutine(evt.creature.feet));
-    }
+        battle
+            .turn
+            .Map(maybeTurn =>
+                maybeTurn.Map(battle.ActingCreature)
+            )
+            .Lazy()
+            .AndThen(Functions.WaitForSeconds<Optional<Creature>>(update, 0.4f))
+            .Get(maybeCreature =>
+            {
+                switch (maybeCreature)
+                {
+                    case Some<Creature> c:
 
-    public IEnumerator TurnStartCoroutine(Transform feet)
-    {
-        var time = Time.time;
+                        transform.position =
+                            c.Value.feet.position;
 
-        var initialPosition = transform.position;
-        var creaturePosition = feet.position;
+                        changeTurnSound.Play();
 
-        yield return null;
+                        break;
 
-        while (Time.time < time + _duration)
-        {
-            var t = Mathf.Pow((Time.time - time) / _duration, _power);
-            transform.position = Vector3.Lerp(initialPosition, creaturePosition, t);
-            yield return null;
-        }
+                    case None<Creature> _:
 
-        transform.position = creaturePosition;
+                        transform.position =
+                            new Vector3(0.0f, -99.0f, 0.0f);
+
+                        break;
+                }
+
+            });
+
+        battle
+            .status
+            .Map(status => status.tag)
+            .Filter(tag => tag != BattleStatusTag.Fighting)
+            .InitializeWith(BattleStatusTag.Preparing)
+            .Get(_ =>
+            {
+                transform.position =
+                    new Vector3(-100, -100, -100);
+            });
     }
 }

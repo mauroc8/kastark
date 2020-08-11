@@ -21,10 +21,14 @@ public class ChangeLanguageSettings : MonoBehaviour
     public void ChangeLanguageToSpanish()
     {
         ChangeLanguage(LanguageId.Spanish);
+
+        Scenes.LoadMainMenu();
     }
 
     public void ChangeLanguageToEnglish()
     {
         ChangeLanguage(LanguageId.English);
+
+        Scenes.LoadMainMenu();
     }
 }

@@ -2,37 +2,68 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class OthokAttackController : MonoBehaviour
+public class OthokAttackController : Ability
 {
-    [SerializeField] Team _targetTeam;
+    public override bool IsAgressive =>
+        true;
+
+    void Awake()
+    {
+        var creature =
+            GetComponentInParent<Creature>();
+
+        var battle =
+            GetComponentInParent<Battle>();
+
+        var isCasting =
+            battle
+                .turn
+                .Map(optionalTurn =>
+                    optionalTurn.CaseOf(
+                        turn =>
+                            battle.ActingCreature(turn) == creature
+                                && turn.action == TurnAction.CastAbility
+                                && turn.selectedAbility == this,
+                        () => false
+                    )
+                )
+                .Lazy();
+
+        var castStart =
+            isCasting
+                .Filter(a => a);
+
+        castStart
+            .Get(_ =>
+            {
+                StartCoroutine(Attack(battle, creature));
+            });
+    }
 
     [SerializeField] GameObject _trail;
-    [SerializeField] UnityEvent _castEndEvent;
-
-    void OnEnable()
-    {
-        StartCoroutine(Attack());
-    }
 
     [SerializeField] int _amountOfCuts = 4;
 
     float _cutLengthVh = 0.25f;
     float _cutDuration = 0.3f;
 
-    IEnumerator Attack()
+    IEnumerator Attack(Battle battle, Creature creature)
     {
         // Think before first cut
         yield return new WaitForSeconds(1.6f);
 
-        var targetCreature = _targetTeam.Creatures[0];
+        var targetCreature =
+            Query
+                .From(transform.root, "aira")
+                .Get<Creature>();
 
-        var targetLifePointManager = targetCreature.gameObject.GetComponentInChildren<LifePointManager>();
-
-        var creature =
-            GetComponentInParent<Creature>();
+        var targetLifePointManager =
+            targetCreature.gameObject.GetComponentInChildren<LifePointManager>();
 
         var animator =
-            creature.GetComponentInChildren<Animator>();
+            Query
+                .From(creature, "mesh")
+                .Get<Animator>();
 
         Debug.Assert(targetLifePointManager != null);
 
@@ -59,6 +90,9 @@ public class OthokAttackController : MonoBehaviour
             var targetPosition =
                 Vector3.Lerp(centerPosition, targetLifePointPosition, 0.6f);
 
+            var targetPosition2 =
+                Camera.main.WorldToScreenPoint(targetPosition);
+
             // Pick a short path centered on (0, 0)
             var angle = Random.Range(-Mathf.PI / 6, Mathf.PI / 6);
 
@@ -78,7 +112,7 @@ public class OthokAttackController : MonoBehaviour
             var startTime = Time.time;
             var attackTrail = Instantiate(_trail).GetComponent<AttackTrail>();
             attackTrail.Open(
-                    GetTargetPoint(targetPosition, pathStart, pathEnd, 0)
+                    GetTargetPoint(targetPosition2, pathStart, pathEnd, 0)
             );
 
             // Play swoosh sound
@@ -94,7 +128,7 @@ public class OthokAttackController : MonoBehaviour
             {
                 var t = (Time.time - startTime) / _cutDuration;
                 attackTrail.Move(
-                    GetTargetPoint(targetLifePointPosition, pathStart, pathEnd, t)
+                    GetTargetPoint(targetPosition2, pathStart, pathEnd, t)
                 );
 
                 yield return null;
@@ -106,18 +140,17 @@ public class OthokAttackController : MonoBehaviour
             yield return new WaitForSeconds(0.25f);
         }
 
-        _castEndEvent.Invoke();
+        battle
+            .CreatureEndsTurn();
     }
 
     Vector2 GetTargetPoint(
-        Vector3 lifePointPosition,
+        Vector2 targetPoint,
         Vector2 pathStart,
         Vector2 pathEnd,
         float t)
     {
-        Vector2 targetPoint = Camera.main.WorldToScreenPoint(lifePointPosition);
-
-        var pathOffset = Vector2.Lerp(pathStart, pathEnd, t);
+        var pathOffset = Vector2.Lerp(Vector2.zero, pathEnd - pathStart, t);
 
         return
             targetPoint +

@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
-public class Team : MonoBehaviour
+public class Team
 {
-    [SerializeField] List<Creature> _creatures;
+    public Creature[] creatures;
 
-    public List<Creature> Creatures => _creatures;
+    public Team(params Creature[] creatures)
+    {
+        this.creatures = creatures;
+    }
 }

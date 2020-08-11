@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ListExtensions;
+using System.Linq;
 
 
 // State ------------------
@@ -47,54 +48,135 @@ public class Creature : StreamBehaviour
 
     public StateStream<int> shield = new StateStream<int>(0);
 
-    public CreatureTurn Turn => GetComponent<CreatureTurn>();
-
     // State
 
     protected StateStream<CreatureState> stateStream =
         new StateStream<CreatureState>(new CreatureState
         {
             lifePoints =
-                ListExtension.Repeat(LifePointState.Idle, 30)
+                new List<LifePointState> { }
         });
 
     public Stream<CreatureState> State => stateStream;
 
-    protected EventStream<CreatureEvt> eventStream = new EventStream<CreatureEvt>();
-    public Stream<CreatureEvt> Events => eventStream;
-
     protected override void Awake()
     {
-        start.Do(() =>
+        stateStream.Value =
+            new CreatureState
+            {
+                lifePoints =
+                    ListExtension.Repeat(LifePointState.Idle, maxHealth)
+            };
+
+        start.Get(_ =>
         {
-            var state = stateStream.Value;
-
-            state.lifePoints =
-                ListExtension.Repeat(LifePointState.Idle, maxHealth);
-
-            stateStream.Value = state;
-
-            shield.Value = 0;
+            stateStream.Value =
+                stateStream.Value;
         });
 
-        stateStream
-            .Map(state =>
-                state.lifePoints
-                    .Filter(lifePoint => lifePoint != LifePointState.Dead)
-                    .Count)
-            .WithLastValue(maxHealth)
-            .Get((lastLifePoints, lifePoints) =>
+        var battle =
+            GetComponentInParent<Battle>();
+
+        battle
+            .turn
+            .FilterMap(a => a)
+            .Map(turn =>
+                turn.action == TurnAction.CastAbility
+                    && turn.selectedAbility.IsAgressive
+                    && battle.EnemyOf(turn.team) == this.team
+            )
+            .Lazy()
+            .Get(isBeingAttacked =>
             {
-                if (lifePoints < lastLifePoints)
-                {
-                    eventStream.Push(new CreatureEvts.ReceivedDamage { });
-                }
-                else if (lifePoints > lastLifePoints)
-                {
-                    eventStream.Push(new CreatureEvts.ReceivedHeal { });
-                }
+                if (isBeingAttacked)
+                    AnimateLifePoints();
+                else
+                    PauseLifePoints();
             });
 
+
+        // Animate circle
+
+        var isMyTurn =
+            battle
+                .turn
+                .FilterMap(a => a)
+                .Map(battle.ToCreature)
+                .Map(creature => creature == this)
+                .Lazy();
+
+
+        isMyTurn
+            .Get(isActive =>
+            {
+            });
+
+
+        var circleRenderer =
+            Query
+                .From(this, "circle")
+                .Get<Renderer>();
+
+        var circleInitialEmission =
+            circleRenderer.material.GetColor("_EmissionColor");
+
+        isMyTurn
+            .InitializeWith(false)
+            .Map(value => value ? 2.0f : 1.0f)
+            .AndThen(Functions.LerpStreamOverTime(update, 0.4f))
+            .Get(t =>
+            {
+                circleRenderer.material
+                    .SetColor("_EmissionColor", circleInitialEmission * t);
+            });
+
+        var circleTransform =
+            circleRenderer.transform;
+
+
+
+        // Aira flies
+
+        var animator =
+            Query
+                .From(this, "mesh")
+                .Get<Animator>();
+
+        if (team == TeamId.Player)
+        {
+            animator.SetFloat("vertical_height", 1.0f);
+        }
+
+        // Othok is in battle
+
+        if (team == TeamId.Enemy)
+        {
+            animator.SetBool("is_in_battle", true);
+
+            // Othok gets hit
+
+            stateStream
+                .Map(state =>
+                    state.lifePoints
+                        .Filter(lifePoint => lifePoint != LifePointState.Dead)
+                        .Count)
+                .WithLastValue(maxHealth)
+                .Get((lastLifePoints, lifePoints) =>
+                {
+                    if (lifePoints < lastLifePoints)
+                    {
+                        if (team == TeamId.Enemy)
+                        {
+                            animator.SetTrigger("gets_hit");
+                        }
+                        //eventStream.Push(new CreatureEvts.ReceivedDamage { });
+                    }
+                    else if (lifePoints > lastLifePoints)
+                    {
+                        //eventStream.Push(new CreatureEvts.ReceivedHeal { });
+                    }
+                });
+        }
     }
 
 
@@ -107,7 +189,8 @@ public class Creature : StreamBehaviour
         state.lifePoints =
             state.lifePoints.MapAtIndex(index, _ => LifePointState.Dead);
 
-        stateStream.Push(state);
+        stateStream.Value =
+            state;
     }
 
 
@@ -117,38 +200,29 @@ public class Creature : StreamBehaviour
             SpawnLifePoint();
     }
 
-    private void SpawnLifePoint()
+    private bool SpawnLifePoint()
     {
         var state = stateStream.Value;
 
         var indexOfDead = state.lifePoints.IndexOf(LifePointState.Dead);
 
         if (indexOfDead == -1)
-            return;
+            return false;
 
         state.lifePoints =
             state.lifePoints.MapAtIndex(indexOfDead, _ => LifePointState.Idle);
 
-        stateStream.Push(state);
+        stateStream.Value =
+            state;
+
+        return true;
     }
 
     private Battle __battle = null;
     private Battle _battle => __battle ?? (__battle = GetComponentInParent<Battle>());
 
-    public void HabilityWasSelected(HabilityId habilityId)
-    {
-        if (habilityId == HabilityId.Attack || habilityId == HabilityId.Magic)
-        {
-            _battle.CreatureBeganAttack(team);
-        }
-    }
 
-    public void TurnIsAboutToEnd()
-    {
-        _battle.CreatureCeasedAttack(team);
-    }
-
-    public void AnimateLifePoints()
+    void AnimateLifePoints()
     {
         LifePointState newLifePointState;
 
@@ -165,10 +239,11 @@ public class Creature : StreamBehaviour
             state.lifePoints
                 .Map(lp => Functions.ChangeLifePointAnimation(lp, newLifePointState));
 
-        stateStream.Push(state);
+        stateStream.Value =
+            state;
     }
 
-    public void PauseLifePoints()
+    void PauseLifePoints()
     {
         var state = stateStream.Value;
 
@@ -176,6 +251,7 @@ public class Creature : StreamBehaviour
             state.lifePoints
                 .Map(lp => Functions.ChangeLifePointAnimation(lp, LifePointState.Idle));
 
-        stateStream.Push(state);
+        stateStream.Value =
+            state;
     }
 }

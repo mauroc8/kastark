@@ -11,7 +11,6 @@ public class FollowCanvasObject : MonoBehaviour
 
     void Start()
     {
-
         _rayCastPlane = new Plane(
             Camera.main.transform.forward * -1, Camera.main.transform.position + Camera.main.transform.forward * _distanceToCamera);
     }

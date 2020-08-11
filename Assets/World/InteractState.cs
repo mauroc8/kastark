@@ -1,8 +1,11 @@
 using UnityEngine;
+using System;
 
 public interface InteractState
 {
     bool LockPlayerControl { get; }
+    bool ShowInteractPrompt { get; }
+    bool ShowPopupWindow { get; }
 }
 
 namespace InteractStates
@@ -10,68 +13,86 @@ namespace InteractStates
     public struct None : InteractState
     {
         public bool LockPlayerControl => false;
+        public bool ShowInteractPrompt => false;
+        public bool ShowPopupWindow => false;
     }
 
     public struct InFrontOfNPC : InteractState
     {
         public bool LockPlayerControl => false;
-    }
-
-    public struct InFrontOfMatch3 : InteractState
-    {
-        public bool LockPlayerControl => false;
-
-        public Board board;
+        public bool ShowInteractPrompt => true;
+        public bool ShowPopupWindow => false;
     }
 
     public struct TalkingWithNPC : InteractState
     {
         public bool LockPlayerControl => true;
+        public bool ShowInteractPrompt => false;
+        public bool ShowPopupWindow => true;
     }
 
-    public struct PlayingMatch3 : InteractState
+    public struct InFrontOfMinigame : InteractState
+    {
+        public bool LockPlayerControl => false;
+        public bool ShowInteractPrompt => true;
+        public bool ShowPopupWindow => false;
+
+        public MinigameTag minigameTag;
+    }
+
+    public struct PlayingMinigame : InteractState
     {
         public bool LockPlayerControl => true;
+        public bool ShowInteractPrompt => false;
+        public bool ShowPopupWindow => false;
 
-        public Board board;
+        public MinigameTag minigameTag;
     }
 
     public struct InFrontOfEnemy : InteractState
     {
         public bool LockPlayerControl => false;
+        public bool ShowInteractPrompt => false;
+        public bool ShowPopupWindow => false;
 
-        public EnemyId enemyId;
+        public Enemy enemy;
 
-        public InFrontOfEnemy(EnemyId id)
+        public InFrontOfEnemy(Enemy enemy)
         {
-            this.enemyId = id;
+            this.enemy = enemy;
         }
     }
 
-    public struct TalkingWithEnemy : InteractState
+    public struct ViewingQuest : InteractState
     {
         public bool LockPlayerControl => true;
-
-        public EnemyId enemyId;
-
-        public TalkingWithEnemy(EnemyId id)
-        {
-            this.enemyId = id;
-        }
+        public bool ShowInteractPrompt => false;
+        public bool ShowPopupWindow => true;
     }
 
-    public struct ViewingJournal : InteractState
+    public struct ViewingInventory : InteractState
     {
         public bool LockPlayerControl => true;
+        public bool ShowInteractPrompt => false;
+        public bool ShowPopupWindow => true;
     }
 
     public struct Popup : InteractState
     {
         public bool LockPlayerControl => true;
+        public bool ShowInteractPrompt => false;
+        public bool ShowPopupWindow => true;
+
+        public string title;
+        public string content;
+        public string acceptButton;
+        public Action onAccept;
     }
 
     public struct EscMenu : InteractState
     {
         public bool LockPlayerControl => true;
+        public bool ShowInteractPrompt => false;
+        public bool ShowPopupWindow => false;
     }
 }

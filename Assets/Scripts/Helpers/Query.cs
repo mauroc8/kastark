@@ -51,7 +51,20 @@ public struct Query
 
     public C Get<C>() where C : Component
     {
-        return host.GetComponentInChildren<C>(true);
+        var c = host.GetComponentInChildren<C>(true);
+
+        if (c == null)
+        {
+            Debug.LogError($"The object {host.name} does not have a child of type {typeof(C)}");
+            return default(C);
+        }
+
+        return c;
+    }
+
+    public C[] GetAll<C>() where C : Component
+    {
+        return host.GetComponentsInChildren<C>(true);
     }
 
     public Query Child(string query)

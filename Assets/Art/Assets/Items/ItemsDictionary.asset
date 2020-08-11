@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce6249e7636e0e143996beb7afc9a14f, type: 3}
+  m_Name: ItemsDictionary
+  m_EditorClassIdentifier: 
+  empty: {fileID: 0}
+  smallSword: {fileID: 21300000, guid: a8e47716518ba474cbd9b96098931145, type: 3}
+  bigSword: {fileID: 21300000, guid: ec59a5d8a6dae224c80fccd6543c082a, type: 3}
+  smallMagic: {fileID: 21300000, guid: c421d31f5bd1a8a40817141b762d99b6, type: 3}
+  bigMagic: {fileID: 21300000, guid: 4b1588f269ada0c4d924bb3c0d65bb52, type: 3}
+  shield: {fileID: 21300000, guid: 51d53a8567104654695ef66be6e730a4, type: 3}
+  potion: {fileID: 21300000, guid: 4200e2c9607315d478268a345c8a21a4, type: 3}
+  clover: {fileID: 21300000, guid: 78d2ad884beb5df4198b971d9d81da0c, type: 3}

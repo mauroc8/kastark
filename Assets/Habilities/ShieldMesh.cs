@@ -2,51 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldMesh : UpdateAsStream
+public class ShieldMesh : MonoBehaviour, IHittable
 {
     void Awake()
     {
+        var shield =
+            GetComponentInParent<Shield>();
+
         var creature =
             GetComponentInParent<Creature>();
 
-        var opacity =
-            creature
-                .shield
-                .Map(value => value > 0 ? 1.0f : 0.0f)
-                .AndThen(Functions.LerpStreamOverTime(update, 0.4f));
-
-        //
-
-        var alphaController =
-            Query
-                .From(this, "shield-mesh")
-                .Get<AlphaController>();
-
-        var maxAlpha =
-            alphaController.Alpha;
-
-        opacity
-            .Get(value =>
-            {
-                alphaController.Alpha =
-                    Functions.EaseInOut(value) * maxAlpha;
-            });
-
-        //
-
-        var mesh =
-            Query
-                .From(this, "shield-mesh mesh")
-                .Get();
-
-        mesh.SetActive(false);
-
-        opacity
-            .Map(t => t != 0)
+        hit
             .Lazy()
-            .Get(value =>
+            .Get(_ =>
             {
-                mesh.SetActive(value);
+                creature.shield.Value =
+                    Mathf.Max(0, creature.shield.Value - 1);
             });
+    }
+
+    StateStream<(Component, int)> hit =
+        new StateStream<(Component, int)>((null, -1));
+
+    public void Hit(Component source, int hitId)
+    {
+        hit.Value =
+            (source, hitId);
     }
 }

@@ -21,7 +21,7 @@ public enum DamageType
 
 public enum CreatureKind
 {
-    Fairy, Gnome, Dwarf, None
+    Fairy, Gnome, Dhende, None
 }
 
 public static class LayerMask

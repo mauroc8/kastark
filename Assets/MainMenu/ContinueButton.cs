@@ -14,13 +14,14 @@ public class ContinueButton : MenuButton
         var button =
             GetComponent<Button>();
 
-        button.interactable = Globals.HasSavedGame();
+        button.interactable =
+            Globals.HasSavedGame();
 
-        var tmp =
+        var text =
             GetComponentInChildren<TMPro.TextMeshProUGUI>();
 
         if (!Globals.HasSavedGame())
-            tmp.color =
+            text.color =
                 disabledColor;
         else
             base.Awake();

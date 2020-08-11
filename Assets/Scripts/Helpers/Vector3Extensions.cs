@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 namespace Vector3Extensions
 {
@@ -20,6 +21,15 @@ namespace Vector3Extensions
         {
             vector.z = z;
             return vector;
+        }
+
+        public static Vector3 Floor(this Vector3 vector)
+        {
+            return new Vector3(
+                x: Mathf.Floor(vector.x),
+                y: Mathf.Floor(vector.y),
+                z: Mathf.Floor(vector.z)
+            );
         }
     }
 }

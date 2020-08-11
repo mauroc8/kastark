@@ -11,12 +11,11 @@ GameObject:
   - component: {fileID: 1265641613721697600}
   - component: {fileID: 1265641613721697607}
   - component: {fileID: 1265641613721697606}
-  - component: {fileID: 1265641613721697602}
   - component: {fileID: 1265641613721697603}
   - component: {fileID: 1265641613721697601}
   - component: {fileID: 1265641613721697612}
   m_Layer: 9
-  m_Name: Main Camera
+  m_Name: Forest camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87,21 +86,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1265641613721697605}
   m_Enabled: 1
---- !u!114 &1265641613721697602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1265641613721697605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c16788acb6ddb44a82ce820feff9113, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _duration: 1
-  _displacement: 9.88
-  _easePower: 2
 --- !u!114 &1265641613721697603
 MonoBehaviour:
   m_ObjectHideFlags: 0

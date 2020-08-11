@@ -10,12 +10,24 @@ public class PotionPanel : MonoBehaviour
             Node.Query(this, "amount text")
                 .GetComponent<TMPro.TextMeshProUGUI>();
 
-        amount.text =
-            $"x{Globals.potions.Value}";
-
         Globals
-            .potions
-            .Listen(this, value =>
+            .inventory
+            .Initialized
+            .Bind(this)
+            .Map(inventory =>
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    switch (inventory[i])
+                    {
+                        case Items.Potion potion:
+                            return potion.amount;
+                    }
+                }
+
+                return 0;
+            })
+            .Get(value =>
             {
                 amount.text =
                     $"x{value}";

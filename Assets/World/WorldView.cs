@@ -22,91 +22,11 @@ public class WorldView : StreamBehaviour
             playerCanMove
                 .AndThen(canMove => canMove ? update : Stream.None<Void>());
 
-
-        // Show "(E) Talk" text when Aira is in front of NPC.
-
-        var npc = Node.Query(this, "npc");
-
-        var npcInteractText = Node.Query(npc.transform, "interact-text");
-
-        worldState
-            .Map(Functions.IsTypeOf<InteractState, InteractStates.InFrontOfNPC>)
-            .Lazy()
-            .Get(inFrontOfNPC =>
-            {
-                npcInteractText.SetActive(inFrontOfNPC);
-            });
-
-        // --- Talk with NPC ---
-
-        var isTalkingToNpc =
-            worldState
-                .Map(Functions.IsTypeOf<InteractState, InteractStates.TalkingWithNPC>)
-                .Lazy();
-
-        var talkingToNpcUpdate =
-            isTalkingToNpc
-                .AndThen(talking =>
-                    talking ? update : Stream.None<Void>()
-                );
-
-        // --- View Journal ---
-
-        var journal =
-            Query
-                .From(this, "journal")
-                .Get();
-
-        journal.SetActive(false);
-
-        worldState
-            .Map(Functions.IsTypeOf<InteractState, InteractStates.ViewingJournal>)
-            .Lazy()
-            .Get(isViewingJournal =>
-            {
-                journal.SetActive(isViewingJournal);
-            });
-
-        // --- Press TAB to open journal ---
-
-        var pressTab =
-            Query
-                .From(this, "press-tab-tutorial")
-                .Get<CanvasGroup>();
-
-        pressTab.alpha =
-            0.0f;
-
-        var hasShownTabTutorial = false;
-
-        worldState
-            .WithLastValue(new InteractStates.None())
-            .Get((lastState, currentState) =>
-            {
-                if (Functions.IsTypeOf<InteractState, InteractStates.TalkingWithNPC>(lastState))
-                {
-                    if (!hasShownTabTutorial)
-                    {
-                        StartCoroutine(ShowTabTutorial(pressTab));
-                        hasShownTabTutorial = true;
-                    }
-                }
-            });
-
-        worldState
-            .Map(state => state.LockPlayerControl)
-            .Lazy()
-            .Get(controlLocked =>
-            {
-                pressTab.gameObject.SetActive(!controlLocked);
-            });
-
-
-        // Esc Menu
+        // --- Esc Menu ---
 
         var escMenu =
             Query
-                .From(this, "ui-scaled esc-menu")
+                .From(this, "ui esc-menu")
                 .Get();
 
         escMenu.SetActive(false);
@@ -157,12 +77,21 @@ public class WorldView : StreamBehaviour
             .click
             .Get(_ =>
             {
-                Globals.Save(
-                    Globals.checkpoint
-                );
-
-                Globals.SetScene(1);
+                Globals.Save();
+                Scenes.LoadMainMenu();
             });
+
+        // --- Interact text ---
+
+        var interact =
+            Query
+                .From(this, "ui e-interact")
+                .Get();
+
+        worldScene
+            .State
+            .Map(state => state.ShowInteractPrompt)
+            .Get(interact.SetActive);
     }
 
     IEnumerator ShowTabTutorial(CanvasGroup pressTab)

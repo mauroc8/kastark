@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(HoverAndClickEventTrigger))]
-[RequireComponent(typeof(AlphaController))]
 public class EscReturnButton : MonoBehaviour
 {
     public StateStream<string> label =
@@ -11,24 +9,6 @@ public class EscReturnButton : MonoBehaviour
 
     void Awake()
     {
-        // Hover effect
-
-        var eventTrigger =
-            GetComponent<HoverAndClickEventTrigger>();
-
-        var alphaController =
-            GetComponent<AlphaController>();
-
-        alphaController.Alpha =
-            eventTrigger.isHovering.Value ? 1.0f : 0.8f;
-
-        eventTrigger.isHovering
-            .Get(value =>
-            {
-                alphaController.Alpha =
-                    value ? 1.0f : 0.8f;
-            });
-
         // Change text
         var labelText =
             Query

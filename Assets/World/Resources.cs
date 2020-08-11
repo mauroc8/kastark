@@ -8,80 +8,48 @@ public class Resources : UpdateAsStream
 
     void Awake()
     {
-        var firstMatch3 = Node.Query(this, "match3-first");
-        var secondMatch3 = Node.Query(this, "match3-second");
-
-        var firstMatch3Board = firstMatch3.GetComponentInChildren<Board>();
-        var secondMatch3Board = secondMatch3.GetComponentInChildren<Board>();
-
-        var resourcesStream =
-            Globals.playerResources;
-
-        Stream.Merge(
-            firstMatch3Board.earnedResources,
-            secondMatch3Board.earnedResources
-        )
-            .Listen(this, resource =>
-            {
-                var resources = resourcesStream.Value;
-
-                switch (resource)
-                {
-                    case Block.Plastic:
-                        resources.plastic++;
-                        break;
-
-                    case Block.Wood:
-                        resources.wood++;
-                        break;
-
-                    case Block.Organic:
-                        resources.organic++;
-                        break;
-
-                    default:
-                        return;
-                }
-
-                resourcesStream.Push(resources);
-            });
-
         var resourcesPanel =
-            Node.Query(this, "ui resources");
+            Query
+                .From(this, "ui resources")
+                .Get();
 
         resourcesPanel.SetActive(true);
 
         var plasticAmount =
-            Node.Query(resourcesPanel, "plastic-amount")
-                .GetComponent<ResourceAmountUI>();
+            Query
+                .From(resourcesPanel, "plastic")
+                .Get<ResourceAmountUI>();
 
         var woodAmount =
-            Node.Query(resourcesPanel, "wood-amount")
-                .GetComponent<ResourceAmountUI>();
+            Query
+                .From(resourcesPanel, "wood")
+                .Get<ResourceAmountUI>();
 
         var organicAmount =
-            Node.Query(resourcesPanel, "organic-amount")
-                .GetComponent<ResourceAmountUI>();
+            Query
+                .From(resourcesPanel, "organic")
+                .Get<ResourceAmountUI>();
 
-        plasticAmount.SetResourceAmount(resourcesStream.Value.plastic);
-        woodAmount.SetResourceAmount(resourcesStream.Value.wood);
-        organicAmount.SetResourceAmount(resourcesStream.Value.organic);
-
-        resourcesStream
+        Globals.playerResources
+            .Initialized
+            .Bind(this)
             .Map(resources => resources.plastic)
             .Lazy()
-            .Listen(this, plasticAmount.SetResourceAmount);
+            .Get(plasticAmount.SetResourceAmount);
 
-        resourcesStream
+        Globals.playerResources
+            .Initialized
+            .Bind(this)
             .Map(resources => resources.wood)
             .Lazy()
-            .Listen(this, woodAmount.SetResourceAmount);
+            .Get(woodAmount.SetResourceAmount);
 
-        resourcesStream
+        Globals.playerResources
+            .Initialized
+            .Bind(this)
             .Map(resources => resources.organic)
             .Lazy()
-            .Listen(this, organicAmount.SetResourceAmount);
-
+            .Get(organicAmount.SetResourceAmount);
 
         var canvasGroup =
             resourcesPanel.GetComponent<CanvasGroup>();
@@ -101,7 +69,7 @@ public class Resources : UpdateAsStream
                 canvasGroup.alpha =
                     Mathf.Lerp(
                         canvasGroup.alpha,
-                        canMove ? 0.0f : 1.0f,
+                        canMove ? 0.6f : 1.0f,
                         0.7f * Time.deltaTime
                     );
             });

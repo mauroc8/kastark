@@ -7,7 +7,9 @@ public enum DialogScreen
 {
     Greeting,
     Quest,
-    Shop
+    Accepted,
+    Shop,
+    Reward
 };
 
 public class NPC : UpdateAsStream
@@ -17,6 +19,16 @@ public class NPC : UpdateAsStream
 
     void Awake()
     {
+        // Initial screen
+
+        dialogScreen.Value =
+            Globals.quest == QuestStatus.FightArthur
+                ? DialogScreen.Accepted
+                : Globals.quest == QuestStatus.GetReward
+                ? DialogScreen.Reward
+                : DialogScreen.Greeting
+            ;
+
         var worldScene =
             GetComponentInParent<WorldScene>();
 
@@ -38,41 +50,19 @@ public class NPC : UpdateAsStream
                         : Stream.None<Void>()
                 );
 
+        var canvas =
+            Query
+                .From(worldScene, "ui dhende")
+                .Get();
 
-        // Show/hide dialog panel
-
-        var dialogPanel =
-            Node.Query(this, "dialog-panel");
-
-        var dialogPanelAlpha =
-            dialogPanel.GetComponent<AlphaController>();
-
-        isInteracting.Get(talking =>
-        {
-            dialogPanel.SetActive(talking);
-
-            if (talking && dialogPanelAlpha != null)
-                dialogPanelAlpha.FadeIn(0.6f, 2f);
-        });
-
-        // Hide Aira
-
-        var aira =
-            Node.Query(transform.root, "aira");
+        isInteracting
+            .InitializeWith(false)
+            .Get(canvas.SetActive);
 
         var lerpedInteracting =
             isInteracting
                 .Map(value => value ? 1.0f : 0.0f)
                 .AndThen(Functions.LerpStreamOverTime(update, 0.8f));
-
-        lerpedInteracting
-            .Map(t => t == 0)
-            .Lazy()
-            .Get(value =>
-            {
-                aira.SetActive(value);
-            });
-
 
         // NPC Move camera
 
@@ -81,17 +71,6 @@ public class NPC : UpdateAsStream
 
         var camera =
             Camera.main;
-
-        /*
-        interactingUpdate.Get(_ =>
-        {
-            camera.transform.position =
-                npcCameraTransform.transform.position;
-
-            camera.transform.rotation =
-                npcCameraTransform.transform.rotation;
-        });
-        */
 
         Stream.Combine(
             isInteracting
@@ -122,39 +101,55 @@ public class NPC : UpdateAsStream
 
         // Change Dialog Screen
 
-        var talkButtonTrigger =
+        var questButton =
             Node
-                .Query(this, "talk-button")
+                .Query(canvas, "greeting-screen quest-button")
                 .GetComponent<HoverAndClickEventTrigger>();
 
-        var shopButtonTrigger =
+        var acceptQuestButton =
             Node
-                .Query(this, "shop-button")
+                .Query(canvas, "quest-screen accept-button")
                 .GetComponent<HoverAndClickEventTrigger>();
 
+        var shopButton =
+            Node
+                .Query(canvas, "accepted-screen shop-button")
+                .GetComponent<HoverAndClickEventTrigger>();
 
-        talkButtonTrigger.click
+        var shopButton2 =
+            Query
+                .From(canvas, "reward-screen shop-button")
+                .Get<HoverAndClickEventTrigger>();
+
+        questButton.click
             .Get(_ =>
             {
-                dialogScreen.Push(DialogScreen.Quest);
+                dialogScreen.Value =
+                    DialogScreen.Quest;
             });
 
-        shopButtonTrigger.click
+        acceptQuestButton.click
             .Get(_ =>
             {
-                dialogScreen.Push(DialogScreen.Shop);
+                dialogScreen.Value =
+                    DialogScreen.Accepted;
+
+                Globals.quest =
+                    QuestStatus.FightArthur;
+            });
+
+        Stream
+            .Merge(shopButton.click, shopButton2.click)
+            .Get(_ =>
+            {
+                dialogScreen.Value =
+                    DialogScreen.Shop;
             });
 
         // Press Escape to go back to the previous screen
 
         var lastDialogScreenChangeTime =
             Time.time;
-
-        var acceptQuestClick =
-            Query
-                .From(this, "accept-button")
-                .Get<HoverAndClickEventTrigger>()
-                .click;
 
         var escapeClickUnfiltered =
             Query
@@ -175,13 +170,12 @@ public class NPC : UpdateAsStream
             interactingUpdate
                 .Filter(_ => Input.GetKeyDown(KeyCode.Escape))
             ,
-            acceptQuestClick.Always(new Void()),
             escapeClick
         )
             .Get(_ =>
             {
                 // Avoid double press to change screens too fast!
-                if (Time.time - lastDialogScreenChangeTime < 0.3f)
+                if (Time.time - lastDialogScreenChangeTime < 0.1f)
                     return;
 
                 lastDialogScreenChangeTime =
@@ -190,14 +184,20 @@ public class NPC : UpdateAsStream
                 switch (dialogScreen.Value)
                 {
                     case DialogScreen.Greeting:
+                    case DialogScreen.Accepted:
+                    case DialogScreen.Quest:
+                    case DialogScreen.Reward:
+
                         worldScene.ExitInteractState();
+
                         return;
 
-                    case DialogScreen.Quest:
                     case DialogScreen.Shop:
 
                         dialogScreen.Value =
-                            DialogScreen.Greeting;
+                            Globals.quest == QuestStatus.FightArthur
+                                ? DialogScreen.Accepted
+                                : DialogScreen.Reward;
 
                         return;
                 }
@@ -218,40 +218,42 @@ public class NPC : UpdateAsStream
                     return;
 
                 returnButton.label.Value =
-                    screen == DialogScreen.Greeting
-                        ? "Return"
-                        : "Back";
+                    screen == DialogScreen.Shop
+                        ? "Back"
+                        : "Return"
+                    ;
             });
 
 
         // Show SCREENS!
 
         var greetingScreen =
-            Node.Query(this, "greeting-screen");
+            Node.Query(canvas, "greeting-screen");
 
         var questScreen =
-            Node.Query(this, "quest-screen");
+            Node.Query(canvas, "quest-screen");
+
+        var acceptedScreen =
+            Node.Query(canvas, "accepted-screen");
 
         var shopScreen =
-            Node.Query(this, "shop-screen");
+            Node.Query(canvas, "shop-screen");
 
-        greetingScreen.SetActive(true);
-        questScreen.SetActive(false);
-        shopScreen.SetActive(false);
+        var rewardScreen =
+            Query
+                .From(canvas, "reward-screen")
+                .Get();
 
-        Func<DialogScreen, GameObject> getScreenNode =
-            screen =>
-                screen == DialogScreen.Greeting ? greetingScreen :
-                screen == DialogScreen.Quest ? questScreen :
-                screen == DialogScreen.Shop ? shopScreen :
-                greetingScreen;
 
         dialogScreen
-            .WithLastValue(DialogScreen.Greeting)
-            .Get((lastScreen, currentScreen) =>
+            .Initialized
+            .Get(screen =>
             {
-                getScreenNode(lastScreen).SetActive(false);
-                getScreenNode(currentScreen).SetActive(true);
+                greetingScreen.SetActive(screen == DialogScreen.Greeting);
+                questScreen.SetActive(screen == DialogScreen.Quest);
+                acceptedScreen.SetActive(screen == DialogScreen.Accepted);
+                shopScreen.SetActive(screen == DialogScreen.Shop);
+                rewardScreen.SetActive(screen == DialogScreen.Reward);
             });
 
         // Checkpoint
@@ -259,16 +261,17 @@ public class NPC : UpdateAsStream
         isInteracting
             .Get(_ =>
             {
-                Globals.Save(
-                    Checkpoint.Dwarf
-                );
+                Globals.checkpoint =
+                    Checkpoint.Dhende;
+
+                Globals.Save();
             });
 
         // Play navigation click audio
 
         var navigationClickAudio =
             Query
-                .From(this, "navigation-click-audio")
+                .From(canvas, "audio navigation-click")
                 .Get<AudioSource>();
 
         dialogScreen
@@ -294,31 +297,6 @@ public class NPC : UpdateAsStream
             .Get(value =>
             {
                 animator.SetBool("is_talking", value);
-            });
-
-        // Show right quest message
-
-        var dialogInitial =
-            Query
-                .From(this, "dialog-initial")
-                .Get();
-
-        var dialogDefeatedArthur =
-            Query
-                .From(this, "dialog-defeated-arthur")
-                .Get();
-
-        dialogInitial.SetActive(Globals.progress != GameProgress.DefeatedArthur);
-        dialogDefeatedArthur.SetActive(Globals.progress == GameProgress.DefeatedArthur);
-
-        // Set quest
-
-        dialogScreen
-            .Filter(screen => screen == DialogScreen.Quest)
-            .Get(_ =>
-            {
-                Globals.hasQuest.Value =
-                    true;
             });
     }
 }
