@@ -1,5 +1,7 @@
 # Magical Light of Kastark
 
+[Enter the official site / Entrar a la página oficial](https://mauroc8.github.io/kastark/)
+
 > El mundo está devastado. Los seres mágicos lucharán por restablecer el equilibrio de la naturaleza, y para ello deberán encontrar la Luz Mágica de Kastark.
 
 Kastark es un RPG por turnos con mecánicas de pelea innovadoras.
